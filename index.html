@@ -181,7 +181,7 @@ p{line-height:1.7}
 .zk.none{color:var(--faint)} .zk.none .sigil{color:var(--faint);text-shadow:none}
 .lore-list{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
 .lr{display:flex;gap:10px;align-items:center;text-align:left;width:100%;min-height:52px;padding:6px 10px;border:1px solid var(--line);background:linear-gradient(#1a130f,#100b09)}
-.lr .no{flex:none;width:64px;font-size:12px;color:var(--gold);letter-spacing:.05em}
+.lr .no{flex:none;width:72px;white-space:nowrap;font-size:12px;color:var(--gold);letter-spacing:.05em}
 .lr .tt{flex:1;min-width:0;font-size:15px;line-height:1.45}
 .lr .tt small{display:block;font-size:11px;color:var(--dim)}
 .lr .new{display:inline-block;font-weight:400;font-size:11px;color:#f0dcc6;background:var(--crimson);padding:0 4px;margin-right:6px;vertical-align:2px}
@@ -375,7 +375,7 @@ DATA.story = [
     '王都の外れ、崩れた鐘楼を抱く共同墓地。かつてここは、死者を陽のもとへ送り出す場所だった。鐘の音に乗って魂は空へ昇り、陽の光に溶けて安らぐ――そう教えられてきた。',
     '今、鐘楼は半ば崩れ、墓標は灰に埋もれている。それでも夜になると、鐘が鳴るという。撞く者は、もういないはずなのに。',
     '組合の依頼は単純だった。鐘を止めよ。鐘が鳴るたびに、起き上がる死者が増えるのだから。']},
-  {id:'c1b', no:'第一章 ・ 終', title:'送れぬ鐘', body:[
+  {id:'c1b', no:'第一章・終', title:'送れぬ鐘', body:[
     '鐘撞き骸は、崩れ落ちる最後の瞬間まで縄を離さなかった。骨だけの指が縄に絡みつき、あなたが近づくと、顎がかすかに動いた。',
     '「……送れぬ。……送れぬのだ。撞いても撞いても、誰も昇らぬ。空に、口が無い」',
     '空に口が無い。その言葉の意味を、あなたはしばらく考えた。陽は、死者を迎え入れる場所だった。いや――「迎え入れる」という言葉は、本当に正しかったのだろうか。',
@@ -385,7 +385,7 @@ DATA.story = [
     '陽喪から三年目の冬、この村は疫病に呑まれた。膿は皮膚の下で黄色く光り、罹った者は死ぬ前から、自分の名を少しずつ忘れていったという。',
     '村人たちは救いを沼に求めた。陽が無いなら、代わりの神が要る。沼の底には何かが住んでいて、それが村を守ってくれる――そう信じた者たちが、何をしたのか。記録は多くを語らない。',
     '組合は言う。沼の廃寺に巣食う魔が、疫病の源だと。だがあなたは、組合の地図にだけ、廃寺の名が書き込まれていないことに気づいていた。まるで、最初から知っていたかのように。']},
-  {id:'c2b', no:'第二章 ・ 終', title:'陽の骨', body:[
+  {id:'c2b', no:'第二章・終', title:'陽の骨', body:[
     '千脚尼の無数の脚が、一本ずつ動きを止めてゆく。最後に残ったのは、数珠を繰るように震える二本の手だった。',
     '「その鎖……」と尼は言った。濁った目が、あなたの手元を見ていた。「懐かしい匂いがする。陽の匂いだ。私はあれが打たれるのを見た。組合の最初の鍛冶場で。砕けた陽の欠片を灰の中から拾い集め、叩いて、延ばして」',
     '「あれは骨だ。陽の骨だ。陽は死んでなどいない。砕かれて、鎖にされて、今も喰い続けている。お前が縛った魔の魂を、少しずつ、少しずつ」',
@@ -932,12 +932,12 @@ function doStep(){
     const g = rint(4,12) * (RUN.ai+1); S.gold += g; rlog(`朽ちた棺の中に、${g}枚の骨貨が残されていた。`, 'good');
   } else if (r < 0.71){
     S.items.kusuri++; rlog('倒れた旅人の懐に「凝血の薬」があった。……使わせてもらう。', 'good');
-  } else if (r < 0.81 && (lc = loreCandidates(RUN.ai, RUN.floor)).length){
+  } else if (r < 0.86 && (lc = loreCandidates(RUN.ai, RUN.floor)).length){
     const l = pickLore(lc); grantLore(l.id); RUN.lastLore = l.id;
     rlog(FOUND_MSG[l.type] + `――《${l.title}》を書き留めた。`, 'hl');
-  } else if (r < 0.9){
+  } else if (r < 0.93){
     rlog(pick(a.flavor));
-  } else if (r < 0.95){
+  } else if (r < 0.97){
     partyMons().forEach(m=>{ if (m.hp>0){ const c=calc(m); m.hp = Math.min(c.hp, m.hp + Math.ceil(c.hp*0.25)); m.mp = Math.min(c.mp, m.mp + Math.ceil(c.mp*0.2)); } });
     rlog('名も無き祠を見つけた。消えかけの灯りが、わずかに傷を癒した。', 'good');
   } else {
@@ -1374,7 +1374,7 @@ setInterval(()=>{
 }, 1000);
 
 // テスト・デバッグ用フック
-window.__game = { get S(){ return S; }, get VIEW(){ return VIEW; }, get RUN(){ return RUN; }, get BT(){ return BT; }, get READ(){ return READ; }, render, save, calc, newMon, go, simulate, mkUnit, checkFamilies, grantLore };
+window.__game = { get S(){ return S; }, get VIEW(){ return VIEW; }, get RUN(){ return RUN; }, get BT(){ return BT; }, get READ(){ return READ; }, render, save, calc, newMon, go, simulate, mkUnit, checkFamilies, grantLore, loreCandidates };
 render();
 })();
 </script>
