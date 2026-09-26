@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0a0c">
+<title>昏檻譚 ― くらきおりのものがたり</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   STYLE
+   ========================================================= */
+:root{
+  --bg:#0b0a0c; --panel:#15100d; --panel2:#1c1511; --line:#3b2c21; --line2:#5a4330;
+  --text:#d9ceb4; --dim:#8d8170; --faint:#5e5549;
+  --crimson:#9b2f2b; --crimson2:#c2463d; --gold:#ab8c4c; --gold2:#d2b16a;
+  --hp:#8e2a26; --mp:#3f5a78; --stam:#b07a2e; --exp:#8a7440;
+  --font:"Shippori Mincho","Noto Serif JP","Noto Serif CJK JP","Yu Mincho","YuMincho","Hiragino Mincho ProN","BIZ UDPMincho","Sawarabi Mincho",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-text-size-adjust:100%;overflow:hidden}
+body{
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(120,40,30,.18), transparent 60%),
+    radial-gradient(ellipse at 50% 120%, rgba(60,40,20,.25), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.012) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.18) 0 1px, transparent 1px 4px),
+    var(--bg);
+}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#app{position:relative;max-width:480px;margin:0 auto;height:100vh;height:100dvh;display:flex;flex-direction:column;
+  border-left:1px solid #1d1612;border-right:1px solid #1d1612;background:rgba(8,6,6,.55)}
+/* top bar */
+#topbar{flex:0 0 46px;display:flex;align-items:center;gap:8px;padding:0 8px;border-bottom:1px solid var(--line);
+  background:linear-gradient(#1a130f,#100b09)}
+#topbar .ttl{flex:1;font-size:15px;letter-spacing:.3em;color:var(--gold);text-align:center}
+.iconbtn{width:44px;height:36px;border:1px solid var(--line2);background:#120d0a;font-size:18px;color:var(--gold)}
+.cur{min-width:110px;text-align:right;font-size:13px;color:var(--dim);border:1px solid var(--line);padding:6px 8px;background:#0e0a08}
+.cur b{color:var(--gold2);font-weight:600;font-size:15px}
+/* main */
+#view{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;padding:8px 10px 12px;-webkit-overflow-scrolling:touch}
+#view.noscroll{overflow:hidden;display:flex;flex-direction:column}
+/* tab bar */
+#tabbar{flex:0 0 58px;display:flex;border-top:1px solid var(--line2);background:linear-gradient(#140e0b,#0a0706);padding-bottom:env(safe-area-inset-bottom)}
+#tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;color:var(--dim);border-right:1px solid #22190f}
+#tabbar button:last-child{border-right:none}
+#tabbar button .tk{font-size:19px;line-height:1;color:var(--faint)}
+#tabbar button.on{color:var(--gold2);background:linear-gradient(#24190f,#140e0a);box-shadow:inset 0 2px 0 var(--crimson)}
+#tabbar button.on .tk{color:var(--crimson2)}
+.hide{display:none!important}
+/* generic */
+.panel{border:1px solid var(--line);background:linear-gradient(var(--panel2),var(--panel));padding:8px 10px;margin-bottom:8px;position:relative}
+.panel h3{font-size:13px;font-weight:600;color:var(--gold);letter-spacing:.15em;border-bottom:1px solid var(--line);padding-bottom:4px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:baseline}
+.panel h3 small{font-size:11px;color:var(--faint);letter-spacing:0;font-weight:400}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:6px 10px;border:1px solid var(--line2);
+  background:linear-gradient(#241a13,#150f0b);color:var(--text);font-size:15px;letter-spacing:.08em;box-shadow:inset 0 1px 0 rgba(255,230,190,.05)}
+.btn:active{background:#2e2016;border-color:var(--gold)}
+.btn[disabled]{opacity:.38;pointer-events:none}
+.btn.red{border-color:#6e2622;background:linear-gradient(#3a1512,#1d0b09);color:#efd6c4}
+.btn.gold{border-color:#7a6232;color:var(--gold2)}
+.btn.wide{width:100%}
+.row{display:flex;gap:6px}
+.row>.btn{flex:1}
+.dim{color:var(--dim)} .faint{color:var(--faint)} .gold{color:var(--gold2)} .red{color:var(--crimson2)}
+.small{font-size:12px}
+p{line-height:1.7}
+/* bars */
+.bar{position:relative;height:9px;border:1px solid #33271d;background:#0a0706;overflow:hidden}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--hp);transition:width .25s}
+.bar.mp i{background:var(--mp)} .bar.st i{background:var(--stam)} .bar.ex i{background:var(--exp)}
+.barline{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--dim)}
+.barline .lbl{width:22px;flex:none} .barline .bar{flex:1} .barline .num{min-width:58px;text-align:right;font-variant-numeric:tabular-nums}
+/* sigil */
+.sigil{flex:none;width:46px;height:46px;border:1px solid var(--line2);outline:1px solid #0a0706;outline-offset:-4px;display:flex;align-items:center;justify-content:center;
+  font-size:26px;color:var(--crimson2);background:radial-gradient(circle at 50% 40%,#2a1a13,#0c0807);text-shadow:0 0 6px rgba(160,40,30,.5)}
+.sigil img{width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
+.sigil.big{width:84px;height:84px;font-size:50px}
+.sigil.sm{width:34px;height:34px;font-size:19px}
+.fam{display:inline-block;font-size:11px;border:1px solid var(--line2);color:var(--gold);padding:0 4px;margin-left:4px;vertical-align:1px}
+/* title */
+.title-wrap{min-height:100%;display:flex;flex-direction:column;justify-content:center;padding:20px 8px}
+.title-logo{text-align:center;font-size:46px;letter-spacing:.35em;color:#e3d6b8;text-shadow:0 0 18px rgba(150,30,20,.55),0 2px 0 #000;margin-right:-.35em}
+.title-sub{text-align:center;font-size:12px;letter-spacing:.4em;color:var(--gold);margin:6px 0 22px}
+.title-line{height:1px;background:linear-gradient(90deg,transparent,var(--crimson),transparent);margin:14px 0}
+.premise p{font-size:14px;color:#c8bca2;margin-bottom:10px;text-indent:1em}
+.title-btns{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.title-btns .btn{min-height:52px;font-size:18px;letter-spacing:.4em}
+.copy{margin-top:20px;text-align:center;font-size:11px;color:var(--faint)}
+/* home */
+.online{display:flex;flex-direction:column;gap:2px;font-size:12px}
+.online div{display:flex;justify-content:space-between;color:var(--dim)} .online b{color:var(--text);font-weight:400}
+.status .who{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px}
+.status .who .nm{font-size:16px} .status .who .lv{color:var(--gold2);font-size:14px}
+.timer{font-size:11px;color:var(--faint);text-align:right;margin-top:1px;font-variant-numeric:tabular-nums}
+.minip{display:flex;gap:6px;margin-top:6px;align-items:center}
+.minip .mp1{flex:1;min-width:0;display:flex;gap:5px;align-items:center;border:1px solid #2a1f17;padding:3px;background:#0f0b09}
+.minip .mp1 .t{min-width:0;font-size:11px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fac{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:8px}
+.fac .btn{flex-direction:column;font-size:12px;min-height:58px;padding:4px 2px;letter-spacing:0;gap:2px}
+.fac .btn .k{font-size:18px;color:var(--gold)}
+.fac .btn .dot{position:absolute;top:4px;right:5px;width:7px;height:7px;background:var(--crimson2);border-radius:0}
+.fac .btn{position:relative}
+.rank{font-size:12px}
+.rank div{display:flex;gap:6px;padding:2px 0;border-bottom:1px dotted #2b2119;color:var(--dim)}
+.rank div span:first-child{width:24px;color:var(--gold)} .rank div span:nth-child(2){flex:1} .rank div.me{color:var(--text)} .rank div.me span:nth-child(2){color:var(--crimson2)}
+.gates{display:flex;flex-direction:column;gap:5px}
+.gate{display:flex;justify-content:space-between;align-items:center;text-align:left;min-height:48px;width:100%}
+.gate .gn{font-size:15px} .gate .gi{font-size:11px;color:var(--dim)}
+.gate.sel{border-color:var(--gold);box-shadow:inset 3px 0 0 var(--crimson2);background:linear-gradient(#2d2016,#180f0b)}
+.explore-big{width:100%;min-height:64px;font-size:22px;letter-spacing:.5em;margin:4px 0 8px;border:1px solid #8a3a2e;
+  background:linear-gradient(#4a1914,#220a08);color:#f0dcc6;text-shadow:0 0 8px rgba(200,60,40,.6);box-shadow:inset 0 0 0 3px #1a0806,inset 0 0 0 4px #5c2a20}
+.explore-big small{display:block;font-size:11px;letter-spacing:.1em;color:#c9a88a}
+/* cards */
+.mlist{display:flex;flex-direction:column;gap:5px}
+.mcard{display:flex;gap:8px;align-items:center;border:1px solid var(--line);background:#100c0a;padding:5px;text-align:left;width:100%;min-height:58px}
+.mcard .mi{flex:1;min-width:0}
+.mcard .mn{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard .ms{font-size:11px;color:var(--dim)}
+.mcard.sel{border-color:var(--gold);background:#22170f}
+.mcard.dead .sigil{filter:grayscale(1) brightness(.5)}
+.mcard.dead .mn{color:var(--faint);text-decoration:line-through}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:2px 12px;font-size:13px;margin:6px 0}
+.stats div{display:flex;justify-content:space-between;border-bottom:1px dotted #2b2119}
+.skl{font-size:13px;border:1px solid #2a1f17;padding:4px 6px;margin-top:3px;background:#0e0a08}
+.skl b{font-weight:600;color:var(--gold2)} .skl span{color:var(--dim);font-size:11px}
+.flavor{font-size:13px;color:#b5a88e;line-height:1.75;border-left:2px solid var(--crimson);padding-left:8px;margin:6px 0}
+/* explore / battle */
+.dhead{border:1px solid var(--line2);padding:6px 8px;background:linear-gradient(#22170f,#120c09);display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.dhead .an{font-size:16px;color:var(--gold2);letter-spacing:.1em} .dhead .fl{font-size:12px;color:var(--dim)}
+.logbox{flex:1 1 auto;min-height:120px;overflow-y:auto;border:1px solid var(--line);background:#080605;padding:6px 8px;font-size:14px;line-height:1.65;margin-bottom:6px}
+.logbox div{color:#7c7263;padding:1px 0}
+.logbox div.hl{color:var(--gold2)} .logbox div.bad{color:#b0655a} .logbox div.good{color:#9fae84}
+.logbox div.new{color:#f0e4c8;border-left:2px solid var(--crimson2);padding-left:6px;margin-left:-8px}
+.logbox div.sep{color:var(--faint);text-align:center;font-size:11px;letter-spacing:.3em}
+.prow{display:flex;gap:4px;margin-bottom:6px}
+.pu{flex:1;min-width:0;border:1px solid var(--line);background:#100c0a;padding:4px}
+.pu .top{display:flex;gap:4px;align-items:center;margin-bottom:3px}
+.pu .nm{font-size:12px;line-height:1.25;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.pu .nm small{display:block;color:var(--dim);font-size:10px}
+.pu .bar{height:7px;margin-top:2px}
+.pu .hpn{font-size:10px;color:var(--dim);text-align:right;font-variant-numeric:tabular-nums}
+.pu.dead{opacity:.4} .pu.hit{animation:hit .3s}
+.pu.enemy{border-color:#4a2420;background:#140908}
+@keyframes hit{0%{background:#5a1a14}100%{background:#100c0a}}
+.dbtns{display:flex;gap:6px;flex:none}
+.dbtns .btn{flex:1}
+.go{min-height:56px;font-size:19px;letter-spacing:.3em}
+.result{border:1px solid var(--gold);background:#1a120c;padding:8px;margin-bottom:6px;font-size:14px;flex:none}
+.result .q{margin-bottom:6px;line-height:1.6}
+/* modal */
+#modal{position:absolute;inset:0;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:14px;z-index:10}
+#modal .mbox{width:100%;max-height:88%;overflow-y:auto;border:1px solid var(--line2);outline:1px solid #000;background:linear-gradient(#1f1611,#110c09);padding:12px;box-shadow:0 0 30px #000}
+#modal .mbox h4{font-size:15px;color:var(--gold2);border-bottom:1px solid var(--line);padding-bottom:5px;margin-bottom:8px;letter-spacing:.12em}
+#modal .mbtns{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.soon{text-align:center;padding:40px 12px}
+.soon .k{font-size:60px;color:var(--crimson);opacity:.7}
+.soon h2{font-size:18px;color:var(--gold2);letter-spacing:.3em;margin:10px 0}
+.toast{position:absolute;left:50%;top:56px;transform:translateX(-50%);background:#1d130e;border:1px solid var(--gold);padding:8px 14px;font-size:13px;z-index:20;white-space:nowrap;max-width:92%;overflow:hidden;text-overflow:ellipsis}
+.fslot{display:flex;gap:6px;margin-bottom:6px}
+.fslot>div{flex:1;border:1px dashed var(--line2);min-height:66px;padding:5px;font-size:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:2px}
+.fslot>div.on{border-style:solid;border-color:var(--gold)}
+.fplus{flex:none!important;border:none!important;min-height:0!important;font-size:20px!important;color:var(--crimson2);width:18px}
+.shop .it{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dotted #2b2119}
+.shop .it .d{flex:1;font-size:13px} .shop .it .d small{display:block;color:var(--dim);font-size:11px}
+.shop .it .btn{min-width:96px}
+/* archive / reader */
+.arch-tabs{display:flex;gap:4px}
+.arch-tabs button{flex:1;min-height:48px;border:1px solid var(--line);background:#0f0b09;color:var(--dim);font-size:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;letter-spacing:.1em}
+.arch-tabs button small{font-size:11px;color:var(--faint);letter-spacing:0}
+.arch-tabs button.on{border-color:var(--gold);color:var(--gold2);background:linear-gradient(#2a1d13,#150f0b);box-shadow:inset 0 -2px 0 var(--crimson2)}
+.arch-tabs .dot,.lr .dot{position:absolute;top:5px;right:6px;width:7px;height:7px;background:var(--crimson2)}
+.zk-fam{border:1px solid var(--line);background:linear-gradient(var(--panel2),var(--panel));padding:6px 8px;margin-bottom:6px}
+.zk-h{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:3px;margin-bottom:4px;color:var(--gold);font-size:14px}
+.zk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.zk{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 2px;border:1px solid #2a1f17;background:#0e0a08;font-size:12px;min-height:72px;text-align:center}
+.zk span{line-height:1.3}
+.zk.own{border-color:var(--line2)}
+.zk i{position:absolute;top:2px;right:3px;font-style:normal;font-size:10px;color:var(--gold2);border:1px solid #6a5230;padding:0 2px}
+.zk.none{color:var(--faint)} .zk.none .sigil{color:var(--faint);text-shadow:none}
+.lore-list{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
+.lr{display:flex;gap:10px;align-items:center;text-align:left;width:100%;min-height:52px;padding:6px 10px;border:1px solid var(--line);background:linear-gradient(#1a130f,#100b09)}
+.lr .no{flex:none;width:64px;font-size:12px;color:var(--gold);letter-spacing:.05em}
+.lr .tt{flex:1;min-width:0;font-size:15px;line-height:1.45}
+.lr .tt small{display:block;font-size:11px;color:var(--dim)}
+.lr .new{display:inline-block;font-weight:400;font-size:11px;color:#f0dcc6;background:var(--crimson);padding:0 4px;margin-right:6px;vertical-align:2px}
+.lr.lock{opacity:.55;background:#0c0908} .lr.lock .tt{color:var(--faint)}
+.addendum{margin-top:8px;border:1px solid #5a4330;background:#150e0a;padding:8px 10px;font-size:13.5px;line-height:1.85;color:#e0cfa8}
+.addendum .ah{font-size:11px;color:var(--crimson2);letter-spacing:.3em;margin-bottom:2px}
+.reader{padding:18px 8px 10px}
+.rd-kick{font-size:12px;color:var(--crimson2);letter-spacing:.35em;text-align:center}
+.rd-title{font-size:24px;font-weight:600;color:#e8dcc0;text-align:center;letter-spacing:.2em;margin:8px 0 4px;text-shadow:0 0 12px rgba(150,30,20,.45)}
+.rd-orn{text-align:center;color:var(--crimson);font-size:10px;margin:6px 0 16px;letter-spacing:1em}
+.rd-auth{text-align:right;font-size:13px;color:var(--dim);margin:6px 0 16px}
+.rd-body p{font-size:16px;line-height:2.05;color:#d4c8ad;text-indent:1em;margin-bottom:1.1em}
+.rd-body p.verse{white-space:pre-line;text-indent:0;padding-left:1em;border-left:1px solid var(--line2);color:#dccfb0}
+.rd-body p.note{font-size:13.5px;color:var(--dim);text-indent:0;border-top:1px dotted var(--line2);padding-top:.6em}
+.reader.lore .rd-body{border:1px solid var(--line);background:linear-gradient(#17110d,#0f0a08);padding:14px 14px 4px}
+.rd-foot{position:sticky;bottom:-12px;padding:10px 0 12px;background:linear-gradient(rgba(11,10,12,0),#0b0a0c 30%)}
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="topbar" class="hide">
+    <button class="iconbtn" data-act="tab" data-tab="menu" aria-label="メニュー">≡</button>
+    <div class="ttl">昏檻譚</div>
+    <div class="cur">骨貨 <b id="gold">0</b></div>
+  </header>
+  <main id="view"></main>
+  <nav id="tabbar" class="hide">
+    <button data-act="tab" data-tab="home"><span class="tk">塞</span>拠点</button>
+    <button data-act="tab" data-tab="party"><span class="tk">鎖</span>支度</button>
+    <button data-act="tab" data-tab="guild"><span class="tk">盟</span>結社</button>
+    <button data-act="tab" data-tab="market"><span class="tk">秤</span>闇市</button>
+    <button data-act="tab" data-tab="menu"><span class="tk">帖</span>覚書</button>
+  </nav>
+  <div id="modal" class="hide"></div>
+</div>
+<script>
+/* =========================================================
+   DATA ── ゲームデータ（ここを編集・追加して拡張する）
+   monsters[].img に画像パスを入れると、紋字の代わりに画像が表示される。
+   ========================================================= */
+const DATA = {
+  title: '昏檻譚',
+  currency: '骨貨',
+  stamina: '燈',
+  premise: [
+    '七十年前、陽は喪われた。灰鐘の国には灰の雨が降り続け、死者は土に還らず、獣は闇に歪んだ。',
+    '人々は魔を鎖で縛り、その牙を借りて夜を凌ぐ。そうした者を《檻守（おりもり）》と呼ぶ。',
+    'あなたは最後の檻守のひとり。錆びた鎖と二匹の獣を連れ、陽を殺した者たちの墓所へ降りてゆく。'
+  ],
+  families: {
+    '骸': '朽ちてなお動く死者の系統。守りが堅い。',
+    '獣': '闇に歪んだ獣の系統。牙が鋭く、素早い。',
+    '霊': '弔われぬ魂の系統。癒しと吸精に長ける。',
+    '蟲': '死を苗床に育つ蟲の系統。毒を操る。',
+    '呪': '人の悪意が形を得た系統。呪詛で敵を弱らせる。'
+  },
+  /* type: dmg(物理) / magic(守備無視) / drain(吸収) / heal / debuff / buff / poison
+     tgt : one(敵単体) / all(敵全体) / ally(味方単体) / allyAll(味方全体) / self */
+  skills: {
+    bite:    {name:'噛み裂き',   mp:2, type:'dmg',   pow:1.5, tgt:'one',  desc:'敵単体に強く噛みつく', msg:'{a}は{t}の喉笛に喰らいついた！'},
+    ash:     {name:'灰の吐息',   mp:4, type:'dmg',   pow:0.75,tgt:'all',  desc:'敵全体に灰を吐きかける', msg:'{a}は灰色の吐息を撒き散らした！'},
+    knell:   {name:'弔鐘',       mp:3, type:'debuff',stat:'def', tgt:'all', desc:'敵全体の守備を下げる', msg:'{a}の鳴らす弔いの鐘が、骨の髄まで響き渡る……'},
+    drain:   {name:'啜命',       mp:3, type:'drain', pow:1.1, tgt:'one',  desc:'敵単体の生気を啜り、傷を癒す', msg:'{a}は{t}の生気を啜った！'},
+    candle:  {name:'燭の癒し',   mp:3, type:'heal',  pow:22,  tgt:'ally', desc:'味方単体の傷を炙り塞ぐ', msg:'{a}の灯火が{t}の傷を炙り塞ぐ。'},
+    requiem: {name:'鎮魂の灯',   mp:7, type:'heal',  pow:18,  tgt:'allyAll', desc:'味方全体を癒す', msg:'{a}は鎮魂の灯を高く掲げた。'},
+    scale:   {name:'毒鱗粉',     mp:3, type:'poison',tgt:'all',   desc:'敵全体を毒に侵す', msg:'{a}が羽ばたくと、毒の鱗粉が舞い散った！'},
+    venom:   {name:'腐れ牙',     mp:2, type:'dmg',   pow:1.1, tgt:'one', poison:true, desc:'敵単体を噛み、毒を流し込む', msg:'{a}の腐れた牙が{t}に食い込む！'},
+    rust:    {name:'錆刃',       mp:4, type:'dmg',   pow:1.9, tgt:'one',  desc:'敵単体に錆びた刃を叩きつける', msg:'{a}は錆びた刃を{t}へ振り下ろした！'},
+    bind:    {name:'呪縛の糸',   mp:3, type:'debuff',stat:'spd', tgt:'one', desc:'敵単体の素早さを下げる', msg:'{a}の指先から黒い糸が伸び、{t}に絡みつく。'},
+    dread:   {name:'怯えの囁き', mp:3, type:'debuff',stat:'atk', tgt:'all', desc:'敵全体の攻撃を下げる', msg:'{a}が耳元で何かを囁いた……'},
+    wail:    {name:'すすり泣き', mp:2, type:'debuff',stat:'atk', tgt:'one', desc:'敵単体の攻撃を下げる', msg:'{a}のすすり泣きが{t}の心を萎えさせる。'},
+    harden:  {name:'硬骨',       mp:2, type:'buff',  stat:'def', tgt:'self', desc:'自身の守備を上げる', msg:'{a}の骨が軋み、硬く締まった。'},
+    tusk:    {name:'骨砕き',     mp:3, type:'dmg',   pow:1.6, tgt:'one',  desc:'敵単体の骨を砕く一撃', msg:'{a}は{t}に突進した！'},
+    prayer:  {name:'黒き祈り',   mp:8, type:'magic', pow:14,  tgt:'all',  desc:'守備を無視して敵全体を焼く', msg:'{a}は陽を呪う祈りを捧げた。黒い炎が降り注ぐ！'},
+    moon:    {name:'逆月の嘆き', mp:9, type:'dmg',   pow:1.35,tgt:'all',  desc:'敵全体を月の刃で裂く', msg:'{a}の頭上に逆さの月が昇る……'}
+  },
+  /* base: Lv1時の能力 / grow: 1Lvごとの上昇量 / rank: 配合で使う格 / xp: 倒した時の経験値係数 / rec: 仲間入り率 */
+  monsters: {
+    haikaburi:  {name:'灰被り',     fam:'骸', sigil:'灰', img:'', rank:1, xp:4, rec:.35,
+      base:{hp:22,mp:6,atk:9,def:8,spd:5},  grow:{hp:5,mp:1,atk:2.2,def:2,spd:1.2}, skills:['harden','ash'],
+      flavor:'灰の雨の夜に埋められた子らの成れの果て。頭から灰を被ったまま、帰る家を探して墓所をさまよう。'},
+    sabiyoroi:  {name:'錆鎧の番人', fam:'骸', sigil:'錆', img:'', rank:2, xp:9, rec:.25,
+      base:{hp:44,mp:6,atk:15,def:16,spd:4}, grow:{hp:7,mp:1,atk:3,def:3,spd:1}, skills:['rust','harden'],
+      flavor:'主を失った鎧だけが門を守っている。中身はとうに腐り落ち、錆の軋みだけが声の代わりだ。'},
+    kanetsuki:  {name:'鐘撞き骸',   fam:'骸', sigil:'鐘', img:'', rank:3, xp:14, rec:.2,
+      base:{hp:56,mp:14,atk:13,def:11,spd:6}, grow:{hp:7,mp:2,atk:2.7,def:2.3,spd:1.2}, skills:['knell','harden','rust'],
+      flavor:'誰もいない鐘楼で、今も弔いの鐘を撞き続ける骸。その音を聞いた者は、己の葬列を夢に見る。'},
+    susukiba:   {name:'煤牙',       fam:'獣', sigil:'牙', img:'', rank:1, xp:4, rec:.35,
+      base:{hp:22,mp:4,atk:11,def:6,spd:10}, grow:{hp:4.6,mp:.8,atk:2.6,def:1.3,spd:2.2}, skills:['bite'],
+      flavor:'焼け跡に棲みつく痩せた野犬。煤で黒く染まった牙は、噛んだ傷口を二度と塞がらせない。'},
+    susurigarasu:{name:'啜り鴉',    fam:'獣', sigil:'鴉', img:'', rank:2, xp:6, rec:.3,
+      base:{hp:24,mp:8,atk:12,def:6,spd:13}, grow:{hp:4.6,mp:1.5,atk:2.5,def:1.3,spd:2.5}, skills:['drain','wail'],
+      flavor:'死にかけた者の枕元に舞い降り、最後の息を啜る鴉。群れはいつも死の匂いの方角へ飛ぶ。'},
+    honekui:    {name:'骨喰い猪',   fam:'獣', sigil:'猪', img:'', rank:2, xp:8, rec:.25,
+      base:{hp:40,mp:5,atk:15,def:10,spd:6}, grow:{hp:7,mp:.8,atk:3,def:2,spd:1.2}, skills:['tusk','harden'],
+      flavor:'墓を掘り返して骨を喰らう大猪。その牙には、人の歯が幾つも喰い込んだまま抜けずにいる。'},
+    nakirou:    {name:'泣き燭',     fam:'霊', sigil:'燭', img:'', rank:1, xp:5, rec:.3,
+      base:{hp:19,mp:12,atk:7,def:6,spd:8}, grow:{hp:3.8,mp:2.4,atk:1.6,def:1.4,spd:1.6}, skills:['candle','wail'],
+      flavor:'誰にも弔われなかった者の涙が蝋となり、青白い火を灯したもの。触れると悲しみだけが指に残る。'},
+    usukage:    {name:'薄影',       fam:'霊', sigil:'影', img:'', rank:2, xp:6, rec:.3,
+      base:{hp:22,mp:14,atk:10,def:6,spd:12}, grow:{hp:4,mp:2.4,atk:2.2,def:1.3,spd:2.4}, skills:['dread','drain'],
+      flavor:'持ち主を失った影。壁から壁へと滑り、生者の影に重なってその温もりを盗む。'},
+    minasoko:   {name:'水底の花嫁', fam:'霊', sigil:'嫁', img:'', rank:3, xp:11, rec:.2,
+      base:{hp:36,mp:24,atk:12,def:10,spd:10}, grow:{hp:5.5,mp:3,atk:2.4,def:2,spd:2}, skills:['requiem','prayer','candle'],
+      flavor:'婚礼の夜に沼へ沈んだ娘。濡れた白無垢の裾から、今も祝いの鈴の音が零れる。'},
+    hitsugiuji: {name:'棺蛆',       fam:'蟲', sigil:'蛆', img:'', rank:1, xp:4, rec:.4,
+      base:{hp:24,mp:4,atk:8,def:9,spd:4}, grow:{hp:5,mp:.8,atk:1.9,def:2,spd:.9}, skills:['venom'],
+      flavor:'棺の底で死者を苗床に育った白い蛆。群れて蠢くさまは、遠目には骸がまだ息をしているように見える。'},
+    umiga:      {name:'膿蛾',       fam:'蟲', sigil:'蛾', img:'', rank:2, xp:6, rec:.3,
+      base:{hp:22,mp:10,atk:10,def:6,spd:11}, grow:{hp:4.2,mp:2,atk:2.1,def:1.3,spd:2.2}, skills:['scale','venom'],
+      flavor:'膿んだ傷口に卵を産む大蛾。翅の模様は、苦悶する人の顔によく似ている。'},
+    senkyakuni: {name:'千脚尼',     fam:'蟲', sigil:'脚', img:'', rank:3, xp:14, rec:.15,
+      base:{hp:66,mp:18,atk:15,def:12,spd:9}, grow:{hp:8,mp:2,atk:3,def:2.3,spd:1.8}, skills:['scale','drain','bind'],
+      flavor:'沼の廃寺に籠もった尼僧の果て。数珠の代わりに無数の脚を繰り、終わらぬ経を唱え続ける。'},
+    tojiningyo: {name:'綴じ人形',   fam:'呪', sigil:'綴', img:'', rank:2, xp:6, rec:.3,
+      base:{hp:26,mp:12,atk:10,def:8,spd:9}, grow:{hp:4.5,mp:2,atk:2.2,def:1.6,spd:1.8}, skills:['bind','dread'],
+      flavor:'死者の髪で縫い綴じられた人形。胸の中には、呪いたい相手の名を書いた紙が詰まっている。'},
+    tsunokanmuri:{name:'角冠の司',  fam:'呪', sigil:'冠', img:'', rank:4, xp:22, rec:.08,
+      base:{hp:88,mp:30,atk:18,def:14,spd:11}, grow:{hp:9,mp:3,atk:3.3,def:2.5,spd:2}, skills:['prayer','knell','moon'],
+      flavor:'捻れた角を冠に戴く、逆月教団の司祭。その祈りの言葉はすべて、陽を殺すためのものだった。'},
+    sakazuki:   {name:'逆月の仔',   fam:'呪', sigil:'月', img:'', rank:4, xp:16, rec:0, fusionOnly:true,
+      base:{hp:40,mp:26,atk:16,def:11,spd:13}, grow:{hp:6,mp:3,atk:3.2,def:2.2,spd:2.4}, skills:['moon','drain','requiem'],
+      flavor:'逆さの月の夜にだけ生まれる忌み仔。その泣き声を聞いた母は、みな自分の名を忘れるという。'}
+  },
+  starters: [['susukiba',2],['nakirou',2]],
+  /* 探索エリア。floors×steps 回「進む」と最奥で主が現れる */
+  areas: [
+    {id:'bosho', name:'灰鐘の墓所', floors:3, steps:3, lv:[1,3], count:[1,2],
+      enemies:['haikaburi','susukiba','hitsugiuji','nakirou'], boss:{id:'kanetsuki', lv:5, hpx:1.5},
+      desc:'崩れた鐘楼を抱く共同墓地。灰に埋もれた墓標が、道標の代わりに並ぶ。',
+      flavor:['灰が降っている。音もなく、途切れることなく。','倒れた墓標に、爪で引っ掻いたような名が刻まれている。','遠くで鐘が一つ鳴った。撞く者などいないはずなのに。','掘り返された土の匂いがする。まだ新しい。','足元で何かが砕けた。骨だった。']},
+    {id:'numa', name:'膿沼の廃村', floors:3, steps:3, lv:[4,7], count:[1,3],
+      enemies:['susurigarasu','umiga','usukage','honekui','tojiningyo'], boss:{id:'senkyakuni', lv:11, hpx:2.2},
+      desc:'疫病に呑まれ沼に沈んだ村。家々の軒先から、黄色い霧が垂れ込めている。',
+      flavor:['沼の水面に泡が浮かび、人の吐息のような音を立てて弾けた。','戸口に吊るされた魔除けの鈴は、どれも内側から潰されている。','誰かが泣いている。いや、泥が啜られる音だ。','腐った麦の穂が、風もないのに揺れている。','井戸の底から、名を呼ばれた気がした。']},
+    {id:'seido', name:'逆月の聖堂', floors:4, steps:3, lv:[9,13], count:[2,3],
+      enemies:['sabiyoroi','minasoko','tojiningyo','usukage','honekui'], boss:{id:'tsunokanmuri', lv:17, hpx:2.4},
+      desc:'陽を殺す儀式が行われたという大聖堂。天井画の太陽は、すべて黒く塗り潰されている。',
+      flavor:['祭壇に並ぶ燭台には、蝋の代わりに指が立てられていた。','ステンドグラスの月は、どれも逆さに嵌め込まれている。','長椅子に、祈りの姿勢のまま干からびた信徒たちが座っている。','床の石畳に、太陽を象った紋が削り取られた跡がある。','聖歌が聞こえる。歌詞は、陽への呪詛だ。']}
+  ],
+  /* 配合：特定の組み合わせ（順不同） */
+  recipes: [
+    {a:'nakirou',    b:'susurigarasu', out:'minasoko'},
+    {a:'haikaburi',  b:'nakirou',      out:'usukage'},
+    {a:'susukiba',   b:'hitsugiuji',   out:'honekui'},
+    {a:'tojiningyo', b:'minasoko',     out:'sakazuki'},
+    {a:'senkyakuni', b:'tsunokanmuri', out:'sakazuki'}
+  ],
+  /* 配合：系統の組み合わせ → 生まれる系統（それ以外の組み合わせ用） */
+  familyMix: {
+    '骸骸':'骸','骸獣':'獣','骸霊':'霊','骸蟲':'蟲','骸呪':'呪',
+    '獣獣':'獣','獣霊':'骸','獣蟲':'獣','獣呪':'骸',
+    '霊霊':'霊','霊蟲':'呪','霊呪':'霊',
+    '蟲蟲':'蟲','蟲呪':'呪','呪呪':'呪'
+  },
+  fuseMinLv: 5,
+  items: {
+    kusuri: {name:'凝血の薬', price:30, desc:'隊の全員のHPを半分ほど癒す（探索中に使用）'},
+    touyu:  {name:'燈油',     price:60, desc:'燈を10回復する'}
+  },
+  /* 雰囲気用の架空データ（ローカルの飾り） */
+  npc: {
+    online: ['灰鴉のミレイ','墓守ゼン','無名の弔い人','黒衣のサクヤ','燐火のトウマ','錆鎖のイオ','夜啼きのヒサメ','骨笛のカガリ','盲目のエダ','焼印のクロウ'],
+    ranking: [['鉄檻のバルド',1840],['夜啼きのヒサメ',1512],['黒衣のサクヤ',1206],['骨笛のカガリ',874],['灰鴉のミレイ',611],['錆鎖のイオ',402],['盲目のエダ',188]],
+    rumors: [
+      '「墓所の鐘楼にゃ近づくな。鐘撞きはまだ、弔いの数を数えてる」',
+      '「泣き燭と啜り鴉を鎖で繋げば、沼の花嫁が生まれるって話だ。……試す奴の気が知れねえ」',
+      '「弱った魔ほど鎖を受け入れやすい。力の差を見せつけてやることさ」',
+      '「膿沼の尼さんは脚が千本あるらしい。数えた奴は帰ってこなかったがね」',
+      '「逆さの月を見たことがあるか？ 見たなら、もう手遅れだ」'
+    ],
+    letter: '檻守組合より。\n\n灰の季節が深まっている。墓所の鐘が鳴るたび、眠れぬ死者が増えていく。\n同封の薬を役立てよ。そして生きて戻れ。\n\n――組合長 ヴェルナ'
+  }
+};
+</script>
+<script>
+/* =========================================================
+   DATA（物語・読み物）── 章・読み物・図鑑の追記
+   lore[].src : {inbox} 鴉便 / {area, floor, rare, night, afterClear} 探索中に拾う
+                {boss:'エリアid'} 主を討つと入手 / {fam:'系統'} 図鑑でその系統を揃えると入手
+   本文中「※」で始まる段落は、紙面の状態などの注記として表示される。
+   ========================================================= */
+DATA.story = [
+  {id:'c0', no:'序章', title:'灰の雨', body:[
+    '七十年前のある正午、陽は空から剥がれ落ちた。人々が見上げた先には、太陽の形をした黒い穴だけが残り、その日から灰の雨が降り始めた。',
+    '死者は土に還らなくなった。弔いの鐘を撞いても、祈りを捧げても、骸は夜ごと起き上がり、獣は死肉を喰らって歪んでいった。',
+    '王都は、狂える逆月教団が陽を殺したのだと布告した。そして檻守組合が生まれた。陽の祝福を宿すという鎖で魔を縛り、その牙で人を守る者たち。',
+    'あなたは目を覚ます。組合の地下、冷たい石の寝台の上で。手には錆びた鎖が巻かれ、その先に二匹の魔が繋がれている。自分の名を思い出そうとして、思い出せないことに気づく。',
+    '「名は要らぬ」と、組合長ヴェルナは言った。「檻守に要るのは、鎖と、帰る場所だけだ」']},
+  {id:'c1a', no:'第一章', title:'灰鐘の墓所', body:[
+    '王都の外れ、崩れた鐘楼を抱く共同墓地。かつてここは、死者を陽のもとへ送り出す場所だった。鐘の音に乗って魂は空へ昇り、陽の光に溶けて安らぐ――そう教えられてきた。',
+    '今、鐘楼は半ば崩れ、墓標は灰に埋もれている。それでも夜になると、鐘が鳴るという。撞く者は、もういないはずなのに。',
+    '組合の依頼は単純だった。鐘を止めよ。鐘が鳴るたびに、起き上がる死者が増えるのだから。']},
+  {id:'c1b', no:'第一章 ・ 終', title:'送れぬ鐘', body:[
+    '鐘撞き骸は、崩れ落ちる最後の瞬間まで縄を離さなかった。骨だけの指が縄に絡みつき、あなたが近づくと、顎がかすかに動いた。',
+    '「……送れぬ。……送れぬのだ。撞いても撞いても、誰も昇らぬ。空に、口が無い」',
+    '空に口が無い。その言葉の意味を、あなたはしばらく考えた。陽は、死者を迎え入れる場所だった。いや――「迎え入れる」という言葉は、本当に正しかったのだろうか。',
+    '鐘楼の頂から見上げた空には、陽の形の黒い穴がある。灰はそこから降ってくる。まるで、喰いかけのものを吐き出すように。',
+    '帰り道、鎖がわずかに温かくなっていることに、あなたは気づかないふりをした。']},
+  {id:'c2a', no:'第二章', title:'膿沼の廃村', body:[
+    '陽喪から三年目の冬、この村は疫病に呑まれた。膿は皮膚の下で黄色く光り、罹った者は死ぬ前から、自分の名を少しずつ忘れていったという。',
+    '村人たちは救いを沼に求めた。陽が無いなら、代わりの神が要る。沼の底には何かが住んでいて、それが村を守ってくれる――そう信じた者たちが、何をしたのか。記録は多くを語らない。',
+    '組合は言う。沼の廃寺に巣食う魔が、疫病の源だと。だがあなたは、組合の地図にだけ、廃寺の名が書き込まれていないことに気づいていた。まるで、最初から知っていたかのように。']},
+  {id:'c2b', no:'第二章 ・ 終', title:'陽の骨', body:[
+    '千脚尼の無数の脚が、一本ずつ動きを止めてゆく。最後に残ったのは、数珠を繰るように震える二本の手だった。',
+    '「その鎖……」と尼は言った。濁った目が、あなたの手元を見ていた。「懐かしい匂いがする。陽の匂いだ。私はあれが打たれるのを見た。組合の最初の鍛冶場で。砕けた陽の欠片を灰の中から拾い集め、叩いて、延ばして」',
+    '「あれは骨だ。陽の骨だ。陽は死んでなどいない。砕かれて、鎖にされて、今も喰い続けている。お前が縛った魔の魂を、少しずつ、少しずつ」',
+    '尼は笑った。あるいは泣いたのかもしれない。脚の群れが灰に還ったあと、その場には焦げた数珠だけが残っていた。',
+    'あなたは鎖を見下ろす。錆の下で、何かが脈打っている。これまで縛った魔たちの気配が、鎖の奥でひとつに溶け合っているような気がした。']},
+  {id:'c3a', no:'第三章', title:'逆月の聖堂', body:[
+    '陽を殺す儀式が行われたという大聖堂。天井画の太陽は、ひとつ残らず黒く塗り潰されている。その上に、誰かが逆さの月を描き足した。',
+    '国史によれば、ここで逆月教団は陽を殺し、国を闇に沈めた。組合によれば、教団の司祭長は今も聖堂の奥で、陽を二度と昇らせぬための祈りを続けている。',
+    'どちらが正しいのか、あなたにはもう分からない。ただひとつ確かなのは、聖堂に近づくにつれ、鎖が熱を帯びてゆくことだ。まるで、帰り道を知っているかのように。']},
+  {id:'c3b', no:'終章', title:'昏き檻', body:[
+    '角冠の司は、膝をついたまま、あなたを見上げていた。捻れた角の下で、その目はひどく穏やかだった。',
+    '「七十年、待った」と司は言った。「陽は死者を喰らって燃えていた。我らはそれを止めた。だが陽は砕け切らなかった。いちばん大きな欠片は、あの日生まれたひとりの赤子の胸に落ちた。組合は、その子を攫った」',
+    '「その子は歳を取らない。名を持たない。目覚めるたびに記憶を奪われ、鎖を持たされ、魔を縛って、魂を喰わせる。陽がもう一度燃え上がるだけの魂を、胸の中に溜め込むまで」',
+    '司の指が、あなたの胸を指した。「檻守とは、檻を守る者ではない。檻を運ぶ者だ。……そして、檻はお前だ」',
+    '司が灰に還ったあと、聖堂には静寂だけが残った。黒く塗られた天井画の太陽を、あなたは長いあいだ見上げていた。',
+    '胸の奥が熱い。鎖の先で、魔たちが静かにこちらを見ている。彼らがかつて誰だったのか、あなたはもう、いくつかを知っている。',
+    '聖堂の扉を開けると、東の空の端が、ほんのわずかに白んでいる気がした。それが夜明けなのか、それとも別の何かなのか――あなたにはまだ、分からない。']}
+];
+DATA.areaStory = {
+  bosho: {enter:'c1a', clear:'c1b', lore:'l08'},
+  numa:  {enter:'c2a', clear:'c2b', lore:'l17'},
+  seido: {enter:'c3a', clear:'c3b', lore:'l25'}
+};
+DATA.lore = [
+  {id:'l01', type:'手紙', title:'檻守組合より', author:'組合長 ヴェルナ', src:{inbox:true}, body:[
+    '檻守組合より。',
+    '灰の季節が深まっている。墓所の鐘が鳴るたび、眠れぬ死者が増えていく。同封の薬を役立てよ。そして生きて戻れ。',
+    '――組合長 ヴェルナ',
+    '※封蝋には、欠けた太陽の紋が押されている。']},
+  {id:'l02', type:'碑文', title:'墓所入口の碑', author:'刻んだ者不明', src:{area:0}, body:[
+    'ここに眠る者は、鐘の音とともに陽のもとへ昇り、光のうちに憩う。遺された者よ、嘆くなかれ。陽は一人も取りこぼさぬ。',
+    '※その下に、後の時代に爪で刻まれた一行がある。「取りこぼされた」']},
+  {id:'l03', type:'手記', title:'国史・陽喪の条', author:'王立記録官', src:{area:0}, body:[
+    '陽喪元年、正午。逆月を奉ずる狂信の徒、聖堂に籠もりて禁忌の儀を為し、天の陽を弑す。以後、灰降りて止まず、死者起つ。',
+    '同年、陽司の遺臣ヴェルナら檻守組合を興し、陽の祝福を宿す鎖をもって魔を縛る。民これを讃う。',
+    '※余白に小さく「本条は組合の検閲を経たもの」と書き込まれている。']},
+  {id:'l04', type:'手記', title:'リオの母の手記', author:'墓所近くに住んでいた女', src:{area:0}, body:[
+    '灰の雨が降った夜、リオは熱を出して、朝には冷たくなっていた。墓所の穴は足りず、子どもたちはまとめて埋められた。',
+    'わたしはあの子に灰色の頭巾を被せた。名前を縫い取った、あの頭巾を。雨に濡れないように。……馬鹿な母親だと笑ってほしい。',
+    '昨夜、墓所の方から、頭巾を被った小さな影がこちらを見ていた。']},
+  {id:'l05', type:'祈り', title:'陽送りの祈り', author:'陽司（ようじ）の祈祷書より', src:{area:0}, body:[
+    '鐘よ鳴れ、魂よ昇れ。\n陽は汝を焼かず、ただ抱く。\n痛みは光に、名は熱に、記憶は輝きに変わりて、\n汝は陽の一部とならん。\n永遠に燃え、永遠に憩え。']},
+  {id:'l06', type:'書き置き', title:'墓掘りの書き置き', author:'墓掘りのダン', src:{area:0, floor:2}, body:[
+    'もう穴は掘らねえ。埋めても埋めても、朝には土が盛り上がってる。',
+    '組合の連中が来て、起き上がったのを鎖で引いていった。どこへ連れてくのか訊いたら、「役に立つところへ」だとよ。死人に役目があるなんて、初めて聞いた。']},
+  {id:'l07', type:'手記', title:'鐘守オルドの日誌・一', author:'鐘守 オルド', src:{area:0, floor:2, rare:true}, body:[
+    '陽のあった頃、鐘を撞くのは誇りだった。一打ごとに、ひとつの魂が昇ってゆくのが見えた。細い光の糸になって、陽へ吸い込まれてゆく。',
+    '陽は満ちるように、少しだけ明るくなった。……今思えば、あれは「満ちる」というより、「腹が膨れる」という顔だった。']},
+  {id:'l08', type:'手記', title:'鐘守オルドの日誌・終', author:'鐘守 オルド', src:{boss:'bosho'}, body:[
+    '陽が消えて七日。撞いても撞いても、糸は昇らない。空の穴の縁で、何かが啜る音だけがする。飢えているのだ。',
+    '鐘を止めれば、あれは地上まで降りてくるかもしれない。だから撞く。わしが骨になっても撞く。誰か、代わりに撞く者が来るまで。']},
+  {id:'l09', type:'書き置き', title:'名も知らぬ檻守へ', author:'署名なし', src:{area:0, night:true, rare:true}, body:[
+    'これを読んでいるなら、あんたもたぶん、自分の名を思い出せないはずだ。おれもそうだった。',
+    'いいか、組合の名簿は見るな。見れば、あんたの前にも後にも、同じ顔の檻守が並んでいるのが分かる。',
+    '……鎖が温かくなったら、気をつけろ。それは、あんたが満ちてきた印だ。']},
+  {id:'l10', type:'手紙', title:'婚礼の招待状', author:'膿沼の村', src:{area:1}, body:[
+    '謹んでご案内申し上げます。灰の月十三夜、沼の社にて、セトとユナの婚礼を執り行います。',
+    '陽の無い世なればこそ、せめて灯りの多い夜にしたく、皆様、燭をひとつずつお持ちくださいませ。']},
+  {id:'l11', type:'碑文', title:'村の掟の碑', author:'膿沼の村', src:{area:1}, body:[
+    '陽なき年は、沼の主に娘ひとりを嫁がせよ。白き衣を着せ、鈴を持たせ、祝いの夜に送るべし。さすれば疫は村を避く。',
+    '※碑の裏に「ユナ」の名が刻まれ、その上から幾度も削られた跡がある。']},
+  {id:'l12', type:'手記', title:'疫病医の覚え書き', author:'疫病医 ハルト', src:{area:1}, body:[
+    '膿を切開しても、中から出てくるのは膿ではない。淡く光る澱だ。患者はそれが抜けるたびに、家族の名をひとつずつ忘れる。',
+    'これは病ではない。行き場を失った魂が、生者の体に溜まっているのだ。陽が死者を受け取らなくなった今、魂は溢れている。',
+    '……今夜も、大きな蛾が患者の傷に卵を産みにくる。翅の模様が、先週死んだ患者の顔に見えた。']},
+  {id:'l13', type:'祈り', title:'沼の子守唄', author:'村の古老が口ずさんでいたもの', src:{area:1}, body:[
+    'ねんねよ　ねんね　陽はおねむ\nくさりのなかで　おねむりよ\nひとつ魂　たべたなら\nふたつ魂　ほしくなる\nねんねよ　ねんね　おきたなら\nみんなのなまえ　もえちゃうよ']},
+  {id:'l14', type:'手紙', title:'セトの手紙', author:'セト', src:{area:1, floor:2}, body:[
+    'ユナは自分から沼へ入ったのだと、皆に言ってくれ。鈴を鳴らしながら、笑って、振り返りもしなかったと。',
+    '……そう言わなければ、この村で生きてはいけないのだ。許してくれ、ユナ。あの夜、私は松明を持っていた。']},
+  {id:'l15', type:'書き置き', title:'ネリの書き置き', author:'人形師の娘 ネリ', src:{area:1, floor:2, rare:true}, body:[
+    'おかあさんの　かみのけで　にんぎょうを　ぬった。おなかに　きらいなひとの　なまえを　いれた。',
+    'むらおさ。おいしゃさま。くみあいの　ヴェルナさま。',
+    'ヴェルナさまは　おかあさんを　くさりで　ひいていった。「やくにたつところへ」って。']},
+  {id:'l16', type:'手記', title:'逆月教団 脱走者の手記', author:'元信徒（名は塗り潰されている）', src:{area:1, night:true}, body:[
+    '私たちは陽を殺したのではない。止めたのだ。',
+    '司祭長は言った。陽は死者を喰らって燃える炉にすぎぬと。天の国など無い、あるのは薪としての永遠だけだと。私は恐ろしくなって逃げた。',
+    '陽が消えた日、空から降ってきた灰は温かかった。喰いかけの魂の、燃え残りだったのだと思う。']},
+  {id:'l17', type:'手記', title:'尼僧イルザの告解', author:'陽司の尼 イルザ', src:{boss:'numa'}, body:[
+    '告解いたします。私は陽司の尼として、組合の最初の鍛冶場に立ち会いました。砕けた陽の欠片は、灰の中でまだ脈打っていました。',
+    'ヴェルナ様はそれを鎖に打ち直し、言われました。「陽は死なせぬ。魂を与え続ければ、いつか再び昇る。人に朝を返すのだ」と。',
+    '私は祈りました。それが救いなのか冒涜なのか、分からぬまま。千の経を唱えても、答えは出ませんでした。']},
+  {id:'l18', type:'手紙', title:'組合長ヴェルナの書簡（控え）', author:'組合長 ヴェルナ', src:{area:1, afterClear:true, rare:true}, body:[
+    '第七十二の器は順調に育っている。今期、鎖の熱は前期の倍。記憶の剥離も問題なし。名の返納は済ませた。',
+    'あと一つ門を越えれば、胸の欠片は燃えるに足りるだろう。陽を取り戻すのだ。どれほどの魂を焚べようとも。',
+    '諸兄、疑うなかれ。夜明けは我らの手にある。']},
+  {id:'l19', type:'碑文', title:'天井画の銘', author:'聖堂の天井に記された銘', src:{area:2}, body:[
+    '陽は与え、陽は奪う。陽は満ちるために喰らい、喰らうために照らす。光を仰ぐ者よ、汝もまた薪なり。',
+    '※天井画の太陽は黒く塗られているが、塗料の下に、いくつもの口が描かれているのが透けて見える。']},
+  {id:'l20', type:'祈り', title:'逆月の祈祷', author:'逆月教団', src:{area:2}, body:[
+    '月よ、逆しまに昇れ。陽の喉を塞げ。\n死者に安らぎを、生者に夜を。\n我らは光を捨てる。光は我らを喰らうゆえに。\n夜よ永かれ。名よ、我らのもとに留まれ。']},
+  {id:'l21', type:'書き置き', title:'聖堂騎士ガレスの書き置き', author:'聖堂騎士 ガレス', src:{area:2}, body:[
+    '儀式の夜、扉の番を命じられた。中から聞こえたのは呪詛ではなく、泣き声だった。司祭長は泣きながら祈っていた。',
+    'やがて天が割れる音がして、光が消えた。私は扉を守り続ける。誰も入れるなと言われた。誰も出すな、とも。']},
+  {id:'l22', type:'手記', title:'司祭長アルヴェンの手記・一', author:'逆月の司祭長 アルヴェン', src:{area:2, floor:2}, body:[
+    '陽司の秘文を読み解いた。天の国は無い。陽は死者の魂を焚べて燃える炉であり、我らの祈りは、その薪をくべる作法にすぎなかった。',
+    '私はこの炉を止める。たとえ世界が永遠の夜に沈もうとも、魂が燃やされ続けるよりはましだ。',
+    '……本当に、そうだろうか。']},
+  {id:'l23', type:'書き置き', title:'檻守名簿の切れ端', author:'檻守組合', src:{area:2, floor:3, rare:true}, body:[
+    '第六十九番　名、返納。鎖熱不足。廃棄。\n第七十番　名、返納。鎖熱不足。廃棄。\n第七十一番　名、返納。逃亡。\n第七十二番　名、返納。……',
+    '※以下は焼け焦げて読めない。']},
+  {id:'l24', type:'手紙', title:'■■■へ', author:'姉より', src:{area:2, night:true, rare:true}, body:[
+    '■■■へ。',
+    'あなたが生まれた日、空が落ちたの。お母さんは、あなたの胸が光っていたと言っていた。すぐに組合の人たちが来て、あなたを連れていった。',
+    'あれから私は年を取ったけれど、あなたはきっと、あの日のままなんでしょうね。いつか、この名前を思い出して。あなたの名前は――',
+    '※以下、字が滲んで読めない。']},
+  {id:'l25', type:'手記', title:'司祭長アルヴェンの手記・終', author:'逆月の司祭長 アルヴェン', src:{boss:'seido'}, body:[
+    '儀式は半ばで破れた。陽は砕けたが、死ななかった。最も大きな欠片が、どこかへ落ちてゆくのが見えた。王都の方角だった。',
+    '組合が動いている。欠片を集め、鎖を打ち、魂を集めて、もう一度陽を燃やすつもりだ。',
+    '私はここで待つ。欠片が、自ら帰ってくるのを。そのとき私はこの角冠を脱ぎ、ひとりの人間として問おう。「お前は、昇りたいか」と。']},
+  {id:'l26', type:'碑文', title:'骨の歌', author:'刻んだ者不明', src:{fam:'骸'}, body:[
+    '骨は覚えている。陽に抱かれたときの熱を。',
+    'それは安らぎではなかった。焼かれる痛みだった。だから骨は起き上がる。二度と昇らぬために。']},
+  {id:'l27', type:'手記', title:'獣たちの見た夜明け', author:'老いた猟師', src:{fam:'獣'}, body:[
+    '陽が消えた朝、森の獣たちは一斉に東を向いて吠えた。まるで、そこにあったものが何だったのかを知っているかのように。',
+    '獣は死肉を喰らう。死肉には、行き場を失った魂がこびりついている。喰らうたびに、獣は少しずつ人の声で鳴くようになった。']},
+  {id:'l28', type:'祈り', title:'泣き燭の数え歌', author:'墓所の子らの遊び歌', src:{fam:'霊'}, body:[
+    'ひとつ　灰かぶり　リオ坊や\nふたつ　鐘守　オルド爺\nみっつ　沼の嫁　ユナ姉さま\nよっつ　扉の騎士さま　ガレス\nいつつ　名の無い檻守さま\nむっつ　ともせば　だあれもいない']},
+  {id:'l29', type:'祈り', title:'蟲の経', author:'膿沼の廃寺の経を逆さに読んだもの', src:{fam:'蟲'}, body:[
+    '喰らうものは喰らわれ、燃やすものは燃やされる。陽もまたいずれ、より大きな何かの薪となる。',
+    '蟲は知る。這うものだけが、燃えずに済むと。']},
+  {id:'l30', type:'書き置き', title:'逆さに綴られた頁', author:'不明', src:{fam:'呪'}, body:[
+    '檻守は檻を守る者にあらず。檻を運ぶ者なり。',
+    '檻の中には陽があり、陽の中には名がある。喰われた者たちの名が。',
+    'すべての名を思い出したとき、檻は開く。開いた檻から昇るのが陽か、それとも人か、誰も知らない。']}
+];
+/* 図鑑の追記（その魔を一度でも仲間にすると読める） */
+Object.entries({
+  haikaburi:'ある一体の頭巾の裏には、拙い縫い取りで「リオ」とある。',
+  sabiyoroi:'胸甲の内側に、聖堂騎士団の紋と「ガレス」の名が削り込まれている。',
+  kanetsuki:'鐘の縄には、擦り切れた掌の皮が貼りついている。鐘守は最期まで縄を離さなかった。',
+  susukiba:'焼け跡で生き延びた犬たちは、陽が消えた日を覚えているかのように、今も東の空に向かって吠える。',
+  susurigarasu:'鴉たちが啜った最後の息は、どこかへ運ばれているらしい。群れは必ず、聖堂の方角へ帰ってゆく。',
+  honekui:'喰らった骨の持ち主の声で、夜ごと鳴く。その声は時々、檻守の名を呼ぶ。',
+  nakirou:'炎を覗き込むと、見知らぬ誰かの葬列が映る。列の先頭に、棺は無い。',
+  usukage:'影を失った者は、朝を待たずに名を忘れるという。……この世界に、朝はもう来ないのだが。',
+  minasoko:'袖に縫い込まれた守り札には二つの名。ひとつは「ユナ」、もうひとつは泥に溶けて読めない。',
+  hitsugiuji:'蛆が喰らうのは肉だけだ。魂は喰わない。――だから骸は、立ち上がる。',
+  umiga:'翅の顔は、疫病医ハルトの覚え書きに描かれた患者たちの顔と一致する。',
+  senkyakuni:'経の合間に、同じ言葉を繰り返している。「あれは骨だ、陽の骨だ」',
+  tojiningyo:'腹の中の紙片に、最も多く書かれている名は「ヴェルナ」。',
+  tsunokanmuri:'冠の角は、自ら額に打ち込んだものだという。痛みで、祈りの意味を忘れぬために。',
+  sakazuki:'その胸には、小さく熱い塊がある。触れた檻守の鎖が、共鳴するように鳴った。'
+}).forEach(([id,t]) => { DATA.monsters[id].lore = t; });
+</script>
+<script>
+/* =========================================================
+   GAME ── ロジック / 描画
+   ========================================================= */
+(function(){
+'use strict';
+const SAVE_KEY = 'konkantan_save_v1';
+const REGEN_MS = 90 * 1000;      // 燈 1 回復あたりの時間
+const PARTY_MAX = 3, BOX_MAX = 30;
+const FAM_ORDER = Object.keys(DATA.families);
+const STAT_JP = {hp:'HP', mp:'MP', atk:'攻撃', def:'守備', spd:'素早さ'};
+const SUFFIX = ['甲','乙','丙'];
+
+/* ---------- utils ---------- */
+const $ = s => document.querySelector(s);
+const rand = (a,b) => a + Math.random()*(b-a);
+const rint = (a,b) => Math.floor(rand(a, b+1));
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const fmt = n => n.toLocaleString('ja-JP');
+const today = () => { const d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); };
+
+/* ---------- state ---------- */
+let S = null;          // 保存されるデータ
+let VIEW = 'title';    // 現在の画面
+let RUN = null;        // 探索中の状態
+let BT = null;         // 戦闘中の状態
+let FUSE = {a:null, b:null, skill:0};
+let ARCH = 'zukan';   // 碑文庫のタブ
+let READ = null;      // 読書画面の状態
+let PENDING_MODAL = null;
+let playTimer = null;
+
+function freshState(){
+  const s = {v:1, gold:50, stam:30, stamAt:Date.now(), plv:1, pexp:0, uidSeq:0, mons:[], party:[],
+    unlocked:1, cleared:{}, selArea:0, items:{kusuri:1, touyu:0}, seen:{}, owned:{}, story:{}, lore:{}, daily:'', letter:false, created:Date.now()};
+  S = s;
+  DATA.starters.forEach(([id,lv]) => { const m = newMon(id, lv); s.mons.push(m); s.party.push(m.uid); s.seen[id]=true; s.owned[id]=true; });
+  return s;
+}
+function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); return true; }catch(e){ return false; } }
+function hasSave(){ try{ return !!localStorage.getItem(SAVE_KEY); }catch(e){ return false; } }
+function load(){
+  try{ const s = JSON.parse(localStorage.getItem(SAVE_KEY)); if (!s || !s.mons) return false; S = s;
+    S.items = Object.assign({kusuri:0, touyu:0}, S.items||{}); S.seen = S.seen||{}; S.story = S.story||{}; S.lore = S.lore||{};
+    if (!S.owned){ S.owned = {}; S.mons.forEach(m=>{ S.owned[m.id]=true; }); } return true; }catch(e){ return false; }
+}
+
+/* ---------- monsters ---------- */
+const MD = m => DATA.monsters[m.id];
+function calc(m){
+  const d = MD(m), o = {};
+  for (const k in d.base) o[k] = Math.floor(d.base[k] + d.grow[k]*(m.lv-1)) + ((m.plus&&m.plus[k])||0);
+  return o;
+}
+function newMon(id, lv){
+  const d = DATA.monsters[id];
+  const m = {uid: ++S.uidSeq, id, lv, exp:0, hp:0, mp:0, skills:d.skills.slice(), plus:{hp:0,mp:0,atk:0,def:0,spd:0}};
+  const c = calc(m); m.hp = c.hp; m.mp = c.mp; return m;
+}
+const need = lv => Math.floor(8*Math.pow(lv,1.5) + 4);
+const getMon = uid => S.mons.find(m => m.uid === uid);
+const partyMons = () => S.party.map(getMon).filter(Boolean);
+const boxMons = () => S.mons.filter(m => !S.party.includes(m.uid));
+function power(){ return partyMons().reduce((t,m)=>{ const c=calc(m); return t + c.atk + c.def + c.spd + Math.floor(c.hp/2) + m.lv*5; }, 0); }
+function gainExp(m, x, lines){
+  const d = MD(m); m.exp += x;
+  const lv0 = m.lv, before = calc(m);
+  while (m.lv < 99 && m.exp >= need(m.lv)){ m.exp -= need(m.lv); m.lv++; }
+  if (m.lv > lv0){
+    const after = calc(m);
+    const up = Object.keys(after).map(k => after[k]-before[k] > 0 ? STAT_JP[k]+'+'+(after[k]-before[k]) : '').filter(Boolean).join(' ');
+    m.hp = Math.min(after.hp, m.hp + (after.hp-before.hp)); m.mp = Math.min(after.mp, m.mp + (after.mp-before.mp));
+    lines.push({t:`${d.name}は Lv${m.lv} になった！（${up}）`, c:'hl'});
+  }
+}
+function sigil(d, cls){ return `<div class="sigil ${cls||''}">${d.img ? `<img src="${d.img}" alt="${d.name}">` : d.sigil}</div>`; }
+function bar(cur, max, cls){ return `<div class="bar ${cls||''}"><i style="width:${max?clamp(cur/max*100,0,100):0}%"></i></div>`; }
+
+/* ---------- stamina (燈) ---------- */
+const maxStam = () => 30 + (S.plv-1);
+function tickStam(){
+  const now = Date.now(), mx = maxStam();
+  if (S.stam >= mx){ S.stamAt = now; return; }
+  const n = Math.floor((now - S.stamAt)/REGEN_MS);
+  if (n > 0){ S.stam = Math.min(mx, S.stam + n); S.stamAt += n*REGEN_MS; if (S.stam >= mx) S.stamAt = now; }
+}
+function stamTimerText(){
+  if (S.stam >= maxStam()) return '燈は満ちている';
+  const left = Math.max(0, REGEN_MS - (Date.now() - S.stamAt)), s = Math.ceil(left/1000);
+  return `次の燈まで ${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+}
+
+/* ---------- story & lore ---------- */
+const isNight = () => window.__night !== undefined ? window.__night : (h => h>=19 || h<5)(new Date().getHours());
+const KN = ['','一','二','三','四','五','六','七','八','九'];
+const kanjiNum = n => n<10 ? KN[n] : (n<20 ? '十' : KN[Math.floor(n/10)]+'十') + KN[n%10];
+const loreNo = l => DATA.lore.indexOf(l) + 1;
+const loreById = id => DATA.lore.find(l=>l.id===id);
+const unreadLore = () => DATA.lore.filter(l=>S.lore[l.id]===1).length;
+function grantLore(id){ if (!id || S.lore[id]) return null; S.lore[id] = 1; return loreById(id); }
+function loreCandidates(ai, floor){
+  return DATA.lore.filter(l => !S.lore[l.id] && l.src.area===ai && (l.src.floor||1) <= floor
+    && (!l.src.night || isNight()) && (!l.src.afterClear || S.cleared[DATA.areas[ai].id]));
+}
+function pickLore(c){
+  const w = c.map(l => l.src.rare ? 0.3 : 1), tot = w.reduce((a,b)=>a+b,0);
+  let r = Math.random()*tot; for (let i=0;i<c.length;i++){ r -= w[i]; if (r<=0) return c[i]; } return c[c.length-1];
+}
+function loreWhere(l){
+  const s = l.src;
+  if (s.inbox) return '鴉便';
+  if (s.boss) return DATA.areas.find(a=>a.id===s.boss).name + 'の主を討つ';
+  if (s.fam) return '図鑑で' + s.fam + '系統を揃える';
+  const a = DATA.areas[s.area];
+  return a.name + ((s.floor||1)>1 ? `・第${s.floor}層以深` : '') + (s.night ? '・夜のみ' : '') + (s.afterClear ? '・主を討った後' : '') + (s.rare ? '・稀' : '');
+}
+const FOUND_MSG = {'碑文':'苔むした石に、文字が刻まれている。', '手記':'朽ちた鞄の底に、綴じられた手記が残っていた。', '祈り':'崩れた祭壇に、祈りの文句が書きつけてある。',
+  '手紙':'泥にまみれた封筒を拾った。', '書き置き':'壁の隙間に、折り畳まれた紙片が挟まっていた。'};
+function markOwned(id){ S.owned[id] = true; S.seen[id] = true; }
+function famMembers(f){ return Object.keys(DATA.monsters).filter(id=>DATA.monsters[id].fam===f); }
+function checkFamilies(){
+  const got = [];
+  FAM_ORDER.forEach(f => {
+    if (famMembers(f).every(id=>S.owned[id])){ const l = DATA.lore.find(x=>x.src.fam===f); const g = l && grantLore(l.id); if (g) got.push(g); }
+  });
+  if (got.length){ save(); const html = `<h4>碑文が揃った</h4><p>鎖に繋いだ魔たちの名が、碑文庫の石に並んだ。<br>石の裏に、新たな文字が浮かび上がる。</p>${got.map(l=>`<p class="gold">《${l.title}》を書き留めた。</p>`).join('')}<div class="mbtns"><button class="btn gold" data-act="rdlore" data-id="${got[0].id}" data-back="home">読む</button><button class="btn" data-act="close">閉じる</button></div>`;
+    if ($('#modal').classList.contains('hide')) modal(html); else PENDING_MODAL = html; }
+  return got;
+}
+function showStory(id, next){ S.story[id] = 1; READ = {kind:'story', id, next}; save(); go('reader'); }
+
+/* ---------- UI helpers ---------- */
+function toast(msg){
+  const t = document.createElement('div'); t.className='toast'; t.textContent = msg; $('#app').appendChild(t);
+  setTimeout(()=>t.remove(), 1800);
+}
+function modal(html){ const m=$('#modal'); m.innerHTML = `<div class="mbox">${html}</div>`; m.classList.remove('hide'); }
+function closeModal(){ $('#modal').classList.add('hide'); $('#modal').innerHTML='';
+  if (PENDING_MODAL){ const h = PENDING_MODAL; PENDING_MODAL = null; modal(h); } }
+function go(v){ VIEW = v; render(); }
+
+function render(){
+  const v = $('#view');
+  const chrome = VIEW !== 'title', tabs = !['title','explore','battle','reader'].includes(VIEW);
+  $('#topbar').classList.toggle('hide', !chrome);
+  $('#tabbar').classList.toggle('hide', !tabs);
+  v.classList.toggle('noscroll', VIEW==='explore' || VIEW==='battle');
+  if (S) $('#gold').textContent = fmt(S.gold);
+  const tabOf = {home:'home', archive:'home', party:'party', fusion:'party', guild:'guild', market:'market', menu:'menu'};
+  document.querySelectorAll('#tabbar button').forEach(b => b.classList.toggle('on', b.dataset.tab === tabOf[VIEW]));
+  const fn = {title:vTitle, home:vHome, party:vParty, fusion:vFusion, guild:vGuild, market:vMarket, menu:vMenu, explore:vExplore, battle:vBattle, archive:vArchive, reader:vReader}[VIEW];
+  v.innerHTML = fn();
+  v.scrollTop = 0;
+  if (VIEW==='explore' || VIEW==='battle'){ const lb = $('#log'); if (lb) lb.scrollTop = lb.scrollHeight; }
+}
+
+/* ---------- views ---------- */
+function vTitle(){
+  return `<div class="title-wrap">
+    <div class="title-logo">${DATA.title}</div>
+    <div class="title-sub">― くらきおりのものがたり ―</div>
+    <div class="title-line"></div>
+    <div class="premise">${DATA.premise.map(p=>`<p>${p}</p>`).join('')}</div>
+    <div class="title-line"></div>
+    <div class="title-btns">
+      <button class="btn red" data-act="newgame">はじめから</button>
+      <button class="btn gold" data-act="continue" ${hasSave()?'':'disabled'}>つづきから</button>
+    </div>
+    <div class="copy">試作版 ・ 画面を叩いて進める文字遊戯</div>
+  </div>`;
+}
+
+function onlineList(){
+  const slot = Math.floor(Date.now()/60000), names = DATA.npc.online, out = [];
+  const places = DATA.areas.map(a=>a.name).concat(['拠点','澱の酒場']);
+  for (let i=0;i<3;i++){ const k=(slot*7+i*13)%names.length; out.push([names[k], 5+((slot+k*11)%40), places[(slot+k)%places.length]]); }
+  return out;
+}
+function vHome(){
+  tickStam();
+  const pm = partyMons(), area = DATA.areas[S.selArea], mx = maxStam();
+  const ol = onlineList();
+  const ranks = DATA.npc.ranking.map(r=>({n:r[0], p:r[1]})).concat([{n:'あなた', p:power(), me:true}]).sort((a,b)=>b.p-a.p);
+  const myIdx = ranks.findIndex(r=>r.me);
+  const shown = ranks.slice(0,4); if (myIdx >= 4) shown.push(ranks[myIdx]);
+  return `
+  <div class="panel"><h3>今宵の徘徊者<small>幻影 ・ ${ol.length+rint(0,0)}名 灯をともす</small></h3>
+    <div class="online">${ol.map(o=>`<div><b>◆ ${o[0]}</b><span>Lv${o[1]} ・ ${o[2]}</span></div>`).join('')}</div></div>
+  <div class="panel status">
+    <div class="who"><span class="nm">名も無き檻守</span><span class="lv">位階 Lv${S.plv}</span></div>
+    <div class="barline"><span class="lbl">経</span>${bar(S.pexp, S.plv*20, 'ex')}<span class="num">${S.pexp}/${S.plv*20}</span></div>
+    <div class="barline" style="margin-top:3px"><span class="lbl">${DATA.stamina}</span>${bar(S.stam, mx, 'st').replace('class="bar st"','class="bar st" id="stambar"')}<span class="num" id="stamnum">${S.stam}/${mx}</span></div>
+    <div class="timer" id="stamtimer">${stamTimerText()}</div>
+    <div class="minip">${pm.map(m=>{ const d=MD(m), c=calc(m); return `<div class="mp1">${sigil(d,'sm')}<div class="t">${d.name}<br><span class="dim">Lv${m.lv} HP${m.hp}/${c.hp}</span></div></div>`; }).join('')}</div>
+    <div class="row" style="margin-top:6px"><button class="btn" data-act="rest">休む</button><button class="btn" data-act="tab" data-tab="party">仲間</button><button class="btn" data-act="save">記録</button></div>
+  </div>
+  <div class="fac">
+    <button class="btn" data-act="fac" data-f="tavern"><span class="k">澱</span>澱の酒場</button>
+    <button class="btn" data-act="fac" data-f="archive">${unreadLore()?'<span class="dot"></span>':''}<span class="k">碑</span>碑文庫</button>
+    <button class="btn" data-act="fac" data-f="daily">${S.daily!==today()?'<span class="dot"></span>':''}<span class="k">贖</span>日々の贖い</button>
+    <button class="btn" data-act="fac" data-f="inbox">${!S.letter?'<span class="dot"></span>':''}<span class="k">鴉</span>鴉便</button>
+  </div>
+  <div class="panel"><h3>冥門<small>挑む門を選べ</small></h3><div class="gates">
+    ${DATA.areas.map((a,i)=>{ const lock = i >= S.unlocked;
+      return `<button class="btn gate ${i===S.selArea?'sel':''}" data-act="gate" data-i="${i}" ${lock?'disabled':''}>
+        <div><div class="gn">${['壱','弐','参'][i]}ノ門 ${lock?'――封印――':a.name}</div><div class="gi">推奨Lv${a.lv[0]}〜${a.lv[1]} ・ 全${a.floors}層</div></div>
+        <div class="gi">${S.cleared[a.id]?'<span class="gold">踏破</span>':lock?'封':'未踏'}</div></button>`; }).join('')}
+  </div></div>
+  <button class="explore-big" data-act="explore">探 索<small>${area.name}へ赴く ・ 一歩に${DATA.stamina}1</small></button>
+  <div class="panel"><h3>戦力番付<small>幻影の檻守たち</small></h3><div class="rank">
+    ${shown.map(r=>`<div class="${r.me?'me':''}"><span>${ranks.indexOf(r)+1}位</span><span>${r.n}</span><span>${fmt(r.p)}</span></div>`).join('')}
+  </div></div>`;
+}
+
+function mcard(m, sel){
+  const d = MD(m), c = calc(m);
+  return `<button class="mcard ${sel?'sel':''} ${m.hp<=0?'dead':''}" data-act="mon" data-uid="${m.uid}">${sigil(d)}
+    <div class="mi"><div class="mn">${d.name}<span class="fam">${d.fam}</span> <span class="gold small">Lv${m.lv}</span></div>
+    <div class="barline"><span class="lbl">HP</span>${bar(m.hp,c.hp)}<span class="num">${m.hp}/${c.hp}</span></div>
+    <div class="barline"><span class="lbl">MP</span>${bar(m.mp,c.mp,'mp')}<span class="num">${m.mp}/${c.mp}</span></div></div></button>`;
+}
+function vParty(){
+  const pm = partyMons(), bx = boxMons();
+  const empty = Array.from({length: PARTY_MAX-pm.length}, ()=>`<div class="mcard faint" style="justify-content:center">― 空き鎖 ―</div>`).join('');
+  return `
+  <div class="panel"><h3>隊列<small>${pm.length}/${PARTY_MAX} ・ 戦力 ${fmt(power())}</small></h3>
+    <div class="mlist">${pm.map(m=>mcard(m)).join('')}${empty}</div>
+    <div class="row" style="margin-top:6px"><button class="btn" data-act="rest">休む（全快）</button><button class="btn red" data-act="fusion">配合の儀</button></div></div>
+  <div class="panel"><h3>檻の中<small>${bx.length}体 ・ 上限${BOX_MAX}</small></h3>
+    <div class="mlist">${bx.length? bx.map(m=>mcard(m)).join('') : '<p class="dim small">檻は空だ。倒した魔は、時に鎖を受け入れる。</p>'}</div></div>
+  <p class="faint small">魔を叩くと詳細。隊の入れ替え・放逐ができる。</p>`;
+}
+function monDetail(m){
+  const d = MD(m), c = calc(m), inParty = S.party.includes(m.uid);
+  return `<div style="display:flex;gap:10px;align-items:center">${sigil(d,'big')}
+    <div><div style="font-size:18px">${d.name}<span class="fam">${d.fam}系</span></div><div class="gold">Lv${m.lv}</div>
+    <div class="small dim">${inParty?'隊列':'檻の中'} ・ 次のLvまで ${need(m.lv)-m.exp}</div></div></div>
+    ${bar(m.exp, need(m.lv), 'ex')}
+    <div class="stats"><div><span>HP</span><span>${m.hp}/${c.hp}</span></div><div><span>MP</span><span>${m.mp}/${c.mp}</span></div>
+    <div><span>攻撃</span><span>${c.atk}</span></div><div><span>守備</span><span>${c.def}</span></div><div><span>素早さ</span><span>${c.spd}</span></div><div><span>格</span><span>${'★'.repeat(d.rank)}</span></div></div>
+    ${m.skills.map(s=>{ const k=DATA.skills[s]; return `<div class="skl"><b>${k.name}</b> <span>MP${k.mp} ・ ${k.desc}</span></div>`; }).join('')}
+    <div class="flavor">${d.flavor}</div>`;
+}
+
+function vFusion(){
+  const el = S.mons.filter(m => m.lv >= DATA.fuseMinLv);
+  const A = FUSE.a && getMon(FUSE.a), B = FUSE.b && getMon(FUSE.b);
+  const slot = m => m ? `${sigil(MD(m),'sm')}<div>${MD(m).name}</div><div class="dim">Lv${m.lv}</div>` : '<span class="faint">未選択</span>';
+  let prev = '';
+  if (A && B){
+    const r = fuseResult(A,B), d = DATA.monsters[r.id], inh = inheritable(A,B,r.id);
+    FUSE.skill = inh.length ? FUSE.skill % inh.length : 0;
+    const bonus = fuseBonus(A,B);
+    prev = `<div class="panel"><h3>産まれ出るもの<small>${r.special?'秘伝の組み合わせ':'系統の理'}</small></h3>
+      <div style="display:flex;gap:10px;align-items:center">${sigil(d,'big')}<div><div style="font-size:18px">${d.name}<span class="fam">${d.fam}系</span></div>
+      <div class="small dim">Lv1 ・ 格${'★'.repeat(d.rank)}</div><div class="small dim">継承補正 ${Object.keys(bonus).map(k=>STAT_JP[k]+'+'+bonus[k]).join(' ')}</div></div></div>
+      <div class="small dim" style="margin-top:6px">固有の特技：${d.skills.map(s=>DATA.skills[s].name).join('、')}</div>
+      <div class="small" style="margin-top:4px">継承する特技：${inh.length?`<b class="gold">${DATA.skills[inh[FUSE.skill]].name}</b>`:'<span class="faint">なし</span>'}</div>
+      ${inh.length>1?`<button class="btn wide" style="margin-top:4px" data-act="fskill">継承特技を変える（${FUSE.skill+1}/${inh.length}）</button>`:''}
+      <div class="flavor">${d.flavor}</div>
+      <button class="btn red wide go" data-act="fuse">配合する</button></div>`;
+  }
+  return `<div class="panel"><h3>配合の儀<small>Lv${DATA.fuseMinLv}以上の二体</small></h3>
+    <p class="small dim">二体の魔を一本の鎖で縛り、灰の中で溶かし合わせる。親は失われ、新たな魔が Lv1 で産まれる。親の力の一部と特技をひとつ受け継ぐ。</p>
+    <div class="fslot" style="margin-top:6px"><div class="${A?'on':''}">${slot(A)}</div><div class="fplus">＋</div><div class="${B?'on':''}">${slot(B)}</div></div></div>
+  ${prev}
+  <div class="panel"><h3>候補<small>叩いて選ぶ</small></h3><div class="mlist">
+    ${el.length ? el.map(m=>mcard(m, m.uid===FUSE.a||m.uid===FUSE.b).replace('data-act="mon"','data-act="fpick"')).join('') : `<p class="dim small">Lv${DATA.fuseMinLv}以上の魔がいない。探索で鍛えよ。</p>`}
+  </div></div>
+  <button class="btn wide" data-act="tab" data-tab="party">支度へ戻る</button>`;
+}
+function vGuild(){
+  return `<div class="soon"><div class="k">盟</div><h2>結 社</h2><p class="dim">血の誓約は、まだ結ばれていない。<br>檻守たちが集う日を待て。</p><p class="faint small" style="margin-top:14px">（準備中）</p></div>`;
+}
+function vMarket(){
+  return `<div class="panel shop"><h3>闇市<small>灰の下の取引</small></h3>
+    <p class="small dim" style="margin-bottom:4px">「……見ない顔だな。骨貨さえあれば、何でも売ってやるさ」</p>
+    ${Object.entries(DATA.items).map(([k,it])=>`<div class="it"><div class="d">${it.name} <span class="dim small">所持 ${S.items[k]||0}</span><small>${it.desc}</small></div>
+      <button class="btn gold" data-act="buy" data-k="${k}" ${S.gold<it.price?'disabled':''}>${it.price} 骨貨</button></div>`).join('')}
+    <div class="it"><div class="d">燈油を使う<small>燈 ${S.stam}/${maxStam()}</small></div><button class="btn" data-act="usetouyu" ${S.items.touyu?'':'disabled'}>使う</button></div>
+  </div>
+  <div class="panel"><h3>質草<small>準備中</small></h3><p class="small faint">魔の骨や装身具の売買は、いずれ。</p></div>`;
+}
+function vMenu(){
+  const n = Object.keys(S.seen).length, all = Object.keys(DATA.monsters).length;
+  return `<div class="panel"><h3>覚書</h3>
+    <div class="stats"><div><span>位階</span><span>Lv${S.plv}</span></div><div><span>仲間</span><span>${S.mons.length}体</span></div>
+    <div><span>碑文</span><span>${n}/${all}</span></div><div><span>踏破</span><span>${Object.keys(S.cleared).length}/${DATA.areas.length}</span></div></div>
+    <div class="mbtns" style="display:flex;flex-direction:column;gap:6px">
+      <button class="btn gold" data-act="save">記録する</button>
+      <button class="btn" data-act="howto">遊び方</button>
+      <button class="btn" data-act="totitle">タイトルへ戻る</button>
+      <button class="btn red" data-act="wipe">記録を消す</button>
+    </div></div>`;
+}
+
+/* ---------- archive (碑文庫) ---------- */
+function vArchive(){
+  const monIds = Object.keys(DATA.monsters), nSeen = monIds.filter(id=>S.seen[id]).length;
+  const nStory = DATA.story.filter(c=>S.story[c.id]).length, nLore = DATA.lore.filter(l=>S.lore[l.id]).length, nNew = unreadLore();
+  const tab = (t, label, cnt, dot) => `<button class="${ARCH===t?'on':''}" data-act="arch" data-t="${t}">${label}<small>${cnt}</small>${dot?'<span class="dot"></span>':''}</button>`;
+  let body = '';
+  if (ARCH==='zukan'){
+    body = FAM_ORDER.map(f => {
+      const ids = famMembers(f), own = ids.filter(id=>S.owned[id]).length, done = own===ids.length;
+      return `<div class="zk-fam"><div class="zk-h"><span>${f}系</span><span class="small ${done?'gold':'faint'}">${done?'揃った ・ 碑文解放':`縛った数 ${own}/${ids.length}`}</span></div>
+        <div class="small faint" style="margin-bottom:4px">${DATA.families[f]}</div>
+        <div class="zk-grid">${ids.map(id=>{ const d=DATA.monsters[id];
+          return S.seen[id] ? `<button class="zk ${S.owned[id]?'own':''}" data-act="zk" data-id="${id}">${sigil(d,'sm')}<span>${d.name}</span>${S.owned[id]&&d.lore?'<i>追</i>':''}</button>`
+                            : `<div class="zk none"><div class="sigil sm">？</div><span>？？？</span></div>`; }).join('')}</div></div>`;
+    }).join('') + `<p class="small faint">同じ系統の魔をすべて鎖で縛ると、その系統の碑文が「読み物」に加わる。「追」の印は碑の追記がある魔。</p>`;
+  } else if (ARCH==='story'){
+    body = `<div class="lore-list">${DATA.story.map(c => S.story[c.id]
+      ? `<button class="lr" data-act="rdstory" data-id="${c.id}"><span class="no">${c.no}</span><span class="tt">${c.title}</span></button>`
+      : `<div class="lr lock"><span class="no">${c.no}</span><span class="tt">―― 未だ語られぬ章 ――</span></div>`).join('')}</div>
+      <p class="small faint">章は、冥門へ初めて踏み入ったとき、そして主を討ったときに語られる。</p>`;
+  } else {
+    body = `<div class="lore-list">${DATA.lore.map((l,i) => S.lore[l.id]
+      ? `<button class="lr" data-act="rdlore" data-id="${l.id}"><span class="no">其の${kanjiNum(i+1)}</span><span class="tt">${S.lore[l.id]===1?'<b class="new">新</b>':''}${l.title}<small>${l.type} ・ ${l.author}</small></span></button>`
+      : `<div class="lr lock"><span class="no">其の${kanjiNum(i+1)}</span><span class="tt">？？？<small>${loreWhere(l)}</small></span></div>`).join('')}</div>`;
+  }
+  return `<div class="panel" style="padding:6px 8px"><h3>碑文庫<small>灰の下に埋もれた言葉たち</small></h3>
+    <div class="arch-tabs">${tab('zukan','図鑑',`${nSeen}/${monIds.length}`)}${tab('story','物語',`${nStory}/${DATA.story.length}`)}${tab('lore','読み物',`${nLore}/${DATA.lore.length}`, nNew>0)}</div></div>
+    ${ARCH==='lore'?`<div class="small dim" style="margin:0 2px 6px">発見 ${nLore}/${DATA.lore.length}${nNew?` ・ <span class="red">未読 ${nNew}</span>`:''}</div>`:''}
+    ${body}
+    <button class="btn wide" style="margin-top:8px" data-act="tab" data-tab="home">拠点へ戻る</button>`;
+}
+function paras(body){
+  return body.map(p => p.startsWith('※') ? `<p class="note">${p.slice(1)}</p>` : `<p class="${p.includes('\n')?'verse':''}">${p}</p>`).join('');
+}
+function vReader(){
+  if (READ.kind==='story'){
+    const c = DATA.story.find(x=>x.id===READ.id);
+    const label = READ.next==='archive' ? '物語の一覧へ' : READ.next==='explore' ? '闇へ踏み入る' : '先へ進む';
+    return `<article class="reader story"><div class="rd-kick">${c.no}</div><h1 class="rd-title">${c.title}</h1><div class="rd-orn">◆</div>
+      <div class="rd-body">${paras(c.body)}</div></article>
+      <div class="rd-foot"><button class="btn ${READ.next==='archive'?'':'red'} wide go" data-act="rdnext">${label}</button></div>`;
+  }
+  const l = loreById(READ.id), i = DATA.lore.indexOf(l);
+  if (S.lore[l.id]===1){ S.lore[l.id] = 2; save(); }
+  const found = DATA.lore.filter(x=>S.lore[x.id]), fi = found.indexOf(l);
+  const prev = found[fi-1], next = found[fi+1], fromList = READ.back==='archive';
+  return `<article class="reader lore"><div class="rd-kick">其の${kanjiNum(i+1)} ・ ${l.type}</div><h1 class="rd-title">${l.title}</h1>
+    <div class="rd-auth">―― ${l.author}</div>
+    <div class="rd-body">${paras(l.body)}</div></article>
+    <div class="rd-foot">${fromList ? `<div class="row"><button class="btn" data-act="rdlore" data-id="${prev?prev.id:''}" ${prev?'':'disabled'}>前の頁</button><button class="btn gold" data-act="rdnext">一覧へ</button><button class="btn" data-act="rdlore" data-id="${next?next.id:''}" ${next?'':'disabled'}>次の頁</button></div>`
+      : `<button class="btn gold wide go" data-act="rdnext">${READ.back==='explore'?'探索に戻る':'閉じる'}</button>`}</div>`;
+}
+
+/* ---------- explore ---------- */
+function unitHTML(u, i){
+  const d = DATA.monsters[u.id];
+  return `<div class="pu ${u.side==='e'?'enemy':''} ${u.hp<=0?'dead':''}" id="u${i}"><div class="top">${sigil(d,'sm')}<div class="nm">${u.name}<small>Lv${u.lv} ${d.fam}</small></div></div>
+    ${bar(u.hp,u.max.hp)}${u.side==='p'?bar(u.mp,u.max.mp,'mp'):''}<div class="hpn">HP ${Math.max(0,u.hp)}/${u.max.hp}</div></div>`;
+}
+function logHTML(lines){
+  const L = lines.slice(-60);
+  return L.map((l,i)=>`<div class="${l.c||''} ${i===L.length-1?'new':''}">${l.t}</div>`).join('');
+}
+function vExplore(){
+  const a = DATA.areas[RUN.ai];
+  const units = partyMons().map(m=>({id:m.id, side:'p', name:MD(m).name, lv:m.lv, hp:m.hp, mp:m.mp, max:calc(m)}));
+  return `<div class="dhead"><span class="an">${a.name}</span><span class="fl">第${RUN.floor}層／全${a.floors}層 ・ ${RUN.step}/${a.steps}歩</span></div>
+    <div class="prow">${units.map(unitHTML).join('')}</div>
+    <div class="logbox" id="log">${logHTML(RUN.log)}</div>
+    <div class="small dim" style="text-align:right;margin-bottom:4px;flex:none">${DATA.stamina} ${S.stam}/${maxStam()} ・ 凝血の薬 ${S.items.kusuri}</div>
+    ${RUN.lastLore?`<div class="dbtns" style="margin-bottom:6px"><button class="btn gold" data-act="rdlore" data-id="${RUN.lastLore}" data-back="explore">書き留めた頁を読む《${loreById(RUN.lastLore).title}》</button></div>`:''}
+    <div class="dbtns" style="margin-bottom:6px"><button class="btn red go" data-act="step">進む<span class="small" style="letter-spacing:0;margin-left:6px">（${DATA.stamina}1）</span></button></div>
+    <div class="dbtns"><button class="btn" data-act="kusuri" ${S.items.kusuri?'':'disabled'}>薬を使う</button><button class="btn" data-act="leave">帰還する</button></div>`;
+}
+function startExplore(){
+  if (!partyMons().some(m=>m.hp>0)){ toast('動ける魔がいない。休ませよ。'); return; }
+  const a = DATA.areas[S.selArea];
+  RUN = {ai:S.selArea, floor:1, step:0, log:[{t:`── ${a.name} ──`, c:'sep'}, {t:a.desc}, {t:'鎖を握り直し、闇へ一歩を踏み出す。', c:'hl'}]};
+  const st = DATA.areaStory[a.id];
+  if (st && !S.story[st.enter]) return showStory(st.enter, 'explore');
+  go('explore');
+}
+function rlog(t,c){ RUN.log.push({t,c}); if (RUN.log.length>80) RUN.log.splice(0, RUN.log.length-80); }
+function doStep(){
+  tickStam();
+  if (S.stam < 1){ toast(`${DATA.stamina}が尽きた。時を待つか、燈油を使え。`); return; }
+  const a = DATA.areas[RUN.ai];
+  S.stam--; RUN.step++; RUN.lastLore = null;
+  let lc;
+  if (RUN.floor === a.floors && RUN.step >= a.steps){
+    rlog('空気が凍りつく。最奥に、何かが蹲っている――', 'bad');
+    startBattle([{id:a.boss.id, lv:a.boss.lv}], true); return;
+  }
+  const r = Math.random();
+  if (r < 0.46){
+    const n = rint(a.count[0], a.count[1]), foes = [];
+    for (let i=0;i<n;i++) foes.push({id:pick(a.enemies), lv:clamp(a.lv[0] + rint(0, RUN.floor), a.lv[0], a.lv[1])});
+    rlog('闇の奥で何かが蠢いた。――魔だ！', 'bad');
+    startBattle(foes, false); return;
+  } else if (r < 0.64){
+    const g = rint(4,12) * (RUN.ai+1); S.gold += g; rlog(`朽ちた棺の中に、${g}枚の骨貨が残されていた。`, 'good');
+  } else if (r < 0.71){
+    S.items.kusuri++; rlog('倒れた旅人の懐に「凝血の薬」があった。……使わせてもらう。', 'good');
+  } else if (r < 0.81 && (lc = loreCandidates(RUN.ai, RUN.floor)).length){
+    const l = pickLore(lc); grantLore(l.id); RUN.lastLore = l.id;
+    rlog(FOUND_MSG[l.type] + `――《${l.title}》を書き留めた。`, 'hl');
+  } else if (r < 0.9){
+    rlog(pick(a.flavor));
+  } else if (r < 0.95){
+    partyMons().forEach(m=>{ if (m.hp>0){ const c=calc(m); m.hp = Math.min(c.hp, m.hp + Math.ceil(c.hp*0.25)); m.mp = Math.min(c.mp, m.mp + Math.ceil(c.mp*0.2)); } });
+    rlog('名も無き祠を見つけた。消えかけの灯りが、わずかに傷を癒した。', 'good');
+  } else {
+    rlog('何も起こらない。ただ灰だけが積もってゆく。', '');
+  }
+  checkDescend(); save(); render();
+}
+function checkDescend(){
+  const a = DATA.areas[RUN.ai];
+  if (RUN.step >= a.steps && RUN.floor < a.floors){ RUN.floor++; RUN.step = 0; rlog(`崩れた階段を見つけた。第${RUN.floor}層へ降りる。`, 'hl'); }
+}
+
+/* ---------- battle (auto) ---------- */
+function mkUnit(side, id, lv, ref){
+  const d = DATA.monsters[id], max = ref ? calc(ref) : calc({id, lv, plus:null});
+  return {side, id, lv, ref, name:d.name, max, hp: ref?ref.hp:max.hp, mp: ref?ref.mp:max.mp, skills: ref?ref.skills.slice():d.skills.slice(), mods:{}, poison:0};
+}
+const eff = (u,k) => u.max[k] * (u.mods[k] ? u.mods[k].m : 1);
+function dmgCalc(a, t, pow){
+  const atk = eff(a,'atk')*pow, raw = atk - eff(t,'def')*0.4;
+  return Math.max(1, Math.round(Math.max(raw, atk*0.12) * rand(0.85,1.15)));
+}
+function simulate(units){
+  const ev = [];
+  const snap = () => units.map(u=>[u.hp,u.mp]);
+  const log = (t,c) => ev.push({t, c, s:snap()});
+  const alive = side => units.filter(u=>u.side===side && u.hp>0);
+  const nm = u => u.name;
+  const hurt = (t, d) => { t.hp = Math.max(0, t.hp - d); };
+  const died = t => { if (t.hp<=0) log(t.side==='p' ? `${nm(t)}は力尽きた……` : `${nm(t)}は崩れ落ち、灰に還った。`, t.side==='p'?'bad':'hl'); };
+  const foesOf = u => alive(u.side==='p'?'e':'p'), friendsOf = u => alive(u.side);
+  const fill = (s, a, t) => s.replace('{a}', nm(a)).replace('{t}', t?nm(t):'');
+  function useSkill(u, key){
+    const sk = DATA.skills[key]; u.mp -= sk.mp;
+    const foes = foesOf(u), friends = friendsOf(u);
+    if (sk.type==='heal'){
+      const tg = sk.tgt==='allyAll' ? friends : [friends.slice().sort((x,y)=>x.hp/x.max.hp - y.hp/y.max.hp)[0]];
+      log(fill(sk.msg, u, tg[0]), 'good');
+      tg.forEach(t=>{ const h = Math.round((sk.pow + u.lv*3)*rand(.9,1.1)); const b=t.hp; t.hp = Math.min(t.max.hp, t.hp+h); log(`${nm(t)}の傷が ${t.hp-b} 癒えた。`, 'good'); });
+      return;
+    }
+    if (sk.type==='buff'){ u.mods[sk.stat] = {m:1.5, n:3}; log(fill(sk.msg,u), 'hl'); log(`${nm(u)}の${STAT_JP[sk.stat]}が上がった。`); return; }
+    const tg = sk.tgt==='all' ? foes : [pick(foes)];
+    log(fill(sk.msg, u, tg[0]), u.side==='p'?'hl':'bad');
+    tg.forEach(t=>{
+      if (sk.type==='debuff'){ t.mods[sk.stat] = {m:0.7, n:3}; log(`${nm(t)}の${STAT_JP[sk.stat]}が下がった。`); return; }
+      if (sk.type==='poison'){ if (!t.poison && Math.random()<0.8){ t.poison = 3; log(`${nm(t)}は毒に侵された！`); } else log(`${nm(t)}には効かなかった。`); return; }
+      let d = sk.type==='magic' ? Math.round((sk.pow + eff(u,'atk')*0.45)*rand(.9,1.1)) : dmgCalc(u, t, sk.pow);
+      hurt(t, d); log(`${nm(t)}に ${d} の傷！`, t.side==='p'?'bad':'');
+      if (sk.type==='drain' && u.hp>0){ const h = Math.ceil(d/2); u.hp = Math.min(u.max.hp, u.hp+h); log(`${nm(u)}は ${h} の生気を得た。`, 'good'); }
+      if (sk.poison && t.hp>0 && !t.poison && Math.random()<0.6){ t.poison = 3; log(`${nm(t)}は毒に侵された！`); }
+      died(t);
+    });
+  }
+  function act(u){
+    const foes = foesOf(u), friends = friendsOf(u); if (!foes.length) return;
+    const usable = u.skills.filter(k => DATA.skills[k].mp <= u.mp);
+    const heals = usable.filter(k => DATA.skills[k].type==='heal');
+    const low = friends.filter(f => f.hp < f.max.hp*0.45);
+    if (heals.length && low.length){
+      const all = heals.find(k=>DATA.skills[k].tgt==='allyAll');
+      return useSkill(u, (all && low.length>=2) ? all : (heals.find(k=>DATA.skills[k].tgt==='ally') || heals[0]));
+    }
+    const offensive = usable.filter(k => { const s = DATA.skills[k];
+      if (s.type==='heal') return false;
+      if (s.type==='buff') return !u.mods[s.stat];
+      if (s.type==='debuff') return foes.some(f=>!f.mods[s.stat]);
+      if (s.type==='poison') return foes.some(f=>!f.poison);
+      return true; });
+    if (offensive.length && Math.random() < (u.side==='p'?0.45:0.4)) return useSkill(u, pick(offensive));
+    const t = pick(foes); let d = dmgCalc(u, t, 1), crit = Math.random() < 0.06;
+    if (crit) d = Math.round(d*1.6);
+    hurt(t, d);
+    log(`${crit?'会心！ ':''}${nm(u)}は${nm(t)}に襲いかかった。― ${d} の傷`, t.side==='p'?'bad':'');
+    died(t);
+  }
+  const ens = units.filter(u=>u.side==='e');
+  log(`── ${ens.length>1 ? ens[0].name+'たち' : ens[0].name}が現れた ──`, 'sep');
+  let outcome = 'draw';
+  outer: for (let round=1; round<=30; round++){
+    const order = units.filter(u=>u.hp>0).map(u=>({u, k: eff(u,'spd')*rand(0.85,1.15)})).sort((a,b)=>b.k-a.k).map(o=>o.u);
+    for (const u of order){
+      if (u.hp<=0) continue;
+      act(u);
+      if (u.poison && u.hp>0){ const d = Math.max(1, Math.floor(u.max.hp*0.08)); hurt(u,d); u.poison--; log(`${nm(u)}は毒に蝕まれている。― ${d} の傷`, u.side==='p'?'bad':''); died(u); }
+      if (!alive('e').length){ outcome='win'; break outer; }
+      if (!alive('p').length){ outcome='lose'; break outer; }
+    }
+    units.forEach(u=>{ for (const k in u.mods){ if (--u.mods[k].n <= 0) delete u.mods[k]; } });
+  }
+  return {ev, outcome};
+}
+function startBattle(foes, boss){
+  const pm = partyMons().filter(m=>m.hp>0);
+  const units = pm.map(m=>mkUnit('p', m.id, m.lv, m));
+  const counts = {};
+  foes.forEach(f=>{ counts[f.id]=(counts[f.id]||0)+1; });
+  const seen = {};
+  foes.forEach(f=>{
+    const u = mkUnit('e', f.id, f.lv, null);
+    if (boss){ u.max.hp = Math.round(u.max.hp*(DATA.areas[RUN.ai].boss.hpx||1.5)); u.hp = u.max.hp; u.name = '【主】'+u.name; }
+    const clash = pm.some(m=>m.id===f.id);
+    if (counts[f.id] > 1 || clash){ seen[f.id]=(seen[f.id]||0); u.name += SUFFIX[seen[f.id]++] || ''; }
+    units.push(u); S.seen[f.id] = true;
+  });
+  const sim = simulate(units);
+  BT = {units, ev:sim.ev, outcome:sim.outcome, idx:0, done:false, boss, lines:[], after:[], recruit:null, ai:RUN.ai};
+  // --- 結果の反映 ---
+  units.filter(u=>u.side==='p').forEach(u=>{ u.ref.hp = u.hp; u.ref.mp = u.mp; });
+  const res = BT.after;
+  if (sim.outcome==='win'){
+    const ens = units.filter(u=>u.side==='e');
+    const xp = ens.reduce((t,u)=>t + Math.round(DATA.monsters[u.id].xp * u.lv * 1.5), 0);
+    const gold = ens.reduce((t,u)=>t + rint(3,7)*u.lv, 0) + (boss?120*(RUN.ai+1):0);
+    S.gold += gold;
+    res.push({t:'── 勝利 ──', c:'sep'});
+    res.push({t:`経験 +${xp}　骨貨 +${gold}`, c:'good'});
+    units.filter(u=>u.side==='p' && u.hp>0).forEach(u=>gainExp(u.ref, xp, res));
+    S.pexp += Math.ceil(xp/2);
+    while (S.pexp >= S.plv*20){ S.pexp -= S.plv*20; S.plv++; S.stam = Math.min(maxStam(), S.stam+5); res.push({t:`檻守の位階が Lv${S.plv} に上がった。${DATA.stamina}の上限が増えた。`, c:'hl'}); }
+    if (boss){
+      const a = DATA.areas[RUN.ai]; S.cleared[a.id] = true;
+      if (S.unlocked < DATA.areas.length && S.unlocked <= RUN.ai+1){ S.unlocked = RUN.ai+2; res.push({t:`${['壱','弐','参'][RUN.ai+1]}ノ門「${DATA.areas[RUN.ai+1].name}」の封印が解けた。`, c:'hl'}); S.selArea = RUN.ai+1; }
+      res.push({t:`${a.name}を踏破した。`, c:'hl'});
+      const bl = grantLore((DATA.areaStory[a.id]||{}).lore); if (bl) res.push({t:`主の骸の傍らに、古びた頁が落ちていた。――《${bl.title}》を書き留めた。`, c:'hl'});
+    }
+    // 仲間入り判定
+    if (S.mons.length < BOX_MAX){
+      const avg = units.filter(u=>u.side==='p').reduce((t,u)=>t+u.ref.lv,0) / Math.max(1, units.filter(u=>u.side==='p').length);
+      for (const u of shuffle(ens)){
+        const d = DATA.monsters[u.id]; if (d.fusionOnly) continue;
+        const p = window.__forceRecruit ? 1 : clamp(d.rec*(boss?0.6:1) + (avg-u.lv)*0.03, 0.02, 0.7);
+        if (Math.random() < p){ BT.recruit = {id:u.id, lv:u.lv}; break; }
+      }
+    }
+  } else if (sim.outcome==='lose'){
+    const lost = Math.floor(S.gold/2); S.gold -= lost;
+    res.push({t:'── 敗北 ──', c:'sep'});
+    res.push({t:`隊は倒れた。檻守は鎖を引き摺り、辛うじて拠点へ逃げ帰った……（骨貨 -${lost}）`, c:'bad'});
+    partyMons().forEach(m=>{ if (m.hp<=0) m.hp = 1; });
+  } else {
+    res.push({t:'灰の霧が濃くなり、互いの姿を見失った。', c:'dim'});
+  }
+  save();
+  VIEW = 'battle'; render();
+  startPlayback();
+}
+function battleHTMLUnits(side){ return BT.units.map((u,i)=>u.side===side?unitHTML(u,i):'').join(''); }
+function vBattle(){
+  const a = DATA.areas[BT.ai];
+  return `<div class="dhead"><span class="an">${BT.boss?'主との死闘':'遭遇'} ― ${a.name}</span><span class="fl">自動戦闘</span></div>
+    <div class="prow" id="erow">${battleHTMLUnits('e')}</div>
+    <div class="logbox" id="log"></div>
+    <div class="prow" id="prow">${battleHTMLUnits('p')}</div>
+    <div id="bctl" style="flex:none"></div>`;
+}
+function setUnitsFromSnap(s){
+  s.forEach(([hp,mp],i)=>{
+    const u = BT.units[i], el = document.getElementById('u'+i); if (!el) return;
+    const prev = u._shp === undefined ? null : u._shp;
+    if (prev !== null && hp < prev){ el.classList.remove('hit'); void el.offsetWidth; el.classList.add('hit'); }
+    u._shp = hp;
+    const bars = el.querySelectorAll('.bar i');
+    bars[0].style.width = clamp(hp/u.max.hp*100,0,100)+'%';
+    if (bars[1]) bars[1].style.width = clamp(mp/u.max.mp*100,0,100)+'%';
+    el.querySelector('.hpn').textContent = `HP ${Math.max(0,hp)}/${u.max.hp}`;
+    el.classList.toggle('dead', hp<=0);
+  });
+}
+function pushBattleLine(e){
+  const lb = $('#log'); if (!lb) return;
+  lb.querySelectorAll('.new').forEach(n=>n.classList.remove('new'));
+  const d = document.createElement('div'); d.className = (e.c||'') + ' new'; d.textContent = e.t; lb.appendChild(d);
+  while (lb.children.length > 60) lb.removeChild(lb.firstChild);
+  lb.scrollTop = lb.scrollHeight;
+}
+function startPlayback(){
+  clearInterval(playTimer);
+  // 開始時の HP 表示
+  BT.units.forEach(u=>{ u._shp = undefined; });
+  const init = BT.ev.length ? BT.ev[0].s : null; if (init) setUnitsFromSnap(init);
+  $('#bctl').innerHTML = `<button class="btn wide" data-act="skip">早送り ▶▶</button>`;
+  playTimer = setInterval(()=>{ if (!stepPlayback()) clearInterval(playTimer); }, window.__fastBattle ? 10 : 420);
+}
+function stepPlayback(){
+  if (!BT || VIEW!=='battle') return false;
+  if (BT.idx < BT.ev.length){ const e = BT.ev[BT.idx++]; pushBattleLine(e); setUnitsFromSnap(e.s); return true; }
+  finishPlayback(); return false;
+}
+function skipPlayback(){
+  clearInterval(playTimer);
+  while (BT.idx < BT.ev.length){ const e = BT.ev[BT.idx++]; pushBattleLine(e); }
+  if (BT.ev.length) setUnitsFromSnap(BT.ev[BT.ev.length-1].s);
+  finishPlayback();
+}
+function finishPlayback(){
+  if (BT.done) return; BT.done = true;
+  BT.after.forEach(pushBattleLine);
+  BT.units.forEach((u,i)=>{ if (u.side==='p'){ const el=document.querySelector('#u'+i+' .nm small'); if (el) el.textContent = `Lv${u.ref.lv} ${DATA.monsters[u.id].fam}`; } });
+  renderBattleCtl();
+}
+function renderBattleCtl(){
+  const c = $('#bctl'); if (!c) return;
+  if (BT.recruit){
+    const d = DATA.monsters[BT.recruit.id];
+    c.innerHTML = `<div class="result"><div class="q">倒れたはずの<b class="gold">${d.name}</b>（Lv${BT.recruit.lv}）が軋みながら身を起こし、あなたの鎖の前に頭を垂れた。<br>――縛りますか？</div>
+      <div class="row"><button class="btn gold" data-act="recruit" data-yes="1">鎖で縛る</button><button class="btn" data-act="recruit" data-yes="0">捨て置く</button></div></div>`;
+    return;
+  }
+  const home = BT.boss || BT.outcome==='lose';
+  c.innerHTML = `<button class="btn ${home?'red':'gold'} wide go" data-act="bdone">${home?'拠点へ戻る':'探索を続ける'}</button>`;
+}
+function doRecruit(yes){
+  const r = BT.recruit, d = DATA.monsters[r.id]; BT.recruit = null;
+  if (yes){
+    const m = newMon(r.id, r.lv); S.mons.push(m); markOwned(r.id);
+    let where = '檻の中';
+    if (S.party.length < PARTY_MAX){ S.party.push(m.uid); where = '隊列'; }
+    pushBattleLine({t:`${d.name}を鎖で縛った。（${where}へ）`, c:'hl'});
+    BT.after.push({t:`${d.name}を鎖で縛った。`, c:'hl'});
+  } else {
+    pushBattleLine({t:`${d.name}は闇の奥へ這い去っていった。`});
+  }
+  save(); renderBattleCtl();
+  if (yes) checkFamilies();
+}
+function battleDone(){
+  clearInterval(playTimer);
+  const b = BT; BT = null;
+  if (b.boss || b.outcome==='lose'){
+    RUN = null; save();
+    const st = DATA.areaStory[DATA.areas[b.ai].id];
+    if (b.outcome==='win' && st){ READ = null; return showStory(st.clear, 'homeClear:'+b.ai); }
+    go('home');
+    if (b.outcome==='win') modal(`<h4>踏破</h4><p>${DATA.areas[b.ai].name}の主は灰に還った。<br>鎖が微かに熱を帯びている。</p><div class="mbtns"><button class="btn gold" data-act="close">拠点に戻る</button></div>`);
+    return;
+  }
+  b.after.forEach(l=>rlog(l.t, l.c));
+  if (b.outcome==='win') rlog('戦いは終わった。静寂が戻る。', 'dim');
+  checkDescend(); save(); go('explore');
+}
+
+/* ---------- fusion ---------- */
+function fuseResult(A,B){
+  const r = DATA.recipes.find(x => (x.a===A.id && x.b===B.id) || (x.a===B.id && x.b===A.id));
+  if (r) return {id:r.out, special:true};
+  const fa = MD(A).fam, fb = MD(B).fam;
+  const key = [fa,fb].sort((x,y)=>FAM_ORDER.indexOf(x)-FAM_ORDER.indexOf(y)).join('');
+  const fam = DATA.familyMix[key] || fa;
+  const target = Math.min(4, Math.max(MD(A).rank, MD(B).rank) + 1);
+  const cands = Object.entries(DATA.monsters).filter(([id,d]) => d.fam===fam && !d.fusionOnly);
+  let best = cands.filter(([,d]) => d.rank <= target).sort((x,y)=>y[1].rank-x[1].rank);
+  if (!best.length) best = cands.sort((x,y)=>x[1].rank-y[1].rank);
+  const top = best.filter(([,d]) => d.rank === best[0][1].rank);
+  const notParent = top.find(([id]) => id!==A.id && id!==B.id);
+  return {id:(notParent||top[0])[0], special:false};
+}
+function inheritable(A,B,outId){
+  const native = DATA.monsters[outId].skills;
+  return [...new Set(A.skills.concat(B.skills))].filter(s => !native.includes(s));
+}
+function fuseBonus(A,B){
+  const a = calc(A), b = calc(B), o = {};
+  for (const k of ['hp','mp','atk','def','spd']) o[k] = Math.floor((a[k]+b[k])*0.06);
+  return o;
+}
+function doFuse(){
+  const A = getMon(FUSE.a), B = getMon(FUSE.b); if (!A || !B) return;
+  const r = fuseResult(A,B), inh = inheritable(A,B,r.id), bonus = fuseBonus(A,B);
+  const child = newMon(r.id, 1);
+  child.plus = bonus;
+  if (inh.length) child.skills.push(inh[FUSE.skill % inh.length]);
+  const c = calc(child); child.hp = c.hp; child.mp = c.mp;
+  const wasInParty = S.party.includes(A.uid) || S.party.includes(B.uid);
+  S.mons = S.mons.filter(m => m.uid!==A.uid && m.uid!==B.uid);
+  S.party = S.party.filter(u => u!==A.uid && u!==B.uid);
+  S.mons.push(child); markOwned(r.id);
+  if (S.party.length < PARTY_MAX && (wasInParty || !S.party.length)) S.party.push(child.uid);
+  FUSE = {a:null, b:null, skill:0};
+  save(); go('fusion');
+  const d = DATA.monsters[r.id];
+  modal(`<h4>配合の儀</h4><div style="display:flex;gap:10px;align-items:center">${sigil(d,'big')}<p>鎖が赤く灼け、二つの影が灰の中で溶け合う。<br>やがて――<b class="gold">${d.name}</b>が産声を上げた。</p></div>
+    <div class="flavor">${d.flavor}</div><div class="small dim">特技：${child.skills.map(s=>DATA.skills[s].name).join('、')}</div>
+    <div class="mbtns"><button class="btn gold" data-act="close">閉じる</button></div>`);
+  checkFamilies();
+}
+
+/* ---------- actions ---------- */
+const ACT = {
+  newgame(){
+    if (hasSave()) return modal(`<h4>はじめから</h4><p>既にある記録は失われる。<br>それでも鎖を握るか？</p><div class="mbtns"><button class="btn red" data-act="newgame2">はじめる</button><button class="btn" data-act="close">やめる</button></div>`);
+    ACT.newgame2();
+  },
+  newgame2(){
+    closeModal(); freshState(); save(); showStory('c0', 'homeIntro');
+  },
+  intro(){
+    go('home');
+    modal(`<h4>檻守の誓い</h4><p>錆びた鎖の先に、二匹の魔が繋がれている。<br>痩せた野犬<b class="gold">煤牙</b>と、青白く揺れる<b class="gold">泣き燭</b>。</p><p class="dim small">冥門を選び「探索」で進め。倒した魔は時に鎖を受け入れる。</p><div class="mbtns"><button class="btn gold" data-act="close">鎖を握る</button></div>`);
+  },
+  continue(){ if (load()){ tickStam(); go('home'); toast('記録を読み込んだ。'); } else toast('記録が見つからない。'); },
+  tab(b){ if (!S) return; closeModal(); if (b.tab==='party') FUSE = {a:null,b:null,skill:0}; go(b.tab); },
+  close(){ closeModal(); },
+  save(){ tickStam(); if (save()) toast('記録を刻んだ。'); else toast('記録に失敗した。'); },
+  rest(){
+    partyMons().concat(boxMons()).forEach(m=>{ const c=calc(m); m.hp=c.hp; m.mp=c.mp; });
+    save(); render(); toast('焚き火の傍で魔たちは傷を舐め合った。（全快）');
+  },
+  gate(b){ S.selArea = +b.i; save(); render(); },
+  explore(){ startExplore(); },
+  step(){ doStep(); },
+  kusuri(){
+    if (!S.items.kusuri) return; S.items.kusuri--;
+    partyMons().forEach(m=>{ if (m.hp>0){ const c=calc(m); m.hp=Math.min(c.hp, m.hp+Math.ceil(c.hp*0.5)); } });
+    rlog('凝血の薬を分け与えた。鉄錆の味が、魔たちの傷を塞ぐ。', 'good'); save(); render();
+  },
+  leave(){ rlog('帰還した。'); RUN = null; save(); go('home'); toast('拠点へ帰還した。'); },
+  skip(){ skipPlayback(); },
+  recruit(b){ doRecruit(b.yes==='1'); },
+  bdone(){ battleDone(); },
+  mon(b){ showMon(+b.uid); },
+  swapto(b){
+    const i = S.party.indexOf(+b.with); if (i<0) return;
+    S.party[i] = +b.uid; save(); closeModal(); render(); toast('隊列を入れ替えた。');
+  },
+  addparty(b){ if (S.party.length<PARTY_MAX){ S.party.push(+b.uid); save(); closeModal(); render(); } },
+  swapmenu(b){
+    const m = getMon(+b.uid);
+    modal(`<h4>誰と入れ替える？</h4><div class="mlist">${partyMons().map(p=>mcard(p).replace('data-act="mon"', `data-act="swapto" data-with="${p.uid}" data-uid="${m.uid}"`).replace(`data-uid="${p.uid}"`, '')).join('')}</div>
+      <div class="mbtns"><button class="btn" data-act="close">やめる</button></div>`);
+  },
+  unparty(b){ if (S.party.length<=1) return toast('隊を空にはできない。'); S.party = S.party.filter(u=>u!==+b.uid); save(); closeModal(); render(); },
+  release(b){
+    const m = getMon(+b.uid);
+    modal(`<h4>放逐</h4><p><b class="gold">${MD(m).name}</b>（Lv${m.lv}）の鎖を解き、闇へ還すか？<br><span class="dim small">二度と戻らない。</span></p>
+      <div class="mbtns"><button class="btn red" data-act="release2" data-uid="${m.uid}">鎖を解く</button><button class="btn" data-act="close">やめる</button></div>`);
+  },
+  release2(b){
+    const uid = +b.uid, m = getMon(uid); if (!m) return;
+    S.mons = S.mons.filter(x=>x.uid!==uid); S.party = S.party.filter(x=>x!==uid);
+    save(); closeModal(); render(); toast(`${MD(m).name}は闇の奥へ消えていった。`);
+  },
+  fusion(){ FUSE = {a:null,b:null,skill:0}; go('fusion'); },
+  fpick(b){
+    const uid = +b.uid;
+    if (FUSE.a===uid) FUSE.a = null; else if (FUSE.b===uid) FUSE.b = null;
+    else if (!FUSE.a) FUSE.a = uid; else if (!FUSE.b) FUSE.b = uid; else FUSE.b = uid;
+    FUSE.skill = 0; render();
+  },
+  fskill(){ FUSE.skill++; render(); },
+  fuse(){
+    const A = getMon(FUSE.a), B = getMon(FUSE.b), d = DATA.monsters[fuseResult(A,B).id];
+    modal(`<h4>配合の儀</h4><p><b class="gold">${MD(A).name}</b>と<b class="gold">${MD(B).name}</b>を失い、<b class="red">${d.name}</b>を産む。<br>よろしいか？</p>
+      <div class="mbtns"><button class="btn red" data-act="fuse2">儀を執り行う</button><button class="btn" data-act="close">やめる</button></div>`);
+  },
+  fuse2(){ closeModal(); doFuse(); },
+  buy(b){
+    const it = DATA.items[b.k]; if (S.gold < it.price) return;
+    S.gold -= it.price; S.items[b.k] = (S.items[b.k]||0)+1; save(); render(); toast(`${it.name}を手に入れた。`);
+  },
+  usetouyu(){
+    if (!S.items.touyu) return; tickStam(); S.items.touyu--; S.stam = Math.min(maxStam(), S.stam+10); save(); render(); toast(`${DATA.stamina}が燃え上がった。（+10）`);
+  },
+  fac(b){
+    const f = b.f;
+    if (f==='tavern') modal(`<h4>澱の酒場</h4><p class="dim small">煤けた梁の下、酔いどれの檻守が杯を傾けている。</p><p>${pick(DATA.npc.rumors)}</p><div class="mbtns"><button class="btn" data-act="fac" data-f="tavern">別の話を聞く</button><button class="btn" data-act="close">店を出る</button></div>`);
+    if (f==='archive'){ ARCH = unreadLore() ? 'lore' : 'zukan'; go('archive'); }
+    if (f==='daily'){
+      if (S.daily !== today()){ S.daily = today(); tickStam(); S.gold += 80; S.stam = Math.min(maxStam(), S.stam+10); save(); render();
+        modal(`<h4>日々の贖い</h4><p>名も無き墓に灰を払い、祈りを捧げた。<br>どこからか、骨貨が転がり落ちてきた。</p><p class="gold">骨貨 +80 ・ ${DATA.stamina} +10</p><div class="mbtns"><button class="btn" data-act="close">閉じる</button></div>`);
+      } else modal(`<h4>日々の贖い</h4><p class="dim">今日の贖いは既に済んだ。<br>また陽の無い朝に来るがいい。</p><div class="mbtns"><button class="btn" data-act="close">閉じる</button></div>`);
+    }
+    if (f==='inbox'){
+      const first = !S.letter;
+      if (first){ S.letter = true; S.items.kusuri += 3; grantLore('l01'); save(); render(); }
+      modal(`<h4>鴉便</h4><p style="white-space:pre-line">${DATA.npc.letter}</p>${first?'<p class="gold">凝血の薬 ×3 を受け取った。</p><p class="dim small">手紙は碑文庫の「読み物」に綴じておいた。</p>':'<p class="faint small">（既読）</p>'}<div class="mbtns"><button class="btn" data-act="close">閉じる</button></div>`);
+    }
+  },
+  arch(b){ ARCH = b.t; render(); },
+  zk(b){ zukanDetail(b.id); },
+  rdstory(b){ READ = {kind:'story', id:b.id, next:'archive'}; go('reader'); },
+  rdlore(b){ closeModal(); READ = {kind:'lore', id:b.id, back:b.back||'archive'}; go('reader'); },
+  rdnext(){
+    const n = READ.next || READ.back || 'archive'; READ = null;
+    if (n==='homeIntro') return ACT.intro();
+    if (n.startsWith('homeClear')){ const ai = +n.split(':')[1]; go('home');
+      return modal(`<h4>踏破</h4><p>${DATA.areas[ai].name}の主は灰に還った。<br>鎖が微かに熱を帯びている。</p><p class="dim small">この章は碑文庫の「物語」から読み返せる。</p><div class="mbtns"><button class="btn gold" data-act="close">拠点に戻る</button></div>`); }
+    if (n==='archive'){ ARCH = READ_prevTab(); }
+    go(n);
+  },
+  howto(){
+    modal(`<h4>遊び方</h4><p class="small">・拠点で<b>冥門</b>を選び<b>探索</b>。「進む」ごとに${DATA.stamina}を1消費し、何かが起こる。<br>・魔に遭うと<b>自動戦闘</b>。勝てば経験と骨貨、時に魔が仲間になる。<br>・最奥の<b>主</b>を倒すと次の門が開く。<br>・${DATA.stamina}は時と共に回復する（${REGEN_MS/1000}秒で1）。<br>・<b>支度</b>で隊の入れ替え、休息、<b>配合</b>（Lv${DATA.fuseMinLv}以上の二体から新たな魔を産む）。<br>・記録は自動でも行われるが、「記録」で明示的に刻める。</p><div class="mbtns"><button class="btn" data-act="close">閉じる</button></div>`);
+  },
+  totitle(){ save(); RUN=null; BT=null; go('title'); },
+  wipe(){ modal(`<h4>記録を消す</h4><p>全ての記録が灰になる。よろしいか？</p><div class="mbtns"><button class="btn red" data-act="wipe2">消す</button><button class="btn" data-act="close">やめる</button></div>`); },
+  wipe2(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} S=null; closeModal(); go('title'); }
+};
+function READ_prevTab(){ return ARCH; }
+function zukanDetail(id){
+  const d = DATA.monsters[id], seen = S.seen[id], own = S.owned[id];
+  if (!seen) return;
+  modal(`<div style="display:flex;gap:10px;align-items:center">${sigil(d,'big')}<div><div style="font-size:18px">${d.name}<span class="fam">${d.fam}系</span></div>
+    <div class="small dim">格${'★'.repeat(d.rank)} ・ ${own?'鎖に繋いだことがある':'見かけただけ'}</div></div></div>
+    <div class="flavor">${d.flavor}</div>
+    ${own ? `<div class="stats"><div><span>HP</span><span>${d.base.hp}</span></div><div><span>MP</span><span>${d.base.mp}</span></div><div><span>攻撃</span><span>${d.base.atk}</span></div><div><span>守備</span><span>${d.base.def}</span></div><div><span>素早さ</span><span>${d.base.spd}</span></div><div><span></span><span class="faint small">（Lv1の値）</span></div></div>
+      ${d.skills.map(k=>`<div class="skl"><b>${DATA.skills[k].name}</b> <span>${DATA.skills[k].desc}</span></div>`).join('')}
+      ${d.lore?`<div class="addendum"><div class="ah">― 碑の追記 ―</div>${d.lore}</div>`:''}`
+      : `<p class="faint small">この魔を鎖で縛れば、碑に追記が刻まれる。</p>`}
+    <div class="mbtns"><button class="btn" data-act="close">閉じる</button></div>`);
+}
+function showMon(uid){
+  const m = getMon(uid); if (!m) return;
+  const inParty = S.party.includes(uid);
+  const btns = [];
+  if (inParty) btns.push(`<button class="btn" data-act="unparty" data-uid="${uid}" ${S.party.length<=1?'disabled':''}>隊から外す</button>`);
+  else if (S.party.length < PARTY_MAX) btns.push(`<button class="btn gold" data-act="addparty" data-uid="${uid}">隊に加える</button>`);
+  else btns.push(`<button class="btn gold" data-act="swapmenu" data-uid="${uid}">隊の誰かと入れ替える</button>`);
+  btns.push(`<button class="btn red" data-act="release" data-uid="${uid}" ${S.mons.length<=1||(inParty&&S.party.length<=1)?'disabled':''}>放つ</button>`);
+  btns.push(`<button class="btn" data-act="close">閉じる</button>`);
+  modal(monDetail(m) + `<div class="mbtns">${btns.join('')}</div>`);
+}
+
+document.getElementById('app').addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
+  const f = ACT[b.dataset.act]; if (f) f(b.dataset);
+});
+$('#modal').addEventListener('click', e => { if (e.target.id==='modal') closeModal(); });
+setInterval(()=>{
+  if (!S) return; tickStam();
+  if (VIEW==='home'){
+    const t = $('#stamtimer'), n = $('#stamnum'), b = $('#stambar i');
+    if (t) t.textContent = stamTimerText(); if (n) n.textContent = `${S.stam}/${maxStam()}`; if (b) b.style.width = (S.stam/maxStam()*100)+'%';
+  }
+}, 1000);
+
+// テスト・デバッグ用フック
+window.__game = { get S(){ return S; }, get VIEW(){ return VIEW; }, get RUN(){ return RUN; }, get BT(){ return BT; }, get READ(){ return READ; }, render, save, calc, newMon, go, simulate, mkUnit, checkFamilies, grantLore };
+render();
+})();
+</script>
+</body>
+</html>
