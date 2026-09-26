@@ -198,6 +198,53 @@ p{line-height:1.7}
 .rd-body p.note{font-size:13.5px;color:var(--dim);text-indent:0;border-top:1px dotted var(--line2);padding-top:.6em}
 .reader.lore .rd-body{border:1px solid var(--line);background:linear-gradient(#17110d,#0f0a08);padding:14px 14px 4px}
 .rd-foot{position:sticky;bottom:-12px;padding:10px 0 12px;background:linear-gradient(rgba(11,10,12,0),#0b0a0c 30%)}
+/* v2: 図鑑・異形・褒賞 */
+.sigil.variant{border-color:var(--gold2);color:var(--gold2);background:radial-gradient(circle at 50% 40%,#3a2a12,#120c06);text-shadow:0 0 8px rgba(230,190,90,.7);outline-color:#5a4318}
+.vtag{display:inline-block;font-size:10px;color:#1a1208;background:var(--gold);padding:0 4px;margin-left:4px;vertical-align:2px;letter-spacing:.1em}
+.pu.isvar{border-color:#8a6d34;box-shadow:inset 0 0 12px rgba(200,160,70,.18)}
+.ptitle{display:block;font-size:12px;color:var(--gold);letter-spacing:.05em;margin-top:1px}
+.status .who{cursor:pointer}
+.dexmini{cursor:pointer}
+.newmark{display:inline-block;font-size:11px;color:#f0dcc6;background:var(--crimson);padding:0 5px;margin-right:6px;vertical-align:2px}
+.dexsum .ds-top{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.ds-pct{font-size:40px;line-height:1;color:var(--gold2);text-shadow:0 0 10px rgba(160,120,40,.4)} .ds-pct small{font-size:16px}
+.ds-nums{flex:1;font-size:13px;color:var(--dim);line-height:1.7} .ds-nums b{color:var(--text);font-weight:600}
+.frows{margin-top:6px;display:flex;flex-direction:column;gap:3px}
+.frow{display:flex;align-items:center;gap:6px;font-size:12px} .frow .fn{width:16px;color:var(--gold)} .frow .bar{flex:1} .frow .fc{width:34px;text-align:right;color:var(--dim)}
+.chips{display:flex;gap:4px;margin-bottom:5px;flex-wrap:wrap}
+.chip{flex:1;min-width:0;min-height:44px;border:1px solid var(--line);background:#0f0b09;color:var(--dim);font-size:14px;padding:0 4px}
+.chip.on{border-color:var(--gold);color:var(--gold2);background:linear-gradient(#2a1d13,#150f0b)}
+.zk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.zk{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 2px 5px;border:1px solid #2a1f17;background:#0e0a08;font-size:12px;min-height:84px;text-align:center}
+.zk .zno{font-size:10px;color:var(--faint);align-self:flex-start;margin-left:3px}
+.zk .znm{line-height:1.25;font-size:12px}
+.zk.st2{border-color:var(--line2);background:linear-gradient(#1b140f,#0f0b09)}
+.zk.st1 .sigil{filter:grayscale(.85) brightness(.75)} .zk.st1 .znm{color:var(--dim)}
+.zk.st0{color:var(--faint)} .zk.st0 .sigil{color:var(--faint);text-shadow:none}
+.zk i{position:absolute;top:2px;font-style:normal;font-size:10px;padding:0 2px;border:1px solid}
+.zk .b-seen{right:3px;color:var(--dim);border-color:#4a3a2a}
+.zk .b-var{right:3px;top:18px;color:#1a1208;background:var(--gold);border-color:var(--gold)}
+.zk .b-lore{right:3px;color:var(--gold2);border-color:#6a5230}
+.zk .b-fuse{right:3px;color:var(--crimson2);border-color:#5a2420}
+.zst{display:inline-block;font-size:11px;padding:0 5px;border:1px solid var(--line2);margin-right:2px}
+.zst.st2{color:var(--gold2);border-color:var(--gold)} .zst.st1{color:var(--dim)} .zst.st0{color:var(--faint)}
+.hint{margin-top:10px;border:1px solid #5a2420;background:#140a08;padding:8px 10px;line-height:1.85;font-size:14px}
+.hint .ah{font-size:11px;color:var(--crimson2);letter-spacing:.3em;margin-bottom:2px}
+.hint p{margin-bottom:4px}
+.newentry{text-align:center}
+.ne-k{font-size:13px;color:var(--crimson2);letter-spacing:.3em;margin-bottom:10px}
+.ne-sig{display:flex;justify-content:center;margin-bottom:6px}
+.ne-sig .sigil.big{width:96px;height:96px;font-size:58px;animation:rise .9s ease-out}
+@keyframes rise{0%{opacity:0;transform:scale(.6);filter:blur(4px)}100%{opacity:1;transform:none;filter:none}}
+.ne-no{font-size:12px;color:var(--faint);letter-spacing:.2em}
+.ne-name{font-size:21px;color:#eadfc4;margin:2px 0 4px}
+.cur-title{text-align:center;font-size:18px;color:var(--gold2);margin:4px 0 8px}
+.titles{display:flex;flex-wrap:wrap;gap:4px} .titles .chip{flex:0 1 auto;padding:0 10px}
+.ms{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dotted #2b2119}
+.ms .md{flex:1;font-size:14px;min-width:0} .ms .md small{display:block;font-size:11px;color:var(--dim)}
+.ms .btn{min-width:88px;font-size:14px}
+.ms.ready .md{color:var(--gold2)} .ms.got{opacity:.6}
+.arch-tabs button{font-size:14px;letter-spacing:.04em}
 </style>
 </head>
 <body>
@@ -256,7 +303,15 @@ const DATA = {
     harden:  {name:'硬骨',       mp:2, type:'buff',  stat:'def', tgt:'self', desc:'自身の守備を上げる', msg:'{a}の骨が軋み、硬く締まった。'},
     tusk:    {name:'骨砕き',     mp:3, type:'dmg',   pow:1.6, tgt:'one',  desc:'敵単体の骨を砕く一撃', msg:'{a}は{t}に突進した！'},
     prayer:  {name:'黒き祈り',   mp:8, type:'magic', pow:14,  tgt:'all',  desc:'守備を無視して敵全体を焼く', msg:'{a}は陽を呪う祈りを捧げた。黒い炎が降り注ぐ！'},
-    moon:    {name:'逆月の嘆き', mp:9, type:'dmg',   pow:1.35,tgt:'all',  desc:'敵全体を月の刃で裂く', msg:'{a}の頭上に逆さの月が昇る……'}
+    moon:    {name:'逆月の嘆き', mp:9, type:'dmg', pow:1.35,tgt:'all',  desc:'敵全体を月の刃で裂く', msg:'{a}の頭上に逆さの月が昇る……'},
+    bonerain:{name:'骨の雨',     mp:5, type:'dmg',   pow:0.85,tgt:'all',  desc:'敵全体に骨を降らせる', msg:'{a}が骨を撒き散らす。骨の雨が降り注ぐ！'},
+    howl:    {name:'遠吠え',     mp:2, type:'buff',  stat:'atk', tgt:'self', desc:'自身の攻撃を上げる', msg:'{a}は空の穴に向かって長く吠えた。'},
+    lullaby: {name:'眠り鈴',     mp:4, type:'debuff',stat:'spd', tgt:'all', desc:'敵全体の素早さを下げる', msg:'{a}の鳴らす音に、手足が重くなってゆく……'},
+    hex:     {name:'呪詛',       mp:2, type:'debuff',stat:'def', tgt:'one', desc:'敵単体の守備を下げる', msg:'{a}は{t}の名を呪った。'},
+    chainbite:{name:'鎖噛み',    mp:4, type:'dmg',   pow:1.8, tgt:'one',  desc:'敵単体に鎖ごと喰らいつく', msg:'{a}は錆びた鎖ごと{t}に喰らいついた！'},
+    sunfire: {name:'黒陽',       mp:12,type:'magic', pow:26,  tgt:'all',  desc:'守備を無視して敵全体を黒い炎で焼く', msg:'{a}の頭上に、黒い陽が灯った――！'},
+    namesteal:{name:'名喰らい',  mp:8, type:'drain', pow:1.6, tgt:'one',  desc:'敵単体の名と生気を喰らう', msg:'{a}は{t}の名を喰らおうとした！'},
+    cocoon:  {name:'繭籠り',     mp:2, type:'buff',  stat:'def', tgt:'self', desc:'自身の守備を上げる', msg:'{a}は白い糸に身を包んだ。'}
   },
   /* base: Lv1時の能力 / grow: 1Lvごとの上昇量 / rank: 配合で使う格 / xp: 倒した時の経験値係数 / rec: 仲間入り率 */
   monsters: {
@@ -266,7 +321,7 @@ const DATA = {
     sabiyoroi:  {name:'錆鎧の番人', fam:'骸', sigil:'錆', img:'', rank:2, xp:9, rec:.25,
       base:{hp:44,mp:6,atk:15,def:16,spd:4}, grow:{hp:7,mp:1,atk:3,def:3,spd:1}, skills:['rust','harden'],
       flavor:'主を失った鎧だけが門を守っている。中身はとうに腐り落ち、錆の軋みだけが声の代わりだ。'},
-    kanetsuki:  {name:'鐘撞き骸',   fam:'骸', sigil:'鐘', img:'', rank:3, xp:14, rec:.2,
+    kanetsuki:  {name:'鐘撞き骸',   fam:'骸', sigil:'鐘', img:'', boss:true, rank:3, xp:14, rec:.2,
       base:{hp:56,mp:14,atk:13,def:11,spd:6}, grow:{hp:7,mp:2,atk:2.7,def:2.3,spd:1.2}, skills:['knell','harden','rust'],
       flavor:'誰もいない鐘楼で、今も弔いの鐘を撞き続ける骸。その音を聞いた者は、己の葬列を夢に見る。'},
     susukiba:   {name:'煤牙',       fam:'獣', sigil:'牙', img:'', rank:1, xp:4, rec:.35,
@@ -293,32 +348,122 @@ const DATA = {
     umiga:      {name:'膿蛾',       fam:'蟲', sigil:'蛾', img:'', rank:2, xp:6, rec:.3,
       base:{hp:22,mp:10,atk:10,def:6,spd:11}, grow:{hp:4.2,mp:2,atk:2.1,def:1.3,spd:2.2}, skills:['scale','venom'],
       flavor:'膿んだ傷口に卵を産む大蛾。翅の模様は、苦悶する人の顔によく似ている。'},
-    senkyakuni: {name:'千脚尼',     fam:'蟲', sigil:'脚', img:'', rank:3, xp:14, rec:.15,
+    senkyakuni: {name:'千脚尼',     fam:'蟲', sigil:'脚', img:'', boss:true, rank:3, xp:14, rec:.15,
       base:{hp:66,mp:18,atk:15,def:12,spd:9}, grow:{hp:8,mp:2,atk:3,def:2.3,spd:1.8}, skills:['scale','drain','bind'],
       flavor:'沼の廃寺に籠もった尼僧の果て。数珠の代わりに無数の脚を繰り、終わらぬ経を唱え続ける。'},
     tojiningyo: {name:'綴じ人形',   fam:'呪', sigil:'綴', img:'', rank:2, xp:6, rec:.3,
       base:{hp:26,mp:12,atk:10,def:8,spd:9}, grow:{hp:4.5,mp:2,atk:2.2,def:1.6,spd:1.8}, skills:['bind','dread'],
       flavor:'死者の髪で縫い綴じられた人形。胸の中には、呪いたい相手の名を書いた紙が詰まっている。'},
-    tsunokanmuri:{name:'角冠の司',  fam:'呪', sigil:'冠', img:'', rank:4, xp:22, rec:.08,
+    tsunokanmuri:{name:'角冠の司',  fam:'呪', sigil:'冠', img:'', boss:true, rank:4, xp:22, rec:.08,
       base:{hp:88,mp:30,atk:18,def:14,spd:11}, grow:{hp:9,mp:3,atk:3.3,def:2.5,spd:2}, skills:['prayer','knell','moon'],
       flavor:'捻れた角を冠に戴く、逆月教団の司祭。その祈りの言葉はすべて、陽を殺すためのものだった。'},
     sakazuki:   {name:'逆月の仔',   fam:'呪', sigil:'月', img:'', rank:4, xp:16, rec:0, fusionOnly:true,
       base:{hp:40,mp:26,atk:16,def:11,spd:13}, grow:{hp:6,mp:3,atk:3.2,def:2.2,spd:2.4}, skills:['moon','drain','requiem'],
-      flavor:'逆さの月の夜にだけ生まれる忌み仔。その泣き声を聞いた母は、みな自分の名を忘れるという。'}
+      flavor:'逆さの月の夜にだけ生まれる忌み仔。その泣き声を聞いた母は、みな自分の名を忘れるという。'},
+    /* ---- ここから追加の魔（v2） ---- */
+    honehiroi:  {name:'骨拾い',     fam:'骸', sigil:'拾', img:'', rank:1, xp:4, rec:.4,
+      base:{hp:24,mp:5,atk:8,def:9,spd:5}, grow:{hp:4.8,mp:.9,atk:2,def:2,spd:1.1}, skills:['harden','tusk'],
+      flavor:'墓所に散らばった骨を拾い集め、背負い籠に詰めて歩く骸。誰の骨かは問わない。ただ、足りない一本を探している。'},
+    hitsugikatsugi:{name:'棺担ぎ',  fam:'骸', sigil:'担', img:'', rank:2, xp:7, rec:.3,
+      base:{hp:36,mp:7,atk:12,def:13,spd:4}, grow:{hp:6.5,mp:1,atk:2.6,def:2.6,spd:1}, skills:['harden','bonerain'],
+      flavor:'空の棺を担いで、墓所の小径を行き来し続ける骸。棺の中身が見つかるまで、その葬列は終わらない。'},
+    kubinashi:  {name:'首無し巡礼', fam:'骸', sigil:'首', img:'', rank:3, xp:11, rec:.22,
+      base:{hp:48,mp:12,atk:16,def:13,spd:7}, grow:{hp:7,mp:1.6,atk:3,def:2.4,spd:1.4}, skills:['rust','bonerain','knell'],
+      flavor:'陽の聖地を目指した巡礼の成れの果て。首は陽に捧げたのだという。今は首の代わりに、錆びた鈴を提げて歩く。'},
+    shirou:     {name:'屍蝋の司書', fam:'骸', sigil:'蝋', img:'', rank:4, xp:18, rec:0, fusionOnly:true,
+      base:{hp:60,mp:28,atk:15,def:16,spd:9}, grow:{hp:8,mp:3,atk:2.8,def:2.8,spd:1.8}, skills:['prayer','knell','requiem'],
+      flavor:'死者の名を帳面に記し続けた記録官の、蝋のように白く固まった骸。今も頁を繰る指だけが、生きている者より速い。'},
+    senkotsu:   {name:'千骨の王',   fam:'骸', sigil:'王', img:'', rank:5, xp:26, rec:0, fusionOnly:true,
+      base:{hp:90,mp:24,atk:22,def:22,spd:8}, grow:{hp:10,mp:2.5,atk:3.6,def:3.6,spd:1.6}, skills:['bonerain','rust','harden'],
+      flavor:'墓所に眠る千の骨を寄せ集めて玉座とした骸。どの骨も、かつてこの国の民だった。王は民を忘れない。一本残らず。'},
+    hainezumi:  {name:'灰鼠',       fam:'獣', sigil:'鼠', img:'', rank:1, xp:3, rec:.45,
+      base:{hp:18,mp:4,atk:9,def:5,spd:13}, grow:{hp:3.8,mp:.8,atk:2.1,def:1.1,spd:2.6}, skills:['venom'],
+      flavor:'灰の積もった墓穴に巣食う鼠。灰と見分けがつかず、踏みつけてから初めてその存在に気づく。気づいたときには、もう噛まれている。'},
+    yonaki:     {name:'夜啼き梟',   fam:'獣', sigil:'梟', img:'', rank:2, xp:8, rec:.3,
+      base:{hp:26,mp:12,atk:12,def:7,spd:15}, grow:{hp:4.6,mp:2,atk:2.5,def:1.4,spd:2.8}, skills:['lullaby','drain'],
+      flavor:'夜にだけ墓所の鐘楼に止まる、白い梟。その啼き声は、死者の名を一つずつ読み上げているように聞こえる。'},
+    morou:      {name:'喪狼',       fam:'獣', sigil:'狼', img:'', rank:3, xp:11, rec:.22,
+      base:{hp:44,mp:8,atk:18,def:10,spd:14}, grow:{hp:6.5,mp:1.2,atk:3.4,def:1.9,spd:2.6}, skills:['bite','howl'],
+      flavor:'喪服のように黒い毛並みの狼。葬列の後をどこまでもついて歩き、最後の一人が倒れるのを待つ。'},
+    kusarikurai:{name:'鎖喰らい',   fam:'獣', sigil:'鎖', img:'', rank:4, xp:18, rec:0, fusionOnly:true,
+      base:{hp:64,mp:10,atk:22,def:14,spd:14}, grow:{hp:8.5,mp:1.4,atk:3.8,def:2.4,spd:2.4}, skills:['chainbite','bite','howl'],
+      flavor:'檻守の鎖を噛み千切り、喰らった獣。腹の中で鎖が熱を持ち、今も内側から焼かれ続けている。それでも、もっと鎖が欲しい。'},
+    kokuyou:    {name:'黒陽獅子',   fam:'獣', sigil:'獅', img:'', rank:5, xp:26, rec:0, fusionOnly:true,
+      base:{hp:86,mp:22,atk:26,def:17,spd:15}, grow:{hp:10,mp:2.4,atk:4.2,def:2.8,spd:2.4}, skills:['sunfire','bite','howl'],
+      flavor:'黒い炎の鬣を持つ獅子。鬣が燃えているのではない。鬣の中で、何かが燃やされているのだ。'},
+    mayoibi:    {name:'迷い火',     fam:'霊', sigil:'火', img:'', rank:1, xp:4, rec:.4,
+      base:{hp:16,mp:12,atk:10,def:5,spd:11}, grow:{hp:3.4,mp:2.4,atk:2.2,def:1.1,spd:2.2}, skills:['ash','wail'],
+      flavor:'墓所をふらふらと漂う小さな火。道に迷った魂だと言われる。ついて行けば、迷うのはこちらの方だ。'},
+    tsurarebito:{name:'吊られ人',   fam:'霊', sigil:'吊', img:'', rank:2, xp:7, rec:.3,
+      base:{hp:28,mp:12,atk:11,def:8,spd:8}, grow:{hp:4.8,mp:2,atk:2.3,def:1.6,spd:1.6}, skills:['hex','drain'],
+      flavor:'廃村の枯れ木に吊られたまま、揺れ続ける霊。縄は腐り落ちたのに、体は今も宙に浮いている。'},
+    suzunari:   {name:'鈴鳴り童',   fam:'霊', sigil:'鈴', img:'', rank:2, xp:8, rec:.28,
+      base:{hp:24,mp:16,atk:10,def:7,spd:13}, grow:{hp:4.2,mp:2.6,atk:2.1,def:1.4,spd:2.4}, skills:['lullaby','candle'],
+      flavor:'夜の廃村に鈴の音を響かせて駆け回る童の霊。婚礼の行列の先頭で、鈴を振る役目だった。'},
+    hiokuri:    {name:'陽送りの巫', fam:'霊', sigil:'巫', img:'', rank:4, xp:18, rec:0, fusionOnly:true,
+      base:{hp:56,mp:34,atk:14,def:13,spd:12}, grow:{hp:7.5,mp:3.4,atk:2.6,def:2.2,spd:2.2}, skills:['requiem','sunfire','candle'],
+      flavor:'死者を陽へ送る儀を司った巫女の霊。送るべき陽を失ってなお、舞いを止めない。その足元で、灰が渦を巻く。'},
+    nakui:      {name:'名喰い',     fam:'霊', sigil:'名', img:'', rank:5, xp:26, rec:0, fusionOnly:true,
+      base:{hp:70,mp:36,atk:20,def:14,spd:16}, grow:{hp:9,mp:3.6,atk:3.6,def:2.4,spd:2.6}, skills:['namesteal','dread','drain'],
+      flavor:'顔の無い霊。触れた者から名を奪い、自分の顔に貼りつける。今は何百もの名が、その顔の上で囁き合っている。'},
+    hainomi:    {name:'灰蚤',       fam:'蟲', sigil:'蚤', img:'', rank:1, xp:3, rec:.45,
+      base:{hp:17,mp:6,atk:9,def:6,spd:12}, grow:{hp:3.6,mp:1.2,atk:2.1,def:1.2,spd:2.4}, skills:['venom','hex'],
+      flavor:'灰に紛れて跳ねる蚤。死者の血を吸って肥え、灰色の腹を赤黒く膨らませる。'},
+    kyouyomi:   {name:'経読み蝉',   fam:'蟲', sigil:'蝉', img:'', rank:2, xp:7, rec:.3,
+      base:{hp:26,mp:12,atk:10,def:9,spd:9}, grow:{hp:4.6,mp:2,atk:2.2,def:1.8,spd:1.8}, skills:['lullaby','scale'],
+      flavor:'廃寺の柱に群がり、経のような声で鳴く蝉。陽の無い世に、鳴く季節など無いはずなのに。'},
+    nemurimayu: {name:'眠り繭',     fam:'蟲', sigil:'繭', img:'', rank:2, xp:8, rec:.28,
+      base:{hp:36,mp:10,atk:8,def:14,spd:4}, grow:{hp:6,mp:1.8,atk:1.8,def:2.8,spd:.9}, skills:['cocoon','lullaby'],
+      flavor:'人ほどの大きさの白い繭。中で何かが眠っている。時折、中から寝言が聞こえる。誰かの名を呼んでいる。'},
+    kodoku:     {name:'蠱毒の壺',   fam:'蟲', sigil:'壺', img:'', rank:4, xp:18, rec:0, fusionOnly:true,
+      base:{hp:66,mp:24,atk:17,def:18,spd:8}, grow:{hp:8.5,mp:2.6,atk:3,def:3,spd:1.6}, skills:['scale','venom','hex'],
+      flavor:'百の蟲を封じて喰らい合わせた呪いの壺。最後に残った一匹は、壺そのものになった。'},
+    hibami:     {name:'陽喰み',     fam:'蟲', sigil:'蝕', img:'', rank:5, xp:26, rec:0, fusionOnly:true,
+      base:{hp:84,mp:28,atk:21,def:18,spd:12}, grow:{hp:10,mp:3,atk:3.8,def:3,spd:2}, skills:['sunfire','scale','drain'],
+      flavor:'空の黒い穴から降りてきたとも、穴そのものの欠片とも言われる蟲。触れた光を、すべて喰らう。'},
+    warami:     {name:'藁の身代わり',fam:'呪', sigil:'藁', img:'', rank:1, xp:4, rec:.4,
+      base:{hp:22,mp:10,atk:8,def:8,spd:8}, grow:{hp:4.4,mp:2,atk:1.9,def:1.7,spd:1.6}, skills:['hex','wail'],
+      flavor:'沼に捧げられる娘の身代わりに編まれた藁人形。役目を果たせなかった藁は、今も花嫁を探して村を這う。'},
+    kuropage:   {name:'黒き頁',     fam:'呪', sigil:'頁', img:'', rank:2, xp:8, rec:.28,
+      base:{hp:24,mp:18,atk:12,def:7,spd:11}, grow:{hp:4.2,mp:2.8,atk:2.5,def:1.4,spd:2.1}, skills:['hex','prayer'],
+      flavor:'書物から破り取られた頁が、黒い蝶のように聖堂を舞う。書かれていた言葉を知る者を、執拗に追う。'},
+    sakasazuri: {name:'逆さ吊りの信徒',fam:'呪', sigil:'逆', img:'', rank:3, xp:11, rec:.22,
+      base:{hp:42,mp:20,atk:15,def:11,spd:10}, grow:{hp:6.5,mp:2.6,atk:3,def:2,spd:1.8}, skills:['dread','prayer','hex'],
+      flavor:'自ら足を縛り、聖堂の梁から逆さに吊った逆月の信徒。逆さに見る世界でだけ、月は正しく昇るのだという。'},
+    nukegara:   {name:'檻守の抜け殻',fam:'呪', sigil:'殻', img:'', rank:3, xp:14, rec:.18,
+      base:{hp:50,mp:16,atk:17,def:13,spd:12}, grow:{hp:7,mp:2.2,atk:3.2,def:2.4,spd:2.2}, skills:['chainbite','dread','drain'],
+      flavor:'錆びた鎖を体に巻きつけた、檻守の装束だけが歩いている。中身はどこへ行ったのか。装束は、あなたの鎖を見ると立ち止まる。'},
+    seibo:      {name:'鎖の聖母',   fam:'呪', sigil:'聖', img:'', rank:5, xp:26, rec:0, fusionOnly:true,
+      base:{hp:80,mp:36,atk:19,def:18,spd:13}, grow:{hp:9.5,mp:3.6,atk:3.4,def:3,spd:2.2}, skills:['requiem','chainbite','prayer'],
+      flavor:'全身を鎖で編んだ衣に包まれ、慈愛の微笑みを浮かべる女。抱きしめた魔を、決して離さない。'}
   },
+  /* 図鑑の並び（No.001〜） */
+  dexOrder: [
+    'haikaburi','honehiroi','hitsugikatsugi','sabiyoroi','kubinashi','kanetsuki','shirou','senkotsu',
+    'susukiba','hainezumi','susurigarasu','yonaki','honekui','morou','kusarikurai','kokuyou',
+    'nakirou','mayoibi','usukage','tsurarebito','suzunari','minasoko','hiokuri','nakui',
+    'hitsugiuji','hainomi','umiga','kyouyomi','nemurimayu','senkyakuni','kodoku','hibami',
+    'warami','tojiningyo','kuropage','sakasazuri','nukegara','tsunokanmuri','sakazuki','seibo'],
+  variantRate: 1/64,   // 異形の出現率（敵1体ごと）
   starters: [['susukiba',2],['nakirou',2]],
   /* 探索エリア。floors×steps 回「進む」と最奥で主が現れる */
   areas: [
     {id:'bosho', name:'灰鐘の墓所', floors:3, steps:3, lv:[1,3], count:[1,2],
-      enemies:['haikaburi','susukiba','hitsugiuji','nakirou'], boss:{id:'kanetsuki', lv:5, hpx:1.5},
+      table:[{id:'haikaburi',w:10},{id:'susukiba',w:9},{id:'hitsugiuji',w:9},{id:'nakirou',w:8},{id:'hainezumi',w:10},{id:'honehiroi',w:8},{id:'mayoibi',w:8},{id:'hainomi',w:8},
+        {id:'hitsugikatsugi',w:5,floor:2},{id:'tojiningyo',w:2,rare:true},{id:'yonaki',w:3,night:true,rare:true}],
+      boss:{id:'kanetsuki', lv:4, hpx:1.3},
       desc:'崩れた鐘楼を抱く共同墓地。灰に埋もれた墓標が、道標の代わりに並ぶ。',
       flavor:['灰が降っている。音もなく、途切れることなく。','倒れた墓標に、爪で引っ掻いたような名が刻まれている。','遠くで鐘が一つ鳴った。撞く者などいないはずなのに。','掘り返された土の匂いがする。まだ新しい。','足元で何かが砕けた。骨だった。']},
     {id:'numa', name:'膿沼の廃村', floors:3, steps:3, lv:[4,7], count:[1,3],
-      enemies:['susurigarasu','umiga','usukage','honekui','tojiningyo'], boss:{id:'senkyakuni', lv:11, hpx:2.2},
+      table:[{id:'susurigarasu',w:10},{id:'umiga',w:10},{id:'usukage',w:8},{id:'warami',w:10},{id:'tsurarebito',w:9},{id:'kyouyomi',w:9},{id:'honekui',w:5},{id:'tojiningyo',w:5},
+        {id:'nemurimayu',w:5,floor:2},{id:'suzunari',w:3,night:true,rare:true},{id:'minasoko',w:2,floor:3,rare:true}],
+      boss:{id:'senkyakuni', lv:11, hpx:2.2},
       desc:'疫病に呑まれ沼に沈んだ村。家々の軒先から、黄色い霧が垂れ込めている。',
       flavor:['沼の水面に泡が浮かび、人の吐息のような音を立てて弾けた。','戸口に吊るされた魔除けの鈴は、どれも内側から潰されている。','誰かが泣いている。いや、泥が啜られる音だ。','腐った麦の穂が、風もないのに揺れている。','井戸の底から、名を呼ばれた気がした。']},
     {id:'seido', name:'逆月の聖堂', floors:4, steps:3, lv:[9,13], count:[2,3],
-      enemies:['sabiyoroi','minasoko','tojiningyo','usukage','honekui'], boss:{id:'tsunokanmuri', lv:17, hpx:2.4},
+      table:[{id:'sabiyoroi',w:10},{id:'kubinashi',w:9},{id:'sakasazuri',w:9},{id:'kuropage',w:9},{id:'morou',w:9},{id:'usukage',w:4},{id:'honekui',w:4},{id:'minasoko',w:5},
+        {id:'nukegara',w:2,floor:3,rare:true},{id:'yonaki',w:2,night:true,rare:true}],
+      boss:{id:'tsunokanmuri', lv:17, hpx:2.4},
       desc:'陽を殺す儀式が行われたという大聖堂。天井画の太陽は、すべて黒く塗り潰されている。',
       flavor:['祭壇に並ぶ燭台には、蝋の代わりに指が立てられていた。','ステンドグラスの月は、どれも逆さに嵌め込まれている。','長椅子に、祈りの姿勢のまま干からびた信徒たちが座っている。','床の石畳に、太陽を象った紋が削り取られた跡がある。','聖歌が聞こえる。歌詞は、陽への呪詛だ。']}
   ],
@@ -327,9 +472,55 @@ const DATA = {
     {a:'nakirou',    b:'susurigarasu', out:'minasoko'},
     {a:'haikaburi',  b:'nakirou',      out:'usukage'},
     {a:'susukiba',   b:'hitsugiuji',   out:'honekui'},
+    {a:'hainezumi',  b:'hainomi',      out:'yonaki'},
+    {a:'honehiroi',  b:'mayoibi',      out:'hitsugikatsugi'},
+    {a:'warami',     b:'nakirou',      out:'tojiningyo'},
+    {a:'sabiyoroi',  b:'usukage',      out:'nukegara'},
+    /* 主（ボス）の別の産まれ方 */
+    {a:'hitsugikatsugi', b:'mayoibi',  out:'kanetsuki'},
+    {a:'kyouyomi',   b:'tsurarebito',  out:'senkyakuni'},
+    {a:'sakasazuri', b:'kuropage',     out:'tsunokanmuri'},
+    /* 配合でしか産まれない魔 */
+    {a:'hitsugikatsugi', b:'kuropage', out:'shirou'},
+    {a:'shirou',     b:'kanetsuki',    out:'senkotsu'},
+    {a:'morou',      b:'tojiningyo',   out:'kusarikurai'},
+    {a:'kusarikurai',b:'hiokuri',      out:'kokuyou'},
+    {a:'minasoko',   b:'suzunari',     out:'hiokuri'},
+    {a:'hiokuri',    b:'nukegara',     out:'nakui'},
+    {a:'nemurimayu', b:'warami',       out:'kodoku'},
+    {a:'kodoku',     b:'senkyakuni',   out:'hibami'},
     {a:'tojiningyo', b:'minasoko',     out:'sakazuki'},
-    {a:'senkyakuni', b:'tsunokanmuri', out:'sakazuki'}
+    {a:'senkyakuni', b:'tsunokanmuri', out:'sakazuki'},
+    {a:'sakazuki',   b:'hiokuri',      out:'seibo'}
   ],
+  /* 配合でしか産まれない魔の、図鑑に記される謎かけ */
+  riddles: {
+    shirou:  '死者を運ぶ者と、破られた言葉。二つが重なるとき、記す者が目を覚ます。',
+    senkotsu:'名を記す者と、鐘を撞く者。記録と弔いが交わるところに、骨の王座が築かれる。',
+    kusarikurai:'葬列を追う牙と、呪いを詰めた腹。鎖を憎む二つが、鎖を喰らうものを生む。',
+    kokuyou: '鎖を喰らった獣に、陽を送る祈りを。黒い陽は、獣の姿で昇る。',
+    hiokuri: '沈んだ花嫁と、婚礼の鈴。祝いの夜が陽へ還るとき、送る者が舞い降りる。',
+    nakui:   '陽を送る者と、檻を捨てた者。送られなかった名たちが、一つの顔に集まる。',
+    kodoku:  '眠る繭と、身代わりの藁。喰らい合う器の底に、最後の一匹が残る。',
+    hibami:  '喰らい合いの果ての器と、千の脚の経。陽さえ喰らう蟲は、祈りの底から這い出る。',
+    sakazuki:'縫い綴じられた呪いと、水底の花嫁。あるいは、千の脚と角の冠。逆さの月は二つの道から昇る。',
+    seibo:   '逆さの月の仔と、陽を送る舞。夜と朝を抱くものは、鎖で編まれた衣を纏う。'
+  },
+  /* 蒐集の褒賞。type: caught(捕縛数) / fam(その系統8体をすべて捕縛) / variant(異形を捕縛) */
+  milestones: [
+    {id:'c5',  type:'caught', n:5,  title:'駆け出しの鎖手', gold:200, desc:'骨貨200'},
+    {id:'c10', type:'caught', n:10, title:'十の鎖',         items:{kusuri:3}, box:5, desc:'凝血の薬×3 ・ 檻+5'},
+    {id:'c20', type:'caught', n:20, title:'灰の蒐集家',     gold:500, items:{touyu:3}, box:5, desc:'骨貨500 ・ 燈油×3 ・ 檻+5'},
+    {id:'c30', type:'caught', n:30, title:'碑を満たす者',   gold:1000, box:10, desc:'骨貨1000 ・ 檻+10'},
+    {id:'c40', type:'caught', n:40, title:'昏き檻の主',     gold:3000, items:{touyu:5}, desc:'骨貨3000 ・ 燈油×5'},
+    {id:'f骸', type:'fam', fam:'骸', title:'骨を数える者',   gold:300, items:{touyu:1}, desc:'骨貨300 ・ 燈油×1'},
+    {id:'f獣', type:'fam', fam:'獣', title:'群れを率いる者', gold:300, items:{touyu:1}, desc:'骨貨300 ・ 燈油×1'},
+    {id:'f霊', type:'fam', fam:'霊', title:'弔いを知る者',   gold:300, items:{touyu:1}, desc:'骨貨300 ・ 燈油×1'},
+    {id:'f蟲', type:'fam', fam:'蟲', title:'這うものの友',   gold:300, items:{touyu:1}, desc:'骨貨300 ・ 燈油×1'},
+    {id:'f呪', type:'fam', fam:'呪', title:'呪を綴る者',     gold:300, items:{touyu:1}, desc:'骨貨300 ・ 燈油×1'},
+    {id:'v1',  type:'variant', n:1, title:'異形を繋ぐ者',   gold:300, items:{kusuri:2}, desc:'骨貨300 ・ 凝血の薬×2'}
+  ],
+  defaultTitle: '名も無き檻守',
   /* 配合：系統の組み合わせ → 生まれる系統（それ以外の組み合わせ用） */
   familyMix: {
     '骸骸':'骸','骸獣':'獣','骸霊':'霊','骸蟲':'蟲','骸呪':'呪',
@@ -361,7 +552,7 @@ const DATA = {
 /* =========================================================
    DATA（物語・読み物）── 章・読み物・図鑑の追記
    lore[].src : {inbox} 鴉便 / {area, floor, rare, night, afterClear} 探索中に拾う
-                {boss:'エリアid'} 主を討つと入手 / {fam:'系統'} 図鑑でその系統を揃えると入手
+                {boss:'エリアid'} 主を討つと入手 / {fam:'系統'} その系統の野生の魔（配合専用を除く・主を含む）をすべて捕縛すると入手
    本文中「※」で始まる段落は、紙面の状態などの注記として表示される。
    ========================================================= */
 DATA.story = [
@@ -528,7 +719,32 @@ Object.entries({
   senkyakuni:'経の合間に、同じ言葉を繰り返している。「あれは骨だ、陽の骨だ」',
   tojiningyo:'腹の中の紙片に、最も多く書かれている名は「ヴェルナ」。',
   tsunokanmuri:'冠の角は、自ら額に打ち込んだものだという。痛みで、祈りの意味を忘れぬために。',
-  sakazuki:'その胸には、小さく熱い塊がある。触れた檻守の鎖が、共鳴するように鳴った。'
+  sakazuki:'その胸には、小さく熱い塊がある。触れた檻守の鎖が、共鳴するように鳴った。',
+  honehiroi:'籠の底板に、墓掘りの焼き印がある。「ダン」。',
+  hitsugikatsugi:'棺の蓋の裏には、爪で刻まれた無数の線。担ぎ手は、中から開けようとした者を知っているのだろうか。',
+  kubinashi:'巡礼手形には「陽送り巡礼　第三十二番」。首を捧げる巡礼など、陽司の教えのどこにも書かれていない――表向きは。',
+  shirou:'帳面の表紙には王家の紋。中の一頁だけが破り取られ、「検閲済」の朱印だけが残っている。',
+  senkotsu:'王冠の内側に刻まれた名は、国史のどこにも載っていない。陽喪の前に廃された、最後の王の名だという。',
+  hainezumi:'一匹見れば三十匹。三十匹見れば、その下に骸が一体埋まっている。',
+  yonaki:'啼き声を書き取った者がいる。並んだ名の最後は、いつも空白だった。',
+  morou:'老いた猟師は言った。あれは狼ではない、泣き疲れた遺族の成れの果てだ、と。',
+  kusarikurai:'その吐息は陽の匂いがする。組合はこの獣を見つけ次第、必ず殺すよう命じている。',
+  kokuyou:'その咆哮を聞いた檻守たちの鎖が、一斉に赤く灼けたという記録がある。',
+  mayoibi:'迷い火は、陽のあった方角へ昇ろうとしては、途中で力尽きて落ちてくる。',
+  tsurarebito:'疫病の年、名を忘れ始めた者は村はずれの木に吊られた。「名を失う前に、人として死なせてやる」ためだったという。',
+  suzunari:'振っている鈴は婚礼の鈴。あの夜、花嫁の手に持たせたものと、同じ形をしている。',
+  hiokuri:'巫の舞は、陽司の祈祷書に記された「給餌の作法」と一致する。――巫自身は、それを知らなかった。',
+  nakui:'囁く名のひとつが、あなたの方を向いて何かを言いかけた。聞き取れたのは、最初の一文字だけだった。',
+  hainomi:'灰蚤に血を吸われた者は、その夜、見知らぬ誰かの死に際を夢に見る。',
+  kyouyomi:'鳴き声を逆さに書き取ると、尼僧の声になる。「あれは骨だ」。',
+  nemurimayu:'繭を裂いた疫病医の覚え書きには、ただ一行。「中身は患者だった。まだ息があった」。',
+  kodoku:'壺の底には、村の掟の碑と同じ文字が刻まれている。',
+  hibami:'蟲の経は言う。陽もまた、より大きな何かの薪であると。――これは、その「何か」の爪の先かもしれない。',
+  warami:'掟の碑の年代を数えると、藁で済んだ年は一度も無い。',
+  kuropage:'頁の端に「国史　陽喪の条　続」。検閲で破り取られた部分らしい。',
+  sakasazuri:'信徒たちは口々に言う。「陽は喰らう、月は喰らわぬ」。その目は、恐怖ではなく安らぎに満ちている。',
+  nukegara:'装束の襟に縫われた番号は「七十一」。名簿の切れ端では、この番号の横に「逃亡」とあった。',
+  seibo:'その顔は、組合の広間に掛けられた肖像画――若き日の組合長ヴェルナに、よく似ている。'
 }).forEach(([id,t]) => { DATA.monsters[id].lore = t; });
 </script>
 <script>
@@ -539,7 +755,7 @@ Object.entries({
 'use strict';
 const SAVE_KEY = 'konkantan_save_v1';
 const REGEN_MS = 90 * 1000;      // 燈 1 回復あたりの時間
-const PARTY_MAX = 3, BOX_MAX = 30;
+const PARTY_MAX = 3;
 const FAM_ORDER = Object.keys(DATA.families);
 const STAT_JP = {hp:'HP', mp:'MP', atk:'攻撃', def:'守備', spd:'素早さ'};
 const SUFFIX = ['甲','乙','丙'];
@@ -562,29 +778,43 @@ let BT = null;         // 戦闘中の状態
 let FUSE = {a:null, b:null, skill:0};
 let ARCH = 'zukan';   // 碑文庫のタブ
 let READ = null;      // 読書画面の状態
-let PENDING_MODAL = null;
+let MQ = [];          // 表示待ちのモーダル
+let ZF = {fam:'all', st:'all'};  // 図鑑の絞り込み
 let playTimer = null;
 
 function freshState(){
   const s = {v:1, gold:50, stam:30, stamAt:Date.now(), plv:1, pexp:0, uidSeq:0, mons:[], party:[],
-    unlocked:1, cleared:{}, selArea:0, items:{kusuri:1, touyu:0}, seen:{}, owned:{}, story:{}, lore:{}, daily:'', letter:false, created:Date.now()};
+    unlocked:1, cleared:{}, selArea:0, items:{kusuri:1, touyu:0}, dex:{}, boxMax:30, titles:[DATA.defaultTitle], title:DATA.defaultTitle, claimed:{}, msNote:{}, story:{}, lore:{}, daily:'', letter:false, created:Date.now()};
   S = s;
-  DATA.starters.forEach(([id,lv]) => { const m = newMon(id, lv); s.mons.push(m); s.party.push(m.uid); s.seen[id]=true; s.owned[id]=true; });
+  DATA.starters.forEach(([id,lv]) => { const m = newMon(id, lv); s.mons.push(m); s.party.push(m.uid); s.dex[id] = {s:Date.now(), a:'拠点', c:Date.now()}; });
   return s;
+}
+function migrateV2(){
+  // v1 の記録（seen / owned）を図鑑形式（dex）へ移す
+  if (!S.dex){
+    const t = S.created || Date.now(); S.dex = {};
+    Object.keys(S.seen||{}).forEach(id=>{ if (DATA.monsters[id]) S.dex[id] = {s:t, a:'―'}; });
+    Object.keys(S.owned||{}).forEach(id=>{ if (DATA.monsters[id]){ S.dex[id] = S.dex[id] || {s:t, a:'―'}; S.dex[id].c = t; } });
+    delete S.seen; delete S.owned;
+  }
+  S.mons.forEach(m=>{ const e = S.dex[m.id] || (S.dex[m.id] = {s:Date.now(), a:'―'}); if (!e.c) e.c = Date.now(); if (m.v) e.v = 1; });
+  S.boxMax = S.boxMax || 30; S.titles = S.titles || [DATA.defaultTitle]; S.title = S.title || DATA.defaultTitle;
+  S.claimed = S.claimed || {};
+  if (!S.msNote){ S.msNote = {}; DATA.milestones.forEach(m=>{ if (msDone(m)) S.msNote[m.id] = 1; }); }
 }
 function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); return true; }catch(e){ return false; } }
 function hasSave(){ try{ return !!localStorage.getItem(SAVE_KEY); }catch(e){ return false; } }
 function load(){
   try{ const s = JSON.parse(localStorage.getItem(SAVE_KEY)); if (!s || !s.mons) return false; S = s;
-    S.items = Object.assign({kusuri:0, touyu:0}, S.items||{}); S.seen = S.seen||{}; S.story = S.story||{}; S.lore = S.lore||{};
-    if (!S.owned){ S.owned = {}; S.mons.forEach(m=>{ S.owned[m.id]=true; }); } return true; }catch(e){ return false; }
+    S.items = Object.assign({kusuri:0, touyu:0}, S.items||{}); S.story = S.story||{}; S.lore = S.lore||{};
+    migrateV2(); return true; }catch(e){ return false; }
 }
 
 /* ---------- monsters ---------- */
 const MD = m => DATA.monsters[m.id];
 function calc(m){
   const d = MD(m), o = {};
-  for (const k in d.base) o[k] = Math.floor(d.base[k] + d.grow[k]*(m.lv-1)) + ((m.plus&&m.plus[k])||0);
+  for (const k in d.base){ o[k] = Math.floor(d.base[k] + d.grow[k]*(m.lv-1)) + ((m.plus&&m.plus[k])||0); if (m.v) o[k] = Math.floor(o[k]*1.1); }
   return o;
 }
 function newMon(id, lv){
@@ -592,8 +822,9 @@ function newMon(id, lv){
   const m = {uid: ++S.uidSeq, id, lv, exp:0, hp:0, mp:0, skills:d.skills.slice(), plus:{hp:0,mp:0,atk:0,def:0,spd:0}};
   const c = calc(m); m.hp = c.hp; m.mp = c.mp; return m;
 }
-const need = lv => Math.floor(8*Math.pow(lv,1.5) + 4);
+const need = lv => Math.floor(10*Math.pow(lv,1.8) + 6);
 const getMon = uid => S.mons.find(m => m.uid === uid);
+const boxMax = () => S.boxMax || 30;
 const partyMons = () => S.party.map(getMon).filter(Boolean);
 const boxMons = () => S.mons.filter(m => !S.party.includes(m.uid));
 function power(){ return partyMons().reduce((t,m)=>{ const c=calc(m); return t + c.atk + c.def + c.spd + Math.floor(c.hp/2) + m.lv*5; }, 0); }
@@ -608,11 +839,13 @@ function gainExp(m, x, lines){
     lines.push({t:`${d.name}は Lv${m.lv} になった！（${up}）`, c:'hl'});
   }
 }
+function vtag(v){ return v ? '<span class="vtag">異形</span>' : ''; }
 function sigil(d, cls){ return `<div class="sigil ${cls||''}">${d.img ? `<img src="${d.img}" alt="${d.name}">` : d.sigil}</div>`; }
 function bar(cur, max, cls){ return `<div class="bar ${cls||''}"><i style="width:${max?clamp(cur/max*100,0,100):0}%"></i></div>`; }
 
 /* ---------- stamina (燈) ---------- */
-const maxStam = () => 30 + (S.plv-1);
+const maxStam = () => 30 + (S.plv-1)*2;
+const pneed = () => S.plv*30;
 function tickStam(){
   const now = Date.now(), mx = maxStam();
   if (S.stam >= mx){ S.stamAt = now; return; }
@@ -623,6 +856,91 @@ function stamTimerText(){
   if (S.stam >= maxStam()) return '燈は満ちている';
   const left = Math.max(0, REGEN_MS - (Date.now() - S.stamAt)), s = Math.ceil(left/1000);
   return `次の燈まで ${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+}
+
+/* ---------- 図鑑 (dex) ---------- */
+const DEXN = () => DATA.dexOrder.length;
+const dexState = id => { const e = S.dex[id]; return !e ? 0 : (e.c ? 2 : 1); };   // 0 未確認 / 1 目撃 / 2 捕縛
+const dexNo = id => 'No.' + String(DATA.dexOrder.indexOf(id)+1).padStart(3,'0');
+const caughtCount = () => DATA.dexOrder.filter(id=>dexState(id)===2).length;
+const seenCount = () => DATA.dexOrder.filter(id=>dexState(id)>=1).length;
+const variantCount = () => DATA.dexOrder.filter(id=>S.dex[id] && S.dex[id].v).length;
+const pct = (a,b) => Math.floor(a/b*100);
+const fmtDate = t => { const d = new Date(t), z = n => String(n).padStart(2,'0'); return `${d.getFullYear()}/${z(d.getMonth()+1)}/${z(d.getDate())} ${z(d.getHours())}:${z(d.getMinutes())}`; };
+function dexSee(id, where){ if (S.dex[id]) return false; S.dex[id] = {s:Date.now(), a:where}; return true; }
+function dexCatch(id, variant, where, silent){
+  const e = S.dex[id] || (S.dex[id] = {s:Date.now(), a:where||'―'});
+  let isNew = false, newV = false;
+  if (!e.c){ e.c = Date.now(); isNew = true; }
+  if (variant && !e.v){ e.v = 1; newV = true; }
+  if (!silent){
+    if (isNew || newV) queueModal(newEntryHTML(id, isNew, newV));
+    checkMilestones(); checkFamilies();
+  }
+  return isNew;
+}
+function newEntryHTML(id, isNew, newV){
+  const d = DATA.monsters[id], inRun = VIEW==='battle' || VIEW==='explore';
+  return `<div class="newentry"><div class="ne-k">― ${isNew ? '新たな魔が記された' : '異形の印が刻まれた'} ―</div>
+    <div class="ne-sig">${sigil(d, 'big' + (newV ? ' variant' : ''))}</div>
+    <div class="ne-no">${dexNo(id)}</div><div class="ne-name">${d.name}<span class="fam">${d.fam}系</span>${newV?vtag(1):''}</div>
+    <div class="flavor" style="text-align:left">${d.flavor}</div>
+    <div class="small dim">図鑑 捕縛 ${caughtCount()}/${DEXN()}（${pct(caughtCount(),DEXN())}%）${newV?` ・ 異形の印 ${variantCount()}`:''}</div></div>
+    <div class="mbtns">${inRun?'':`<button class="btn gold" data-act="zkopen" data-id="${id}">図鑑で見る</button>`}<button class="btn" data-act="close">閉じる</button></div>`;
+}
+function rarityOf(w){ return w >= 8 ? 'よく見る' : w >= 4 ? '時折' : '稀'; }
+function habitat(id){
+  const out = [];
+  DATA.areas.forEach((a,i)=>{
+    a.table.filter(e=>e.id===id).forEach(e=>{ out.push({ai:i, text:`${a.name}（${rarityOf(e.w)}${(e.floor||1)>1?`・第${e.floor}層以深`:''}${e.night?'・夜のみ':''}）`}); });
+    if (a.boss.id===id) out.push({ai:i, text:`${a.name}の最奥（主・再戦で稀に鎖を受け入れる）`});
+  });
+  return out;
+}
+function recipeHint(id){
+  const recs = DATA.recipes.filter(r=>r.out===id); if (!recs.length) return null;
+  const score = r => [r.a,r.b].filter(x=>dexState(x)===2).length;
+  const best = recs.slice().sort((x,y)=>score(y)-score(x))[0], lv = score(best);
+  const nm = x => DATA.monsters[x].name;
+  let line = '';
+  if (lv===2) line = `二つの鍵は、既にあなたの鎖の中にある：<b class="gold">${nm(best.a)}</b> ＋ <b class="gold">${nm(best.b)}</b>`;
+  else if (lv===1){ const k = dexState(best.a)===2 ? best.a : best.b; line = `鍵のひとつは<b class="gold">${nm(k)}</b>。もうひとつは、まだ闇の中。`; }
+  else line = '鍵となる魔を、まだひとつも縛っていない。';
+  return {lv, line, recs};
+}
+function famWild(f){ return famMembers(f).filter(id=>!DATA.monsters[id].fusionOnly); }
+
+/* ---------- 褒賞・称号 ---------- */
+function msDone(m){
+  if (m.type==='caught') return caughtCount() >= m.n;
+  if (m.type==='fam') return famMembers(m.fam).every(id=>dexState(id)===2);
+  if (m.type==='variant') return variantCount() >= m.n;
+  return false;
+}
+function msLabel(m){
+  if (m.type==='caught') return m.n >= DEXN() ? '全ての魔を捕縛' : `魔を${m.n}体捕縛`;
+  if (m.type==='fam') return `${m.fam}系の魔を全て捕縛`;
+  return '異形を捕縛';
+}
+function msProg(m){
+  if (m.type==='caught') return `${Math.min(caughtCount(), m.n)}/${m.n}`;
+  if (m.type==='fam'){ const ids = famMembers(m.fam); return `${ids.filter(id=>dexState(id)===2).length}/${ids.length}`; }
+  return `${Math.min(variantCount(), m.n)}/${m.n}`;
+}
+const claimable = () => DATA.milestones.filter(m=>msDone(m) && !S.claimed[m.id]).length;
+function checkMilestones(){
+  const newly = DATA.milestones.filter(m=>msDone(m) && !S.msNote[m.id]);
+  newly.forEach(m=>{ S.msNote[m.id] = 1; });
+  if (newly.length) queueModal(`<h4>蒐集の褒賞</h4><p>碑文庫に、新たな褒賞が届いた。</p>${newly.map(m=>`<p class="gold">◆ ${msLabel(m)}<br><span class="small">称号「${m.title}」 ・ ${m.desc}</span></p>`).join('')}<p class="dim small">碑文庫の「褒賞」で受け取れる。</p><div class="mbtns"><button class="btn gold" data-act="close">閉じる</button></div>`);
+}
+function claimMs(id){
+  const m = DATA.milestones.find(x=>x.id===id); if (!m || !msDone(m) || S.claimed[id]) return;
+  S.claimed[id] = 1;
+  if (m.gold) S.gold += m.gold;
+  if (m.items) for (const k in m.items) S.items[k] = (S.items[k]||0) + m.items[k];
+  if (m.box) S.boxMax = boxMax() + m.box;
+  if (m.title && !S.titles.includes(m.title)) S.titles.push(m.title);
+  save(); render(); toast(`褒賞を受け取った：称号「${m.title}」 ・ ${m.desc}`);
 }
 
 /* ---------- story & lore ---------- */
@@ -651,27 +969,28 @@ function loreWhere(l){
 }
 const FOUND_MSG = {'碑文':'苔むした石に、文字が刻まれている。', '手記':'朽ちた鞄の底に、綴じられた手記が残っていた。', '祈り':'崩れた祭壇に、祈りの文句が書きつけてある。',
   '手紙':'泥にまみれた封筒を拾った。', '書き置き':'壁の隙間に、折り畳まれた紙片が挟まっていた。'};
-function markOwned(id){ S.owned[id] = true; S.seen[id] = true; }
 function famMembers(f){ return Object.keys(DATA.monsters).filter(id=>DATA.monsters[id].fam===f); }
 function checkFamilies(){
   const got = [];
   FAM_ORDER.forEach(f => {
-    if (famMembers(f).every(id=>S.owned[id])){ const l = DATA.lore.find(x=>x.src.fam===f); const g = l && grantLore(l.id); if (g) got.push(g); }
+    if (famWild(f).every(id=>dexState(id)===2)){ const l = DATA.lore.find(x=>x.src.fam===f); const g = l && grantLore(l.id); if (g) got.push(g); }
   });
   if (got.length){ save(); const html = `<h4>碑文が揃った</h4><p>鎖に繋いだ魔たちの名が、碑文庫の石に並んだ。<br>石の裏に、新たな文字が浮かび上がる。</p>${got.map(l=>`<p class="gold">《${l.title}》を書き留めた。</p>`).join('')}<div class="mbtns"><button class="btn gold" data-act="rdlore" data-id="${got[0].id}" data-back="home">読む</button><button class="btn" data-act="close">閉じる</button></div>`;
-    if ($('#modal').classList.contains('hide')) modal(html); else PENDING_MODAL = html; }
+    queueModal(html); }
   return got;
 }
 function showStory(id, next){ S.story[id] = 1; READ = {kind:'story', id, next}; save(); go('reader'); }
 
 /* ---------- UI helpers ---------- */
 function toast(msg){
+  document.querySelectorAll('.toast').forEach(x=>x.remove());
   const t = document.createElement('div'); t.className='toast'; t.textContent = msg; $('#app').appendChild(t);
   setTimeout(()=>t.remove(), 1800);
 }
 function modal(html){ const m=$('#modal'); m.innerHTML = `<div class="mbox">${html}</div>`; m.classList.remove('hide'); }
 function closeModal(){ $('#modal').classList.add('hide'); $('#modal').innerHTML='';
-  if (PENDING_MODAL){ const h = PENDING_MODAL; PENDING_MODAL = null; modal(h); } }
+  if (MQ.length) modal(MQ.shift()); }
+function queueModal(html){ if ($('#modal').classList.contains('hide')) modal(html); else MQ.push(html); }
 function go(v){ VIEW = v; render(); }
 
 function render(){
@@ -722,16 +1041,16 @@ function vHome(){
   <div class="panel"><h3>今宵の徘徊者<small>幻影 ・ ${ol.length+rint(0,0)}名 灯をともす</small></h3>
     <div class="online">${ol.map(o=>`<div><b>◆ ${o[0]}</b><span>Lv${o[1]} ・ ${o[2]}</span></div>`).join('')}</div></div>
   <div class="panel status">
-    <div class="who"><span class="nm">名も無き檻守</span><span class="lv">位階 Lv${S.plv}</span></div>
-    <div class="barline"><span class="lbl">経</span>${bar(S.pexp, S.plv*20, 'ex')}<span class="num">${S.pexp}/${S.plv*20}</span></div>
+    <div class="who" data-act="titles"><span class="nm">名も無き檻守<span class="ptitle">〈${S.title}〉</span></span><span class="lv">位階 Lv${S.plv}</span></div>
+    <div class="barline"><span class="lbl">経</span>${bar(S.pexp, pneed(), 'ex')}<span class="num">${S.pexp}/${pneed()}</span></div>
     <div class="barline" style="margin-top:3px"><span class="lbl">${DATA.stamina}</span>${bar(S.stam, mx, 'st').replace('class="bar st"','class="bar st" id="stambar"')}<span class="num" id="stamnum">${S.stam}/${mx}</span></div>
     <div class="timer" id="stamtimer">${stamTimerText()}</div>
-    <div class="minip">${pm.map(m=>{ const d=MD(m), c=calc(m); return `<div class="mp1">${sigil(d,'sm')}<div class="t">${d.name}<br><span class="dim">Lv${m.lv} HP${m.hp}/${c.hp}</span></div></div>`; }).join('')}</div>
+    <div class="minip">${pm.map(m=>{ const d=MD(m), c=calc(m); return `<div class="mp1">${sigil(d,'sm')}<div class="t">${d.name}<br><span class="dim">Lv${m.lv}<br>HP${m.hp}/${c.hp}</span></div></div>`; }).join('')}</div>
     <div class="row" style="margin-top:6px"><button class="btn" data-act="rest">休む</button><button class="btn" data-act="tab" data-tab="party">仲間</button><button class="btn" data-act="save">記録</button></div>
   </div>
   <div class="fac">
     <button class="btn" data-act="fac" data-f="tavern"><span class="k">澱</span>澱の酒場</button>
-    <button class="btn" data-act="fac" data-f="archive">${unreadLore()?'<span class="dot"></span>':''}<span class="k">碑</span>碑文庫</button>
+    <button class="btn" data-act="fac" data-f="archive">${unreadLore()||claimable()?'<span class="dot"></span>':''}<span class="k">碑</span>碑文庫</button>
     <button class="btn" data-act="fac" data-f="daily">${S.daily!==today()?'<span class="dot"></span>':''}<span class="k">贖</span>日々の贖い</button>
     <button class="btn" data-act="fac" data-f="inbox">${!S.letter?'<span class="dot"></span>':''}<span class="k">鴉</span>鴉便</button>
   </div>
@@ -742,6 +1061,8 @@ function vHome(){
         <div class="gi">${S.cleared[a.id]?'<span class="gold">踏破</span>':lock?'封':'未踏'}</div></button>`; }).join('')}
   </div></div>
   <button class="explore-big" data-act="explore">探 索<small>${area.name}へ赴く ・ 一歩に${DATA.stamina}1</small></button>
+  ${S.cleared[area.id]?`<button class="btn wide" style="margin-bottom:8px" data-act="bossfight">主に再び挑む（${DATA.stamina}3）<span class="small dim" style="margin-left:6px">稀に鎖を受け入れる</span></button>`:''}
+  <div class="panel dexmini" data-act="zkhome"><h3>図鑑<small>捕縛 ${caughtCount()}/${DEXN()} ・ ${pct(caughtCount(),DEXN())}%</small></h3>${bar(caughtCount(), DEXN(), 'ex')}<div class="small dim" style="margin-top:3px">目撃 ${seenCount()} ・ 異形の印 ${variantCount()}${claimable()?` ・ <span class="red">受け取れる褒賞 ${claimable()}</span>`:''}</div></div>
   <div class="panel"><h3>戦力番付<small>幻影の檻守たち</small></h3><div class="rank">
     ${shown.map(r=>`<div class="${r.me?'me':''}"><span>${ranks.indexOf(r)+1}位</span><span>${r.n}</span><span>${fmt(r.p)}</span></div>`).join('')}
   </div></div>`;
@@ -749,8 +1070,8 @@ function vHome(){
 
 function mcard(m, sel){
   const d = MD(m), c = calc(m);
-  return `<button class="mcard ${sel?'sel':''} ${m.hp<=0?'dead':''}" data-act="mon" data-uid="${m.uid}">${sigil(d)}
-    <div class="mi"><div class="mn">${d.name}<span class="fam">${d.fam}</span> <span class="gold small">Lv${m.lv}</span></div>
+  return `<button class="mcard ${sel?'sel':''} ${m.hp<=0?'dead':''}" data-act="mon" data-uid="${m.uid}">${sigil(d, m.v?'variant':'')}
+    <div class="mi"><div class="mn">${d.name}<span class="fam">${d.fam}</span>${vtag(m.v)} <span class="gold small">Lv${m.lv}</span></div>
     <div class="barline"><span class="lbl">HP</span>${bar(m.hp,c.hp)}<span class="num">${m.hp}/${c.hp}</span></div>
     <div class="barline"><span class="lbl">MP</span>${bar(m.mp,c.mp,'mp')}<span class="num">${m.mp}/${c.mp}</span></div></div></button>`;
 }
@@ -761,14 +1082,14 @@ function vParty(){
   <div class="panel"><h3>隊列<small>${pm.length}/${PARTY_MAX} ・ 戦力 ${fmt(power())}</small></h3>
     <div class="mlist">${pm.map(m=>mcard(m)).join('')}${empty}</div>
     <div class="row" style="margin-top:6px"><button class="btn" data-act="rest">休む（全快）</button><button class="btn red" data-act="fusion">配合の儀</button></div></div>
-  <div class="panel"><h3>檻の中<small>${bx.length}体 ・ 上限${BOX_MAX}</small></h3>
+  <div class="panel"><h3>檻の中<small>${bx.length}体 ・ 総数${S.mons.length}/${boxMax()}</small></h3>
     <div class="mlist">${bx.length? bx.map(m=>mcard(m)).join('') : '<p class="dim small">檻は空だ。倒した魔は、時に鎖を受け入れる。</p>'}</div></div>
   <p class="faint small">魔を叩くと詳細。隊の入れ替え・放逐ができる。</p>`;
 }
 function monDetail(m){
   const d = MD(m), c = calc(m), inParty = S.party.includes(m.uid);
-  return `<div style="display:flex;gap:10px;align-items:center">${sigil(d,'big')}
-    <div><div style="font-size:18px">${d.name}<span class="fam">${d.fam}系</span></div><div class="gold">Lv${m.lv}</div>
+  return `<div style="display:flex;gap:10px;align-items:center">${sigil(d,'big'+(m.v?' variant':''))}
+    <div><div style="font-size:18px">${d.name}<span class="fam">${d.fam}系</span>${vtag(m.v)}</div><div class="small faint">${dexNo(m.id)}</div><div class="gold">Lv${m.lv}</div>
     <div class="small dim">${inParty?'隊列':'檻の中'} ・ 次のLvまで ${need(m.lv)-m.exp}</div></div></div>
     ${bar(m.exp, need(m.lv), 'ex')}
     <div class="stats"><div><span>HP</span><span>${m.hp}/${c.hp}</span></div><div><span>MP</span><span>${m.mp}/${c.mp}</span></div>
@@ -787,8 +1108,8 @@ function vFusion(){
     FUSE.skill = inh.length ? FUSE.skill % inh.length : 0;
     const bonus = fuseBonus(A,B);
     prev = `<div class="panel"><h3>産まれ出るもの<small>${r.special?'秘伝の組み合わせ':'系統の理'}</small></h3>
-      <div style="display:flex;gap:10px;align-items:center">${sigil(d,'big')}<div><div style="font-size:18px">${d.name}<span class="fam">${d.fam}系</span></div>
-      <div class="small dim">Lv1 ・ 格${'★'.repeat(d.rank)}</div><div class="small dim">継承補正 ${Object.keys(bonus).map(k=>STAT_JP[k]+'+'+bonus[k]).join(' ')}</div></div></div>
+      <div style="display:flex;gap:10px;align-items:center">${sigil(d,'big')}<div><div style="font-size:18px">${dexState(r.id)<2?'<span class="newmark">図鑑に無い魔</span><br>':''}${d.name}<span class="fam">${d.fam}系</span></div>
+      <div class="small dim">${dexNo(r.id)} ・ Lv1 ・ 格${'★'.repeat(d.rank)}</div><div class="small dim">継承補正 ${Object.keys(bonus).map(k=>STAT_JP[k]+'+'+bonus[k]).join(' ')}</div></div></div>
       <div class="small dim" style="margin-top:6px">固有の特技：${d.skills.map(s=>DATA.skills[s].name).join('、')}</div>
       <div class="small" style="margin-top:4px">継承する特技：${inh.length?`<b class="gold">${DATA.skills[inh[FUSE.skill]].name}</b>`:'<span class="faint">なし</span>'}</div>
       ${inh.length>1?`<button class="btn wide" style="margin-top:4px" data-act="fskill">継承特技を変える（${FUSE.skill+1}/${inh.length}）</button>`:''}
@@ -817,10 +1138,10 @@ function vMarket(){
   <div class="panel"><h3>質草<small>準備中</small></h3><p class="small faint">魔の骨や装身具の売買は、いずれ。</p></div>`;
 }
 function vMenu(){
-  const n = Object.keys(S.seen).length, all = Object.keys(DATA.monsters).length;
+  const n = caughtCount(), all = DEXN();
   return `<div class="panel"><h3>覚書</h3>
     <div class="stats"><div><span>位階</span><span>Lv${S.plv}</span></div><div><span>仲間</span><span>${S.mons.length}体</span></div>
-    <div><span>碑文</span><span>${n}/${all}</span></div><div><span>踏破</span><span>${Object.keys(S.cleared).length}/${DATA.areas.length}</span></div></div>
+    <div><span>図鑑</span><span>${n}/${all}</span></div><div><span>踏破</span><span>${Object.keys(S.cleared).length}/${DATA.areas.length}</span></div></div>
     <div class="mbtns" style="display:flex;flex-direction:column;gap:6px">
       <button class="btn gold" data-act="save">記録する</button>
       <button class="btn" data-act="howto">遊び方</button>
@@ -831,19 +1152,33 @@ function vMenu(){
 
 /* ---------- archive (碑文庫) ---------- */
 function vArchive(){
-  const monIds = Object.keys(DATA.monsters), nSeen = monIds.filter(id=>S.seen[id]).length;
   const nStory = DATA.story.filter(c=>S.story[c.id]).length, nLore = DATA.lore.filter(l=>S.lore[l.id]).length, nNew = unreadLore();
   const tab = (t, label, cnt, dot) => `<button class="${ARCH===t?'on':''}" data-act="arch" data-t="${t}">${label}<small>${cnt}</small>${dot?'<span class="dot"></span>':''}</button>`;
   let body = '';
   if (ARCH==='zukan'){
-    body = FAM_ORDER.map(f => {
-      const ids = famMembers(f), own = ids.filter(id=>S.owned[id]).length, done = own===ids.length;
-      return `<div class="zk-fam"><div class="zk-h"><span>${f}系</span><span class="small ${done?'gold':'faint'}">${done?'揃った ・ 碑文解放':`縛った数 ${own}/${ids.length}`}</span></div>
-        <div class="small faint" style="margin-bottom:4px">${DATA.families[f]}</div>
-        <div class="zk-grid">${ids.map(id=>{ const d=DATA.monsters[id];
-          return S.seen[id] ? `<button class="zk ${S.owned[id]?'own':''}" data-act="zk" data-id="${id}">${sigil(d,'sm')}<span>${d.name}</span>${S.owned[id]&&d.lore?'<i>追</i>':''}</button>`
-                            : `<div class="zk none"><div class="sigil sm">？</div><span>？？？</span></div>`; }).join('')}</div></div>`;
-    }).join('') + `<p class="small faint">同じ系統の魔をすべて鎖で縛ると、その系統の碑文が「読み物」に加わる。「追」の印は碑の追記がある魔。</p>`;
+    const N = DEXN(), cc = caughtCount();
+    const famRows = FAM_ORDER.map(f=>{ const ids = famMembers(f), c = ids.filter(id=>dexState(id)===2).length;
+      return `<div class="frow"><span class="fn">${f}</span>${bar(c, ids.length, 'ex')}<span class="fc ${c===ids.length?'gold':''}">${c}/${ids.length}</span></div>`; }).join('');
+    const chip = (k, v, label) => `<button class="chip ${ZF[k]===v?'on':''}" data-act="zf" data-k="${k}" data-v="${v}">${label}</button>`;
+    const list = DATA.dexOrder.filter(id => (ZF.fam==='all' || DATA.monsters[id].fam===ZF.fam) && (ZF.st==='all' || dexState(id)===+ZF.st));
+    body = `<div class="panel dexsum"><div class="ds-top"><div><div class="ds-pct">${pct(cc,N)}<small>%</small></div><div class="small dim">蒐集率</div></div>
+        <div class="ds-nums"><div>捕縛 <b>${cc}</b>/${N}</div><div>目撃 <b>${seenCount()}</b>/${N}</div><div>異形の印 <b class="gold">${variantCount()}</b></div></div></div>
+        ${bar(cc, N, 'ex')}<div class="frows">${famRows}</div></div>
+      <div class="chips">${chip('fam','all','全')}${FAM_ORDER.map(f=>chip('fam',f,f)).join('')}</div>
+      <div class="chips">${chip('st','all','全て')}${chip('st','2','捕縛')}${chip('st','1','目撃')}${chip('st','0','未確認')}</div>
+      <div class="zk-grid">${list.map(id=>{ const d = DATA.monsters[id], st = dexState(id), e = S.dex[id];
+        const badges = (st===1?'<i class="b-seen">目</i>':'') + (e&&e.v?'<i class="b-var">異</i>':'') + (st===2&&d.lore?'<i class="b-lore">追</i>':'') + (st===0&&d.fusionOnly?'<i class="b-fuse">配合</i>':'');
+        return `<button class="zk st${st}" data-act="zk" data-id="${id}"><span class="zno">${dexNo(id)}</span>${st ? sigil(d, 'sm' + (e.v?' variant':'')) : '<div class="sigil sm">？</div>'}<span class="znm">${st ? d.name : '？？？'}</span>${badges}</button>`; }).join('') || '<p class="dim small">該当する魔はいない。</p>'}</div>
+      <p class="small faint" style="margin-top:6px">「目」は目撃のみ、「異」は異形の印、「追」は碑の追記あり、「配合」は配合でしか産まれない魔。系統の野生の魔（主を含む）を全て捕縛すると、その系統の碑文が「読み物」に加わる。</p>`;
+  } else if (ARCH==='reward'){
+    body = `<div class="panel"><h3>称号<small>拠点の名の下に掲げられる</small></h3>
+        <div class="cur-title">〈${S.title}〉</div>
+        <div class="titles">${S.titles.map(t=>`<button class="chip ${S.title===t?'on':''}" data-act="settitle" data-t="${t}">${t}</button>`).join('')}</div></div>
+      <div class="panel"><h3>蒐集の褒賞<small>受け取れる ${claimable()}</small></h3>
+        ${DATA.milestones.map(m=>{ const done = msDone(m), got = S.claimed[m.id];
+          return `<div class="ms ${got?'got':done?'ready':''}"><div class="md"><div>${msLabel(m)} <span class="small dim">${msProg(m)}</span></div><small>称号「${m.title}」 ・ ${m.desc}</small></div>
+            ${got?'<span class="small faint">受領済</span>':`<button class="btn ${done?'gold':''}" data-act="claim" data-id="${m.id}" ${done?'':'disabled'}>${done?'受け取る':'未達'}</button>`}</div>`; }).join('')}
+      </div>`;
   } else if (ARCH==='story'){
     body = `<div class="lore-list">${DATA.story.map(c => S.story[c.id]
       ? `<button class="lr" data-act="rdstory" data-id="${c.id}"><span class="no">${c.no}</span><span class="tt">${c.title}</span></button>`
@@ -855,7 +1190,7 @@ function vArchive(){
       : `<div class="lr lock"><span class="no">其の${kanjiNum(i+1)}</span><span class="tt">？？？<small>${loreWhere(l)}</small></span></div>`).join('')}</div>`;
   }
   return `<div class="panel" style="padding:6px 8px"><h3>碑文庫<small>灰の下に埋もれた言葉たち</small></h3>
-    <div class="arch-tabs">${tab('zukan','図鑑',`${nSeen}/${monIds.length}`)}${tab('story','物語',`${nStory}/${DATA.story.length}`)}${tab('lore','読み物',`${nLore}/${DATA.lore.length}`, nNew>0)}</div></div>
+    <div class="arch-tabs">${tab('zukan','図鑑',`${caughtCount()}/${DEXN()}`)}${tab('reward','褒賞',`${DATA.milestones.filter(m=>S.claimed[m.id]).length}/${DATA.milestones.length}`, claimable()>0)}${tab('story','物語',`${nStory}/${DATA.story.length}`)}${tab('lore','読み物',`${nLore}/${DATA.lore.length}`, nNew>0)}</div></div>
     ${ARCH==='lore'?`<div class="small dim" style="margin:0 2px 6px">発見 ${nLore}/${DATA.lore.length}${nNew?` ・ <span class="red">未読 ${nNew}</span>`:''}</div>`:''}
     ${body}
     <button class="btn wide" style="margin-top:8px" data-act="tab" data-tab="home">拠点へ戻る</button>`;
@@ -885,7 +1220,7 @@ function vReader(){
 /* ---------- explore ---------- */
 function unitHTML(u, i){
   const d = DATA.monsters[u.id];
-  return `<div class="pu ${u.side==='e'?'enemy':''} ${u.hp<=0?'dead':''}" id="u${i}"><div class="top">${sigil(d,'sm')}<div class="nm">${u.name}<small>Lv${u.lv} ${d.fam}</small></div></div>
+  return `<div class="pu ${u.side==='e'?'enemy':''} ${u.v?'isvar':''} ${u.hp<=0?'dead':''}" id="u${i}"><div class="top">${sigil(d,'sm'+(u.v?' variant':''))}<div class="nm">${u.name}<small>Lv${u.lv} ${d.fam}${u.v?' ・ <span class="gold">異形</span>':''}</small></div></div>
     ${bar(u.hp,u.max.hp)}${u.side==='p'?bar(u.mp,u.max.mp,'mp'):''}<div class="hpn">HP ${Math.max(0,u.hp)}/${u.max.hp}</div></div>`;
 }
 function logHTML(lines){
@@ -894,7 +1229,7 @@ function logHTML(lines){
 }
 function vExplore(){
   const a = DATA.areas[RUN.ai];
-  const units = partyMons().map(m=>({id:m.id, side:'p', name:MD(m).name, lv:m.lv, hp:m.hp, mp:m.mp, max:calc(m)}));
+  const units = partyMons().map(m=>({id:m.id, v:m.v, side:'p', name:MD(m).name, lv:m.lv, hp:m.hp, mp:m.mp, max:calc(m)}));
   return `<div class="dhead"><span class="an">${a.name}</span><span class="fl">第${RUN.floor}層／全${a.floors}層 ・ ${RUN.step}/${a.steps}歩</span></div>
     <div class="prow">${units.map(unitHTML).join('')}</div>
     <div class="logbox" id="log">${logHTML(RUN.log)}</div>
@@ -925,8 +1260,14 @@ function doStep(){
   const r = Math.random();
   if (r < 0.46){
     const n = rint(a.count[0], a.count[1]), foes = [];
-    for (let i=0;i<n;i++) foes.push({id:pick(a.enemies), lv:clamp(a.lv[0] + rint(0, RUN.floor), a.lv[0], a.lv[1])});
+    let rare = false;
+    for (let i=0;i<n;i++){
+      const e = rollEncounter(a, RUN.floor); if (e.rare) rare = true;
+      foes.push({id:e.id, lv:clamp(a.lv[0] + rint(0, RUN.floor), a.lv[0], a.lv[1]), v: Math.random() < (window.__forceVariant ? 1 : DATA.variantRate)});
+    }
     rlog('闇の奥で何かが蠢いた。――魔だ！', 'bad');
+    if (rare) rlog('……見慣れぬ気配が混じっている。', 'hl');
+    if (foes.some(f=>f.v)) rlog('異形の気配――常ならぬ姿の魔がいる！', 'hl');
     startBattle(foes, false); return;
   } else if (r < 0.64){
     const g = rint(4,12) * (RUN.ai+1); S.gold += g; rlog(`朽ちた棺の中に、${g}枚の骨貨が残されていた。`, 'good');
@@ -945,15 +1286,21 @@ function doStep(){
   }
   checkDescend(); save(); render();
 }
+function rollEncounter(a, floor){
+  const tbl = a.table.filter(e => (e.floor||1) <= floor && (!e.night || isNight()));
+  const tot = tbl.reduce((t,e)=>t+e.w, 0); let r = Math.random()*tot;
+  for (const e of tbl){ r -= e.w; if (r <= 0) return e; } return tbl[tbl.length-1];
+}
 function checkDescend(){
   const a = DATA.areas[RUN.ai];
   if (RUN.step >= a.steps && RUN.floor < a.floors){ RUN.floor++; RUN.step = 0; rlog(`崩れた階段を見つけた。第${RUN.floor}層へ降りる。`, 'hl'); }
 }
 
 /* ---------- battle (auto) ---------- */
-function mkUnit(side, id, lv, ref){
+function mkUnit(side, id, lv, ref, v){
   const d = DATA.monsters[id], max = ref ? calc(ref) : calc({id, lv, plus:null});
-  return {side, id, lv, ref, name:d.name, max, hp: ref?ref.hp:max.hp, mp: ref?ref.mp:max.mp, skills: ref?ref.skills.slice():d.skills.slice(), mods:{}, poison:0};
+  if (!ref && v) for (const k in max) max[k] = Math.floor(max[k]*1.15);
+  return {side, id, lv, ref, v: ref ? ref.v : v, name:(v&&!ref?'異形の':'')+d.name, max, hp: ref?ref.hp:max.hp, mp: ref?ref.mp:max.mp, skills: ref?ref.skills.slice():d.skills.slice(), mods:{}, poison:0};
 }
 const eff = (u,k) => u.max[k] * (u.mods[k] ? u.mods[k].m : 1);
 function dmgCalc(a, t, pow){
@@ -1033,44 +1380,46 @@ function simulate(units){
 function startBattle(foes, boss){
   const pm = partyMons().filter(m=>m.hp>0);
   const units = pm.map(m=>mkUnit('p', m.id, m.lv, m));
-  const counts = {};
+  const counts = {}, area = DATA.areas[RUN.ai], wasCleared = !!S.cleared[area.id], newSeen = [];
   foes.forEach(f=>{ counts[f.id]=(counts[f.id]||0)+1; });
   const seen = {};
   foes.forEach(f=>{
-    const u = mkUnit('e', f.id, f.lv, null);
+    const u = mkUnit('e', f.id, f.lv, null, !!f.v);
     if (boss){ u.max.hp = Math.round(u.max.hp*(DATA.areas[RUN.ai].boss.hpx||1.5)); u.hp = u.max.hp; u.name = '【主】'+u.name; }
     const clash = pm.some(m=>m.id===f.id);
     if (counts[f.id] > 1 || clash){ seen[f.id]=(seen[f.id]||0); u.name += SUFFIX[seen[f.id]++] || ''; }
-    units.push(u); S.seen[f.id] = true;
+    units.push(u); if (dexSee(f.id, area.name + (boss?'の最奥':''))) newSeen.push(DATA.monsters[f.id].name);
   });
   const sim = simulate(units);
   BT = {units, ev:sim.ev, outcome:sim.outcome, idx:0, done:false, boss, lines:[], after:[], recruit:null, ai:RUN.ai};
   // --- 結果の反映 ---
   units.filter(u=>u.side==='p').forEach(u=>{ u.ref.hp = u.hp; u.ref.mp = u.mp; });
   const res = BT.after;
+  if (newSeen.length) res.push({t:`図鑑に目撃が記された：${[...new Set(newSeen)].join('、')}`, c:'hl'});
   if (sim.outcome==='win'){
     const ens = units.filter(u=>u.side==='e');
-    const xp = ens.reduce((t,u)=>t + Math.round(DATA.monsters[u.id].xp * u.lv * 1.5), 0);
-    const gold = ens.reduce((t,u)=>t + rint(3,7)*u.lv, 0) + (boss?120*(RUN.ai+1):0);
+    const xp = ens.reduce((t,u)=>t + Math.round(DATA.monsters[u.id].xp * u.lv * 1.2), 0);
+    const gold = ens.reduce((t,u)=>t + rint(3,7)*u.lv, 0) + (boss ? (wasCleared ? 50 : 120)*(RUN.ai+1) : 0);
     S.gold += gold;
     res.push({t:'── 勝利 ──', c:'sep'});
     res.push({t:`経験 +${xp}　骨貨 +${gold}`, c:'good'});
     units.filter(u=>u.side==='p' && u.hp>0).forEach(u=>gainExp(u.ref, xp, res));
     S.pexp += Math.ceil(xp/2);
-    while (S.pexp >= S.plv*20){ S.pexp -= S.plv*20; S.plv++; S.stam = Math.min(maxStam(), S.stam+5); res.push({t:`檻守の位階が Lv${S.plv} に上がった。${DATA.stamina}の上限が増えた。`, c:'hl'}); }
+    while (S.pexp >= pneed()){ S.pexp -= pneed(); S.plv++; S.stam = Math.max(S.stam, maxStam()); S.stamAt = Date.now(); res.push({t:`檻守の位階が Lv${S.plv} に上がった。${DATA.stamina}が満ち、上限が増えた。`, c:'hl'}); }
     if (boss){
       const a = DATA.areas[RUN.ai]; S.cleared[a.id] = true;
       if (S.unlocked < DATA.areas.length && S.unlocked <= RUN.ai+1){ S.unlocked = RUN.ai+2; res.push({t:`${['壱','弐','参'][RUN.ai+1]}ノ門「${DATA.areas[RUN.ai+1].name}」の封印が解けた。`, c:'hl'}); S.selArea = RUN.ai+1; }
-      res.push({t:`${a.name}を踏破した。`, c:'hl'});
+      res.push({t: wasCleared ? `${a.name}の主は、再び灰に還った。` : `${a.name}を踏破した。`, c:'hl'});
       const bl = grantLore((DATA.areaStory[a.id]||{}).lore); if (bl) res.push({t:`主の骸の傍らに、古びた頁が落ちていた。――《${bl.title}》を書き留めた。`, c:'hl'});
     }
     // 仲間入り判定
-    if (S.mons.length < BOX_MAX){
+    if (S.mons.length < boxMax()){
       const avg = units.filter(u=>u.side==='p').reduce((t,u)=>t+u.ref.lv,0) / Math.max(1, units.filter(u=>u.side==='p').length);
       for (const u of shuffle(ens)){
         const d = DATA.monsters[u.id]; if (d.fusionOnly) continue;
-        const p = window.__forceRecruit ? 1 : clamp(d.rec*(boss?0.6:1) + (avg-u.lv)*0.03, 0.02, 0.7);
-        if (Math.random() < p){ BT.recruit = {id:u.id, lv:u.lv}; break; }
+        if (boss && !wasCleared) continue;   // 初回の主は鎖を拒む
+        const p = window.__forceRecruit ? 1 : boss ? clamp(0.06 + (avg-u.lv)*0.01, 0.03, 0.12) : clamp(d.rec + (avg-u.lv)*0.03, 0.02, 0.7);
+        if (Math.random() < p){ BT.recruit = {id:u.id, lv:u.lv, v:u.v}; break; }
       }
     }
   } else if (sim.outcome==='lose'){
@@ -1143,7 +1492,8 @@ function renderBattleCtl(){
   const c = $('#bctl'); if (!c) return;
   if (BT.recruit){
     const d = DATA.monsters[BT.recruit.id];
-    c.innerHTML = `<div class="result"><div class="q">倒れたはずの<b class="gold">${d.name}</b>（Lv${BT.recruit.lv}）が軋みながら身を起こし、あなたの鎖の前に頭を垂れた。<br>――縛りますか？</div>
+    const st = dexState(BT.recruit.id);
+    c.innerHTML = `<div class="result"><div class="q">${st<2?'<span class="newmark">未捕縛</span>':''}倒れたはずの<b class="gold">${BT.recruit.v?'異形の':''}${d.name}</b>（Lv${BT.recruit.lv}）が軋みながら身を起こし、あなたの鎖の前に頭を垂れた。<br>――縛りますか？</div>
       <div class="row"><button class="btn gold" data-act="recruit" data-yes="1">鎖で縛る</button><button class="btn" data-act="recruit" data-yes="0">捨て置く</button></div></div>`;
     return;
   }
@@ -1153,16 +1503,16 @@ function renderBattleCtl(){
 function doRecruit(yes){
   const r = BT.recruit, d = DATA.monsters[r.id]; BT.recruit = null;
   if (yes){
-    const m = newMon(r.id, r.lv); S.mons.push(m); markOwned(r.id);
+    const m = newMon(r.id, r.lv); if (r.v){ m.v = 1; const c = calc(m); m.hp = c.hp; m.mp = c.mp; } S.mons.push(m);
     let where = '檻の中';
     if (S.party.length < PARTY_MAX){ S.party.push(m.uid); where = '隊列'; }
     pushBattleLine({t:`${d.name}を鎖で縛った。（${where}へ）`, c:'hl'});
     BT.after.push({t:`${d.name}を鎖で縛った。`, c:'hl'});
+    dexCatch(r.id, r.v, DATA.areas[BT.ai].name);
   } else {
     pushBattleLine({t:`${d.name}は闇の奥へ這い去っていった。`});
   }
   save(); renderBattleCtl();
-  if (yes) checkFamilies();
 }
 function battleDone(){
   clearInterval(playTimer);
@@ -1170,7 +1520,7 @@ function battleDone(){
   if (b.boss || b.outcome==='lose'){
     RUN = null; save();
     const st = DATA.areaStory[DATA.areas[b.ai].id];
-    if (b.outcome==='win' && st){ READ = null; return showStory(st.clear, 'homeClear:'+b.ai); }
+    if (b.outcome==='win' && st && !S.story[st.clear]){ READ = null; return showStory(st.clear, 'homeClear:'+b.ai); }
     go('home');
     if (b.outcome==='win') modal(`<h4>踏破</h4><p>${DATA.areas[b.ai].name}の主は灰に還った。<br>鎖が微かに熱を帯びている。</p><div class="mbtns"><button class="btn gold" data-act="close">拠点に戻る</button></div>`);
     return;
@@ -1187,8 +1537,8 @@ function fuseResult(A,B){
   const fa = MD(A).fam, fb = MD(B).fam;
   const key = [fa,fb].sort((x,y)=>FAM_ORDER.indexOf(x)-FAM_ORDER.indexOf(y)).join('');
   const fam = DATA.familyMix[key] || fa;
-  const target = Math.min(4, Math.max(MD(A).rank, MD(B).rank) + 1);
-  const cands = Object.entries(DATA.monsters).filter(([id,d]) => d.fam===fam && !d.fusionOnly);
+  const target = Math.min(3, Math.max(MD(A).rank, MD(B).rank) + 1);
+  const cands = Object.entries(DATA.monsters).filter(([id,d]) => d.fam===fam && !d.fusionOnly && !d.boss);
   let best = cands.filter(([,d]) => d.rank <= target).sort((x,y)=>y[1].rank-x[1].rank);
   if (!best.length) best = cands.sort((x,y)=>x[1].rank-y[1].rank);
   const top = best.filter(([,d]) => d.rank === best[0][1].rank);
@@ -1214,7 +1564,7 @@ function doFuse(){
   const wasInParty = S.party.includes(A.uid) || S.party.includes(B.uid);
   S.mons = S.mons.filter(m => m.uid!==A.uid && m.uid!==B.uid);
   S.party = S.party.filter(u => u!==A.uid && u!==B.uid);
-  S.mons.push(child); markOwned(r.id);
+  S.mons.push(child);
   if (S.party.length < PARTY_MAX && (wasInParty || !S.party.length)) S.party.push(child.uid);
   FUSE = {a:null, b:null, skill:0};
   save(); go('fusion');
@@ -1222,7 +1572,8 @@ function doFuse(){
   modal(`<h4>配合の儀</h4><div style="display:flex;gap:10px;align-items:center">${sigil(d,'big')}<p>鎖が赤く灼け、二つの影が灰の中で溶け合う。<br>やがて――<b class="gold">${d.name}</b>が産声を上げた。</p></div>
     <div class="flavor">${d.flavor}</div><div class="small dim">特技：${child.skills.map(s=>DATA.skills[s].name).join('、')}</div>
     <div class="mbtns"><button class="btn gold" data-act="close">閉じる</button></div>`);
-  checkFamilies();
+  dexCatch(r.id, false, '配合');
+  save();
 }
 
 /* ---------- actions ---------- */
@@ -1304,7 +1655,7 @@ const ACT = {
   fac(b){
     const f = b.f;
     if (f==='tavern') modal(`<h4>澱の酒場</h4><p class="dim small">煤けた梁の下、酔いどれの檻守が杯を傾けている。</p><p>${pick(DATA.npc.rumors)}</p><div class="mbtns"><button class="btn" data-act="fac" data-f="tavern">別の話を聞く</button><button class="btn" data-act="close">店を出る</button></div>`);
-    if (f==='archive'){ ARCH = unreadLore() ? 'lore' : 'zukan'; go('archive'); }
+    if (f==='archive'){ ARCH = claimable() ? 'reward' : unreadLore() ? 'lore' : 'zukan'; go('archive'); }
     if (f==='daily'){
       if (S.daily !== today()){ S.daily = today(); tickStam(); S.gold += 80; S.stam = Math.min(maxStam(), S.stam+10); save(); render();
         modal(`<h4>日々の贖い</h4><p>名も無き墓に灰を払い、祈りを捧げた。<br>どこからか、骨貨が転がり落ちてきた。</p><p class="gold">骨貨 +80 ・ ${DATA.stamina} +10</p><div class="mbtns"><button class="btn" data-act="close">閉じる</button></div>`);
@@ -1317,6 +1668,21 @@ const ACT = {
     }
   },
   arch(b){ ARCH = b.t; render(); },
+  zf(b){ ZF[b.k] = b.v; render(); },
+  zkopen(b){ MQ = []; closeModal(); ARCH = 'zukan'; go('archive'); zukanDetail(b.id); },
+  zkhome(){ ARCH = 'zukan'; go('archive'); },
+  titles(){ ARCH = 'reward'; go('archive'); },
+  claim(b){ claimMs(b.id); },
+  settitle(b){ S.title = b.t; save(); render(); toast(`称号を「${b.t}」に改めた。`); },
+  bossfight(){
+    const a = DATA.areas[S.selArea]; tickStam();
+    if (!S.cleared[a.id]) return;
+    if (S.stam < 3) return toast(`${DATA.stamina}が足りない。`);
+    if (!partyMons().some(m=>m.hp>0)) return toast('動ける魔がいない。休ませよ。');
+    S.stam -= 3;
+    RUN = {ai:S.selArea, floor:a.floors, step:a.steps, log:[{t:`── ${a.name}・最奥 ──`, c:'sep'}, {t:'灰を踏みしめ、まっすぐ主の間へ向かう。', c:'hl'}]};
+    startBattle([{id:a.boss.id, lv:a.boss.lv}], true);
+  },
   zk(b){ zukanDetail(b.id); },
   rdstory(b){ READ = {kind:'story', id:b.id, next:'archive'}; go('reader'); },
   rdlore(b){ closeModal(); READ = {kind:'lore', id:b.id, back:b.back||'archive'}; go('reader'); },
@@ -1337,16 +1703,36 @@ const ACT = {
 };
 function READ_prevTab(){ return ARCH; }
 function zukanDetail(id){
-  const d = DATA.monsters[id], seen = S.seen[id], own = S.owned[id];
-  if (!seen) return;
-  modal(`<div style="display:flex;gap:10px;align-items:center">${sigil(d,'big')}<div><div style="font-size:18px">${d.name}<span class="fam">${d.fam}系</span></div>
-    <div class="small dim">格${'★'.repeat(d.rank)} ・ ${own?'鎖に繋いだことがある':'見かけただけ'}</div></div></div>
-    <div class="flavor">${d.flavor}</div>
-    ${own ? `<div class="stats"><div><span>HP</span><span>${d.base.hp}</span></div><div><span>MP</span><span>${d.base.mp}</span></div><div><span>攻撃</span><span>${d.base.atk}</span></div><div><span>守備</span><span>${d.base.def}</span></div><div><span>素早さ</span><span>${d.base.spd}</span></div><div><span></span><span class="faint small">（Lv1の値）</span></div></div>
+  const d = DATA.monsters[id], st = dexState(id), e = S.dex[id] || {};
+  const head = (name, sig) => `<div style="display:flex;gap:10px;align-items:center">${sig}<div><div class="small faint">${dexNo(id)}</div><div style="font-size:18px">${name}</div>
+    <div class="small"><span class="zst st${st}">${['未確認','目撃','捕縛'][st]}</span>${st?` <span class="fam">${d.fam}系</span> <span class="gold">${'★'.repeat(d.rank)}</span>`:''}${e.v?' <span class="vtag">異形の印</span>':''}</div></div></div>`;
+  const hab = habitat(id), rh = d.fusionOnly || st===2 ? recipeHint(id) : null;
+  let html = '';
+  if (st===0){
+    html = head('？？？', '<div class="sigil big">？</div>');
+    if (d.fusionOnly){
+      html += `<div class="hint"><div class="ah">― 碑に刻まれた謎かけ ―</div><p>${DATA.riddles[id]||'……'}</p><p class="small">${rh.line}</p></div><p class="small faint">この魔は野に棲まない。配合によってのみ産まれる。</p>`;
+    } else {
+      const known = hab.filter(h=>h.ai < S.unlocked);
+      html += `<p class="small dim" style="margin-top:8px">出没の噂：${known.length ? known.map(h=>h.text).join('、') : 'まだ開かぬ冥門の奥'}</p>`;
+    }
+  } else if (st===1){
+    html = head(d.name, sigil(d,'big'));
+    html += `<div class="stats" style="margin-top:8px"><div><span>初目撃</span><span>${e.a||'―'}</span></div><div><span>日時</span><span class="small">${fmtDate(e.s)}</span></div></div>
+      <p class="small dim">出没：${hab.map(h=>h.text).join('、') || '―'}</p>
+      <p class="small faint">鎖で縛れば、姿の全てと碑の追記が記される。</p>`;
+  } else {
+    html = head(d.name, sigil(d, 'big' + (e.v?' variant':'')));
+    html += `<div class="flavor">${d.flavor}</div>
+      <div class="stats"><div><span>HP</span><span>${d.base.hp}</span></div><div><span>MP</span><span>${d.base.mp}</span></div><div><span>攻撃</span><span>${d.base.atk}</span></div><div><span>守備</span><span>${d.base.def}</span></div><div><span>素早さ</span><span>${d.base.spd}</span></div><div><span></span><span class="faint small">（Lv1の値）</span></div></div>
       ${d.skills.map(k=>`<div class="skl"><b>${DATA.skills[k].name}</b> <span>${DATA.skills[k].desc}</span></div>`).join('')}
-      ${d.lore?`<div class="addendum"><div class="ah">― 碑の追記 ―</div>${d.lore}</div>`:''}`
-      : `<p class="faint small">この魔を鎖で縛れば、碑に追記が刻まれる。</p>`}
-    <div class="mbtns"><button class="btn" data-act="close">閉じる</button></div>`);
+      <div class="stats" style="margin-top:6px"><div><span>初捕縛</span><span class="small">${fmtDate(e.c)}</span></div><div><span>初目撃</span><span class="small">${e.a||'―'}</span></div></div>
+      <p class="small dim">${d.fusionOnly ? '配合でのみ産まれる' : '出没：' + (hab.map(h=>h.text).join('、') || '―')}</p>
+      ${rh ? `<p class="small dim">産まれ方：${rh.recs.map(r=>`${DATA.monsters[r.a].name}＋${DATA.monsters[r.b].name}`).join('、')}</p>` : ''}
+      ${d.lore?`<div class="addendum"><div class="ah">― 碑の追記 ―</div>${d.lore}</div>`:''}
+      ${e.v?'':'<p class="small faint" style="margin-top:6px">異形の姿で捕らえると、異形の印が刻まれる。</p>'}`;
+  }
+  modal(html + `<div class="mbtns"><button class="btn" data-act="close">閉じる</button></div>`);
 }
 function showMon(uid){
   const m = getMon(uid); if (!m) return;
@@ -1374,7 +1760,7 @@ setInterval(()=>{
 }, 1000);
 
 // テスト・デバッグ用フック
-window.__game = { get S(){ return S; }, get VIEW(){ return VIEW; }, get RUN(){ return RUN; }, get BT(){ return BT; }, get READ(){ return READ; }, render, save, calc, newMon, go, simulate, mkUnit, checkFamilies, grantLore, loreCandidates };
+window.__game = { get S(){ return S; }, get VIEW(){ return VIEW; }, get RUN(){ return RUN; }, get BT(){ return BT; }, get READ(){ return READ; }, render, save, calc, newMon, go, simulate, mkUnit, checkFamilies, grantLore, loreCandidates, dexCatch, rollEncounter, get ZF(){ return ZF; } };
 render();
 })();
 </script>
