@@ -1247,6 +1247,41 @@ function startExplore(){
   go('explore');
 }
 function rlog(t,c){ RUN.log.push({t,c}); if (RUN.log.length>80) RUN.log.splice(0, RUN.log.length-80); }
+function anomalyChoiceEvent(){
+  const a = DATA.areas[RUN.ai];
+  const events = [
+    {title:'戸の向こうの爪音', text:'灰に埋もれた戸の向こうから、三度だけ爪を立てる音がした。戸には内側から鎖が巻かれている。', a:'戸を開ける', b:'印だけ記録する', risk:true},
+    {title:'名を呼ぶ井戸', text:'水の枯れた井戸から、あなたのものではない名で呼ぶ声がする。返事を待っているようだ。', a:'井戸を覗く', b:'灰を投げ入れる', risk:true},
+    {title:'逆さの道標', text:'来た時には無かった道標が立っている。文字は逆さで、「近道」とだけ読める。', a:'近道へ進む', b:'元の道を行く', risk:false}
+  ];
+  const e = pick(events);
+  RUN.choice = e;
+  modal(`<h4>怪異現象 ― ${e.title}</h4><p>${e.text}</p><div class="mbtns"><button class="btn red" data-act="anomaly" data-pick="a">${e.a}</button><button class="btn" data-act="anomaly" data-pick="b">${e.b}</button></div>`);
+}
+function resolveAnomaly(which){
+  const e = RUN && RUN.choice; if (!e) return;
+  closeModal(); RUN.choice = null;
+  const a = DATA.areas[RUN.ai], brave = which==='a';
+  if (brave){
+    const r = Math.random();
+    if (r < .38){
+      const en = rollEncounter(a, RUN.floor);
+      rlog(`「${e.title}」――踏み込んだ先で、魔の気配が爆ぜた！`, 'bad');
+      startBattle([{id:en.id, lv:clamp(a.lv[0]+RUN.floor, a.lv[0], a.lv[1]), v:Math.random()<DATA.variantRate}], false); return;
+    } else if (r < .72){
+      const g = rint(18,35)*(RUN.ai+1); S.gold += g;
+      rlog(`「${e.title}」の奥から骨貨を見つけた。骨貨 +${g}`, 'good');
+    } else {
+      const lc = loreCandidates(RUN.ai, RUN.floor);
+      if (lc.length){ const l=pickLore(lc); grantLore(l.id); RUN.lastLore=l.id; rlog(`危険の先で《${l.title}》を書き留めた。`, 'hl'); }
+      else { S.items.kusuri++; rlog('何者かが残した凝血の薬を拾った。', 'good'); }
+    }
+  } else {
+    if (e.risk && Math.random()<.35){ S.items.kusuri++; rlog(`「${e.title}」には深入りしなかった。足元に凝血の薬が残されていた。`, 'good'); }
+    else rlog(`「${e.title}」をやり過ごした。背後の気配は、しばらく消えなかった。`, 'dim');
+  }
+  checkDescend(); save(); render();
+}
 function doStep(){
   tickStam();
   if (S.stam < 1){ toast(`${DATA.stamina}が尽きた。時を待つか、燈油を使え。`); return; }
@@ -1258,7 +1293,10 @@ function doStep(){
     startBattle([{id:a.boss.id, lv:a.boss.lv}], true); return;
   }
   const r = Math.random();
-  if (r < 0.46){
+  if (r < 0.14){
+    rlog('道の様子がおかしい。何かがこちらを試している。', 'hl');
+    save(); render(); anomalyChoiceEvent(); return;
+  } else if (r < 0.50){
     const n = rint(a.count[0], a.count[1]), foes = [];
     let rare = false;
     for (let i=0;i<n;i++){
@@ -1600,6 +1638,7 @@ const ACT = {
   gate(b){ S.selArea = +b.i; save(); render(); },
   explore(){ startExplore(); },
   step(){ doStep(); },
+  anomaly(b){ resolveAnomaly(b.pick); },
   kusuri(){
     if (!S.items.kusuri) return; S.items.kusuri--;
     partyMons().forEach(m=>{ if (m.hp>0){ const c=calc(m); m.hp=Math.min(c.hp, m.hp+Math.ceil(c.hp*0.5)); } });
